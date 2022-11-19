@@ -1,0 +1,2 @@
+class UserresultsController < ApplicationController
+end
