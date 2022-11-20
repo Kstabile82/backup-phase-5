@@ -55,7 +55,7 @@ function App(){
     .then((currentRescues) => setRescues(currentRescues));
     },[]);
 
- function handlePdfChange(e){
+function handlePdfChange(e){
   e.preventDefault();
   let file = e.target.files[0]
   // console.log(uploadFile[0].type === "application/pdf" || uploadFile[0].type === "pdf")
@@ -85,7 +85,6 @@ function submitForm(e){
     setLoggedOut(false)
     setUserRescues(user.userrescues)
   }
-  console.log(user)
   function onDeleteUserRescue(rescue, user) {
     let id = user.userrescues.find(uR => uR.rescue_id === rescue.id)
       fetch(`/userrescue/${id}`, { 

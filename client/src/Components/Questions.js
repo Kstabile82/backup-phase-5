@@ -1,7 +1,7 @@
 import React, { useState } from "react"; 
 // import Options from "./Options";
 
-function Questions({ options, setOptions, i, questions, setQuestions, addOpt, setAddOpt, opts, setOpts, question, setQuestion }) {
+function Questions({ info, setInfo }) {
     const [addQs, setAddQs] = useState(false);
     // const [opts, setOpts] = useState([])
     // const [addOpt, setAddOpt] = useState(false)
@@ -12,7 +12,8 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
     let correctAnswer; 
     // let option;
     let qArray = []
-    questions.map(q => {
+  
+    info.questions.map(q => {
         let qOpts = []
         q.optionmethod.map(qO => qOpts.push({text: qO.text, correct: qO.correct}))
         qArray.push({text: q.questiontext, options: [qOpts]})
@@ -53,25 +54,25 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
     function handlePostQ(e) {
         e.preventDefault();
         let questiontext = qText
-        let information_id = i.id
-        fetch(`/newquestion`, {
-            method: "POST", 
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ information_id, questiontext }),
-        })
-        .then((r) => r.json())
-        .then((newQ) => {
-            if (questions.length > 0) {
-                setQuestions([...questions, newQ])
-                //make sure this renders right away == may need a callback fn from Adminpage
-            }
-            else {
-                setQuestions(newQ)
-            }
-            setAddQs(false)
-        })
+        // let information_id = i.id
+        // fetch(`/newquestion`, {
+        //     method: "POST", 
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({ information_id, questiontext }),
+        // })
+        // .then((r) => r.json())
+        // .then((newQ) => {
+        //     if (questions.length > 0) {
+        //         setQuestions([...questions, newQ])
+        //         //make sure this renders right away == may need a callback fn from Adminpage
+        //     }
+        //     else {
+        //         setQuestions(newQ)
+        //     }
+        //     setAddQs(false)
+        // })
     }
     function handleNewQInput(e) {
         e.preventDefault();
@@ -91,11 +92,10 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
     }
     function handleAddOption(e, qn) {
         e.preventDefault();
-        setAddOpt(true)
-        setQn(qn)
-        setOptions(qn.optionmethod)
+        // setAddOpt(true)
+        // setQn(qn)
+        // setOptions(qn.optionmethod)
     }
-    console.log(options)
         function handleChange(e, qn) {
         if (e.target.id === "option"){
             newOptionInput = e.target.value
@@ -119,12 +119,12 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
         }
     }
     function handleEditOptions(e, qn){
-        setQuestion(qn)
-        setOptions(qn.optionmethod)
+        // setQuestion(qn)
+        // setOptions(qn.optionmethod)
     }
     function handleSaveNewOption(e) {
         e.preventDefault();
-        setAddOpt(false)
+        // setAddOpt(false)
         fetch("/options", {
             method: "POST",
             headers: {
@@ -138,8 +138,8 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
         })
         .then((r) => r.json())
         .then((newO) => {
-          setOptions([...options, newO])
-          setAddOpt(false)
+        //   setOptions([...options, newO])
+        //   setAddOpt(false)
         })
     }
     function handleDeleteOption(e, o) {
@@ -149,7 +149,7 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
     }
     return (
         <div>
-            {questions !== [] ? questions.map(qn => <div>
+            {info.questions !== [] ? info.questions.map(qn => <div>
                 <form onChange={(e) => handleChange(e, qn)}>
                     Question:  
                     <input 
@@ -181,7 +181,7 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
                     {/* {options ? < Options options={options} setOptions={setOptions} />: null } */}
             </form>
                 </div> ) : null } <br></br><br></br>
-            {addOpt ? <div> 
+            {/* {addOpt ? <div> 
                 <form onChange={handleChangeNewOption}>
                     Option: <input 
                     type="text" 
@@ -191,9 +191,9 @@ function Questions({ options, setOptions, i, questions, setQuestions, addOpt, se
                     Correct? <input 
                     type="text" 
                     id="Optioncorrect" 
-                    defaultValue="Y/N"></input>  
-                <br></br> <button onClick={handleSaveNewOption}>Save Option</button>
-            </form> </div> : null}
+                    defaultValue="Y/N"></input>   */}
+                {/* <br></br> <button onClick={handleSaveNewOption}>Save Option</button>
+            </form> </div> : null} */}
           <br></br>
         <button onClick={handleAddMoreQs}>Add Question</button>
         {addQs ? <div><form onChange={handleNewQInput}>

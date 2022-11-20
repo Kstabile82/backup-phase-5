@@ -1,11 +1,12 @@
 import React, { useState } from "react"; 
+import Questions from "./Questions";
 
-function Infopage({ rescue, user, setShowInfo }){
+function Infopage({ info, rescue, user, userRescue, setShowInfo }) {
    const [showQuiz, setShowQuiz] = useState()
-   const [info, setInfo] = useState()
    const [qs, setQs] = useState([])
    const [q, setQ] = useState({})
    const [ots, setOts] = useState([])
+   const [addInfo, setAddInfo] = useState(false)
 
   function handleClose(e) {
     e.preventDefault();
@@ -15,19 +16,24 @@ function Infopage({ rescue, user, setShowInfo }){
     setQs(rIm.questions)
     //fetch questions rIm.id and set questions & options
   }
-  console.log(rescue)
-return (
+  function handleAddInfo(e) {
+    e.preventDefault();
+    setAddInfo(true)
+  }
+  return (
         <div>
-             {rescue.informations.map(rIm => <div key={rIm.id}><h3 onClick={(e) => handleClickInfo(rIm, e)}>{rIm.title}</h3></div>) } 
-             {qs ? <div>{qs.map(q => {
+             {info.map(i => <div key={i.id}><h3 onClick={(e) => handleClickInfo(i, e)}>{i.title}</h3></div>) } 
+             {/* {qs ? <div>{qs.map(q => {
                 <div>
-             <p>{q.questiontext}</p>
+             <p>{q.questiontext}</p> */} 
              {/* {q.optionmethod.map(o => <p>{o.text}</p>)} */}
-             </div>
-             }) 
+            {/* </div> */}
+              {/* }) 
              }
-             </div> : null}
-             <button onClick={handleClose}>Close</button>
+              </div> : null} */}
+             {/* <button onClick={handleClose}>Close</button> */}
+             {userRescue.status === "Admin" ? <button onClick={handleAddInfo}>Edit Info</button> : null }
+             {/* {info.questions ? <Questions info={info} setInfo={setInfo}/> : null} */}
 
         </div>
     )

@@ -2,6 +2,7 @@ import React from "react";
 import Rescuepage from "./Rescuepage";
 
 function MyRescues({ resc, setResc, rescues, userRescue, setUserRescue, onDeleteUserRescue, handleRemoveAdmin, handleAddAdmin, user, userRescues, setUserRescues, isAdmin, setIsAdmin, isGuest, setIsGuest }) { 
+
   function handleClick(e, uR) {
     setUserRescue(uR)
     if (uR.status === "Admin"){
