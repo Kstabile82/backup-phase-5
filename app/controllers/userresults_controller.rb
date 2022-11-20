@@ -1,2 +1,0 @@
-class UserresultsController < ApplicationController
-end

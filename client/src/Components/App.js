@@ -34,11 +34,6 @@ function App(){
   const [rescue, setRescue] = useState({})
   // const [pdfFileErr, setPdfFileErr]=useState('')
 
-  useEffect(() => {
-    fetch("/rescues")
-    .then((r) => r.json())
-    .then((currentRescues) => setRescues(currentRescues));
-    },[]);
     useEffect(() => {
     fetch("/me")
     .then((response) => {
@@ -47,12 +42,20 @@ function App(){
           // setUser(u)
           // setUserRescues(u.userrescues)
           setLoggedOut(false)
+          setUser(user);
+          setLoggedOut(false)
+          // setUserRescues(user.userrescues)
         })
       }
     })
   }, []);
+  useEffect(() => {
+    fetch("/rescues")
+    .then((r) => r.json())
+    .then((currentRescues) => setRescues(currentRescues));
+    },[]);
 
-function handlePdfChange(e){
+ function handlePdfChange(e){
   e.preventDefault();
   let file = e.target.files[0]
   // console.log(uploadFile[0].type === "application/pdf" || uploadFile[0].type === "pdf")
@@ -77,15 +80,12 @@ function submitForm(e){
   }
 }
 
-
   function handleLogIn(user) {
     setUser(user);
     setLoggedOut(false)
     setUserRescues(user.userrescues)
-
-    // setUserRescues(user.userrescues)
-
   }
+  console.log(user)
   function onDeleteUserRescue(rescue, user) {
     let id = user.userrescues.find(uR => uR.rescue_id === rescue.id)
       fetch(`/userrescue/${id}`, { 

@@ -1,6 +1,6 @@
 class UserrescuesController < ApplicationController
-    before_action :authorize
-    skip_before_action :authorize, only: :create
+    # before_action :authorize
+    # skip_before_action :authorize, only: :create
 
     def create
         uR = Userrescue.create!(userrescue_params)
@@ -13,6 +13,11 @@ class UserrescuesController < ApplicationController
         render json: userR
     end
   
+    def show
+        userR = Userrescue.find_by(params[:user_id])
+        render json: userR
+    end
+
     # def destroy
     #     uR = Userrescue.find(params[:id])
     #     uR.destroy

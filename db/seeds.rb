@@ -22,3 +22,5 @@ Userrescue.create({user_id: User.second.id, rescue_id: Rescue.second.id, status:
 Userrescue.create({user_id: User.second.id, rescue_id: Rescue.third.id, status: "Guest"})
 Userrescue.create({user_id: User.third.id, rescue_id: Rescue.last.id, status: "Admin"})
 Userrescue.create({user_id: User.last.id, rescue_id: Rescue.last.id, status: "Guest"})
+
+Information.create({rescue_id: Rescue.first.id, title: "All About Bunnies", text: "So you want to get a bunny?"})

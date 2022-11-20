@@ -1,3 +1,4 @@
 class UserrescueSerializer < ActiveModel::Serializer
-  attributes :id, :rescue_id, :user_id, :status, :datetime
+  attributes :id, :status, :rescue
+  belongs_to :rescue, useSerializer: RescueSerializer 
 end

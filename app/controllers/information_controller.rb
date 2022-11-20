@@ -1,31 +1,28 @@
 class InformationController < ApplicationController
-    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
-
-    def show
-     info = Information.where(rescue_id: params[:rescue_id])
-     render json: info, status: 200
-    end
-
-    def create
-        info = Information.create!(infoParams)
+  def show
+    info = []
+    info = Information.where(rescue_id: params[:id])
+    if info
         render json: info, status: 200
+    else
+        render json: { message: "No info" }, status: :unauthorized
     end
+  end
 
-    def destroy
-        info = Information.find(params[:id])
-        info.destroy
-    end
+  def create
+    info = Information.create(information_params)
+    render json: info
+  end
 
-    def update
-        info = Information.find(params[:id])
-        info.update!(infoParams)
-        render json: info, status: 200
-    end
+  def destroy
+    info = Information.find(params[:id])
+    info.destroy
+        render json: { message: "Deleted" }
+      end
 
-    private 
-
-    def infoParams
-        params.permit(:rescue_id, :title, :text, :questions)
-    end
+  private
+  def information_params
+    params.permit(:title, :text, :rescue_id)
+  end
 end

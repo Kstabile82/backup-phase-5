@@ -5,14 +5,13 @@ function AllRescues({ updateUserRescues, user, rescues, setRescue, rescue, isAdm
     let displayedRescueIDs = []
     let displayedRescues = []
     // setIsAdmin(false)
-    if (user && user.userrescues.length > 0) {
+    if (user && user.userrescues && user.userrescues.length > 0) {
         user.userrescues.map(ur => {
         displayedRescueIDs.push(ur.rescue.id)
         return displayedRescueIDs
         })
     }
     displayedRescues = rescues.filter(r => !displayedRescueIDs.includes(r.id))
-
     function handleClick(e, r) {
         e.preventDefault();
       setRescue(r)
