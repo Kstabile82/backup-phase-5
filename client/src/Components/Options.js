@@ -1,18 +1,18 @@
-import React from "react"; 
+import React, { useState } from "react"; 
 
-function Options({ options, setOptions }){
+function Options({ q, setQ }){
+const [opts, setOpts] = useState(q.options)
 
-    console.log(options)
-
-    return (
+return (
         <div>
-            {options.map(opt => {
-                <input 
-                    type="text" 
-                    id="question" 
-                    defaultValue={opt.text}>
-                    </input>
-            })}
+            {opts ? opts.map(opt => {
+                <li>opt</li>
+                // <input 
+                //     type="text" 
+                //     id="question" 
+                //     defaultValue={opt.text}>
+                //     </input>
+            }) : null }
       
         </div>
     )
