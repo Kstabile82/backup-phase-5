@@ -19,7 +19,6 @@ import NewRescue from "./NewRescue";
 
 function App(){
   // const defaultLayoutPluginInstance = defaultLayoutPlugin();
-
   const [user, setUser] = useState(null);
   const [loggedOut, setLoggedOut] = useState(true);
   const [rescues, setRescues] = useState([])
@@ -53,30 +52,30 @@ function App(){
     .then((currentRescues) => setRescues(currentRescues));
     },[]);
 
-function handlePdfChange(e){
-  e.preventDefault();
-  let file = e.target.files[0]
-  // console.log(uploadFile[0].type === "application/pdf" || uploadFile[0].type === "pdf")
-  if (file.type === "application/pdf") { 
-    let reader = new FileReader();
-      reader.readAsDataURL(file);
-        reader.onloadend = (e) => {
-          setPdfFile(file)
-        }
-    }
-    else {
-      setPdfFile(null)
-    }
-}
-function submitForm(e){
-  e.preventDefault();
-  if(pdfFile!==null){
-    setViewPdf(pdfFile);
-  }
-  else{
-    setViewPdf(null);
-  }
-}
+// function handlePdfChange(e){
+//   e.preventDefault();
+//   let file = e.target.files[0]
+//   // console.log(uploadFile[0].type === "application/pdf" || uploadFile[0].type === "pdf")
+//   if (file.type === "application/pdf") { 
+//     let reader = new FileReader();
+//       reader.readAsDataURL(file);
+//         reader.onloadend = (e) => {
+//           setPdfFile(file)
+//         }
+//     }
+//     else {
+//       setPdfFile(null)
+//     }
+// }
+// function submitForm(e){
+//   e.preventDefault();
+//   if(pdfFile!==null){
+//     setViewPdf(pdfFile);
+//   }
+//   else{
+//     setViewPdf(null);
+//   }
+// }
 
   function handleLogIn(user) {
     setUser(user);
@@ -169,7 +168,7 @@ function handleAddAdmin(e, v){
     {/* <Document file={pdfFile} >
       <Page></Page>
     </Document> */}
-    <h4>Upload PDF</h4>
+    {/* <h4>Upload PDF</h4>
       <form onSubmit={submitForm}>
         <input
         type="text"
@@ -178,18 +177,18 @@ function handleAddAdmin(e, v){
            }
         placeholder="pdf"/>
         {/* <input type="file" onChange={(e) => setUploadFile(e.target.files)}/> */}
-        <input type="file" onChange={handlePdfChange}/>
+        {/* <input type="file" onChange={handlePdfChange}/>
         <input type="submit" />
       </form>
       <h4>View PDF</h4>
-      <div className='pdf-container'>
+      <div className='pdf-container'> */} 
       {/* { viewPdf&&<><Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
       <Viewer fileUrl={viewPdf}/> */}
       {/* plugins={[defaultLayoutPluginInstance]} /> */}
 {/* 
             </Worker> </>}
       {!viewPdf&&<>No pdf file selected</>}  */}
-      </div>
+      {/* </div> */}
   </div>
   );
 }
