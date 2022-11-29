@@ -12,9 +12,9 @@ Rescue.create({ name: "Posh Pets", location: "Long Beach, NY" })
 Rescue.create({ name: "Kitty Cove", location: "Queens, NY" })
 
 User.create({ name: "Karina", location: "Long Beach, NY", password: "dolly"})
-User.create({ name: "Dolly", location: "Long Beach, NY", password_digest: "bunny"})
-User.create({ name: "Linda", location: "Queens, NY", password_digest: "test"})
-User.create({ name: "Jim", location: "NY, NY", password_digest: "test"})
+User.create({ name: "Dolly", location: "Long Beach, NY", password: "bunny"})
+User.create({ name: "Linda", location: "Queens, NY", password: "test"})
+User.create({ name: "Jim", location: "NY, NY", password: "test"})
 
 Userrescue.create({user_id: User.first.id, rescue_id: Rescue.first.id, status: "Admin"})
 Userrescue.create({user_id: User.first.id, rescue_id: Rescue.second.id, status: "Admin"})

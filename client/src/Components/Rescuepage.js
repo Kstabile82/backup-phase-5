@@ -1,5 +1,4 @@
 import React, { useState}  from "react";
-// import Adminpage from "./Adminpage";
 import Infopage from "./Infopage";
 
 function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemoveAdmin, handleAddAdmin }) {
@@ -47,10 +46,7 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
 return (
     <div>
     <h3>{rescue.name}</h3> 
-    {/* {userRescue && userRescue.status === "Admin" ? <Adminpage user={user} rescue={rescue} handleAddAdmin={handleAddAdmin} handleRemoveAdmin={handleRemoveAdmin} />
-    :  */}
-    <div><button onClick={handleShowUserInfo}>Rescue Information</button> <button>Pets</button>  <button onClick={handleDeleteUserRescue}>Delete</button></div>
-     {/* } */}
+    <div><button onClick={handleShowUserInfo}>Rescue Information</button> <button>Pets</button> <button>Users</button> <button onClick={handleDeleteUserRescue}>Remove</button></div>
     {showInfo && info !== null && info !== undefined ? <Infopage q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} user={user} setShowInfo={setShowInfo} info={info} /> : null}
    {showInfo && info === null ? <p>No Info Yet</p> : null}
    {userRescue.status === "Admin" && showInfo ? <button onClick={handleAddInfo}>Add Info</button> : null }

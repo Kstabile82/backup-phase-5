@@ -1,9 +1,12 @@
 import React, { useState } from "react"; 
+import Form from "./Form";
 
-function Questions({ setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
+function Questions({ infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [inputOpt, setInputOpt] = useState(null)
+
+    // const [isChecked, setIsChecked] = useState(null)
     function handleClickedQuestion(e, quest) {
         setQ(quest)
     }
@@ -30,6 +33,12 @@ function Questions({ setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userR
         e.preventDefault();
         //delete option by o.id
     }
+    // function handleTestInput(e) {
+    //     e.preventDefault();
+    //     // setIsChecked(e.target.value)
+     
+    // }
+
     return (
         <div>
             {userRescue.status === "Admin" ? <div>
@@ -47,8 +56,23 @@ function Questions({ setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userR
             <button onClick={handleAddQuestions}>Add Question</button>
             {addQs ? <p>Add Question Form here</p>: null}
             <button onClick={handleQClose}>Close</button>
-            </div>
-            : null }
+            </div> : null }
+            {userRescue.status !== "Admin" ? 
+            <Form qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns}/> : null}
+            {/* // <form>{quest.text}
+            //     {quest.options.map(o => <div>
+            //     <label>{o.text}
+            //     <input  */}
+            {/* //     type="radio" 
+            //     name={quest.id}
+            //     value={o.text} 
+            //     checked={isChecked === o.text}
+            //     onChange={handleTestInput}></input>  */}
+            {/* //     </label> */}
+            {/* //     </div>)} */}
+            {/* //     </form>  */}
+
+            
     </div>
     )
 }

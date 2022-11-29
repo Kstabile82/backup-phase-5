@@ -1,7 +1,6 @@
 import React from "react"; 
 
 function Welcomepage({ user, handleLogout }) {
-console.log(user)
     function handleDelete(e){
       e.preventDefault();
       fetch(`/user/${user.id}`, { method: "DELETE" }).then((r) => {
@@ -16,9 +15,6 @@ return (
         Welcome, {user.name}!
         <br></br><br></br>
         <button onClick={handleDelete}>Delete My Account</button>
-       <p>My Rescues</p>
-       <p>All Rescues</p>
-       <p>Create New Rescue</p>
 
     </div>
 )
