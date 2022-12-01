@@ -1,35 +1,33 @@
 import React, { useState } from "react"; 
 import Questions from "./Questions";
 
-function Form({ qs, i, infoAns, setInfoAns }){
-    const [isChecked, setIsChecked] = useState("") 
+function Form({ qs, i, infoAns, setInfoAns, testArr, setTestArr }){
     const [answerObj, setAnswerObj] = useState({})
 
     let obJ = {}
-   
+    let thisValue;
 
     function handleTestInput(e) {
         e.preventDefault();
-        // setIsChecked(e.target.value)
         e.target.checked = true
-        let thisValue = e.target.value
+        thisValue = e.target.value
         let thisName = e.target.name
         obJ = {question: thisName, answer: thisValue}
         setAnswerObj(obJ)
+        
     }
 
-    function handleSubmitClicked(e) {
+    function handleSubmitClicked(e, q) {
         e.preventDefault();
-        // setInfoAns([...answerObj, obJ])
         setInfoAns([...infoAns.filter(iA => iA.question !== answerObj.question), answerObj])
-        // setInfoAns([...infoAns, answerObj])
-        console.log(infoAns)
+            let testObj = { questionId: q.id, answer: q.options.find(o => o.correct === true), input: answerObj.answer };
+            setTestArr([...testArr.filter(tA => tA.questionId !== testObj.questionId), testObj])
     }
 
     return (
         <div>
             {qs.map(q => 
-                <div><form onSubmit={handleSubmitClicked}>{q.text}
+                <div><form onSubmit={(e) => handleSubmitClicked(e, q)}>{q.text}
                 {q.options.map(o => 
                     <label>{o.text}
                     <input

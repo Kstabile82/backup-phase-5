@@ -1,11 +1,20 @@
 import React, { useState } from "react"; 
 import Form from "./Form";
 
-function Questions({ infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
+function Questions({ testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [inputOpt, setInputOpt] = useState(null)
+    // let testArr = [] 
+    // i.questions.map(q => { 
+    //     let testObj = { questionId: q.id, answer: q.options.find(o => o.correct === true), input: "x" };
+    //     testArr.push(testObj)
+    // })
+    //the above may need to happen in the form component, create this in submitClicked fn
+//testArr length should be equal to i.questions.length when we go to submit the final
 
+   //upon submitting answers, map the testArr, if answer === input, add a point
+   //total points = array length
     // const [isChecked, setIsChecked] = useState(null)
     function handleClickedQuestion(e, quest) {
         setQ(quest)
@@ -57,8 +66,10 @@ function Questions({ infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, s
             {addQs ? <p>Add Question Form here</p>: null}
             <button onClick={handleQClose}>Close</button>
             </div> : null }
-            {userRescue.status !== "Admin" ? 
-            <Form qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns}/> : null}
+            {userRescue.status !== "Admin" ? <div>
+            <Form qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
+            <button>Submit</button> </div>
+            : null}
             {/* // <form>{quest.text}
             //     {quest.options.map(o => <div>
             //     <label>{o.text}

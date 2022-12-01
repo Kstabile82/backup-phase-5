@@ -6,9 +6,17 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
    const [editInfo, setEditInfo] = useState(false)
    const [inf, setInf] = useState(null)
   const [showingQs, setShowingQs] = useState(false)
-  const [takeTest, setTakeTest] = useState(false)
+  const [takeTest, setTakeTest] = useState(null)
   const [infoAns, setInfoAns] = useState([])
+  const [scoreArr, setScoreArr] = useState([])
+  let infoObj = {}
+  const [testArr, setTestArr] = useState([])
 
+//for each piece of info, have an array that contains: 
+//obj{
+  //question_id: x, correct_answer: x, input_answer: x
+//}
+//obj.questions.map, take question id, for the question, map options & find correct, then include the input with that question id
   function handleDeleteInfo(e, i) {
     console.log(i)
     //delete goes here
@@ -20,7 +28,9 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
   }
   function handleShowQuiz(e, i) {
     setInf(i)
-    setTakeTest(!takeTest)
+    // setTakeTest(!takeTest)
+    setTakeTest(i)
+
   }
   function handleEditQuestions(e, i) {
     setQs(i.questions)
@@ -29,7 +39,9 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
 
   function handleSub(e) {
     e.preventDefault();
-    console.log(infoAns)
+    console.log(testArr)
+    // console.log(infoAns)
+    // console.log(inf.questions.length === infoAns.length)
   }
   return (
         <div>
@@ -39,7 +51,7 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
              <button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button> }
              {editInfo ? <form onClick={(e) => handleClickForm(e, i)}>Editing form here</form> : null}
              {i && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={i.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
-             {i && takeTest ? <Questions infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={i.questions} q={q} setQ={setQ} i={inf} setI={setInf} userRescue={userRescue}/> : null}
+             {i && takeTest ? <Questions testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={i.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
              <br></br>{i && takeTest && i.questions ? <button onClick={handleSub}>Submit "{i.title}"</button> : null }
              </div>) } 
              <br></br>

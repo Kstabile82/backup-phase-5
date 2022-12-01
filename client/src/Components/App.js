@@ -39,9 +39,9 @@ function App(){
       if (response.ok) {
         response.json().then((u) => {
           setLoggedOut(false)
-          setUser(user);
+          setUser(u);
           setLoggedOut(false)
-          setUserRescues(user.userrescues)
+          setUserRescues(u.userrescues)
         })
       }
     })
