@@ -1,21 +1,17 @@
 import React, { useState } from "react"; 
 import Form from "./Form";
 
-function Questions({ testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
+function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [inputOpt, setInputOpt] = useState(null)
-    // let testArr = [] 
-    // i.questions.map(q => { 
     //     let testObj = { questionId: q.id, answer: q.options.find(o => o.correct === true), input: "x" };
     //     testArr.push(testObj)
-    // })
     //the above may need to happen in the form component, create this in submitClicked fn
 //testArr length should be equal to i.questions.length when we go to submit the final
 
    //upon submitting answers, map the testArr, if answer === input, add a point
    //total points = array length
-    // const [isChecked, setIsChecked] = useState(null)
     function handleClickedQuestion(e, quest) {
         setQ(quest)
     }
@@ -47,6 +43,10 @@ function Questions({ testArr, setTestArr, infoAns, setInfoAns, takeTest, setTake
     //     // setIsChecked(e.target.value)
      
     // }
+    function handleSubmitTest(e) {
+        e.preventDefault();
+        console.log(testArr)
+    }
 
     return (
         <div>
@@ -67,23 +67,10 @@ function Questions({ testArr, setTestArr, infoAns, setInfoAns, takeTest, setTake
             <button onClick={handleQClose}>Close</button>
             </div> : null }
             {userRescue.status !== "Admin" ? <div>
-            <Form qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
-            <button>Submit</button> </div>
-            : null}
-            {/* // <form>{quest.text}
-            //     {quest.options.map(o => <div>
-            //     <label>{o.text}
-            //     <input  */}
-            {/* //     type="radio" 
-            //     name={quest.id}
-            //     value={o.text} 
-            //     checked={isChecked === o.text}
-            //     onChange={handleTestInput}></input>  */}
-            {/* //     </label> */}
-            {/* //     </div>)} */}
-            {/* //     </form>  */}
-
-            
+                <h2>{i.title} Test:</h2>
+            <Form answerObj={answerObj} setAnswerObj={setAnswerObj} qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
+            <button onClick={handleSubmitTest}>Submit {i.title}</button> </div>
+            : null}          
     </div>
     )
 }

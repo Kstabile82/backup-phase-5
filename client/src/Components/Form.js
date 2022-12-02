@@ -1,8 +1,7 @@
 import React, { useState } from "react"; 
 import Questions from "./Questions";
 
-function Form({ qs, i, infoAns, setInfoAns, testArr, setTestArr }){
-    const [answerObj, setAnswerObj] = useState({})
+function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, setTestArr }){
 
     let obJ = {}
     let thisValue;
@@ -20,7 +19,7 @@ function Form({ qs, i, infoAns, setInfoAns, testArr, setTestArr }){
     function handleSubmitClicked(e, q) {
         e.preventDefault();
         setInfoAns([...infoAns.filter(iA => iA.question !== answerObj.question), answerObj])
-            let testObj = { questionId: q.id, answer: q.options.find(o => o.correct === true), input: answerObj.answer };
+            let testObj = { infoId: i.id, questionId: q.id, answer: q.options.find(o => o.correct === true), input: answerObj.answer };
             setTestArr([...testArr.filter(tA => tA.questionId !== testObj.questionId), testObj])
     }
 
