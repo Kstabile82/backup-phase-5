@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  resources :rescuepets
   resources :users
   resources :rescues
   resources :userrescues
   resources :information do
     resources :questions
   end
+  resources :userresults
+  resources :rescuepets
 
   post "/signup", to: "users#create"
   get "/me", to: "users#show"

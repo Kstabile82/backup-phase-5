@@ -6,6 +6,8 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
     const [info, setInfo] = useState(null)
     const [addInfo, setAddInfo] = useState(false)
     const [q, setQ] = useState(null)
+    const [rescuePets, setRescuePets] = useState([])
+    const [showPets, setShowPets] = useState(false)
 
     fetch(`/information/${rescue.id}`)
     .then((r) => r.json())
@@ -43,10 +45,20 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
     setShowInfo(false)
     setQ(null)
   }
+  function handleShowPets(e) {
+    e.preventDefault();
+    fetch(`/rescuepets/${rescue.id}`)
+    .then((r) => r.json())
+    .then((pets) => {
+        setRescuePets(pets)
+        setShowPets(!showPets)
+    });
+
+  }
 return (
     <div>
     <h3>{rescue.name}</h3> 
-    <div><button onClick={handleShowUserInfo}>Rescue Information</button> <button>Pets</button> <button>Users</button> <button onClick={handleDeleteUserRescue}>Remove</button></div>
+    <div><button onClick={handleShowUserInfo}>Rescue Information</button> <button onClick={handleShowPets}>Pets</button> <button style={{display: userRescue.status === "Admin" ? 'visible' : 'none' }} >Users</button> <button onClick={handleDeleteUserRescue}>Remove</button></div>
     {showInfo && info !== null && info !== undefined ? <Infopage q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} user={user} setShowInfo={setShowInfo} info={info} /> : null}
    {showInfo && info === null ? <p>No Info Yet</p> : null}
    {userRescue.status === "Admin" && showInfo ? <button onClick={handleAddInfo}>Add Info</button> : null }
@@ -54,7 +66,7 @@ return (
               Fields to add info here
              </form> : null}
              {showInfo ? <button onClick={handleClose}>Close</button> : null} 
-
+    {rescuePets !== [] && showPets ? rescuePets.map(rP => <p>{rP.name}, {rP.animal}, {rP.age}, {rP.breed}</p> ): null}
     </div>
 )
 }

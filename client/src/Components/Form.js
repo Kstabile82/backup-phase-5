@@ -18,8 +18,9 @@ function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, se
 
     function handleSubmitClicked(e, q) {
         e.preventDefault();
+       let ans = q.options.find(o => o.correct === true)
         setInfoAns([...infoAns.filter(iA => iA.question !== answerObj.question), answerObj])
-            let testObj = { infoId: i.id, questionId: q.id, answer: q.options.find(o => o.correct === true), input: answerObj.answer };
+            let testObj = { infoId: i.id, questionId: q.id, answer: ans.text, input: answerObj.answer };
             setTestArr([...testArr.filter(tA => tA.questionId !== testObj.questionId), testObj])
     }
 

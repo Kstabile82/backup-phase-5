@@ -1,4 +1,4 @@
 class UserresultSerializer < ActiveModel::Serializer
-  attributes :id, :question_id, :correct
+  attributes :id, :information_id, :userrescue_id, :score
   
 end

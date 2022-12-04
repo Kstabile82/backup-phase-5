@@ -5,13 +5,7 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [inputOpt, setInputOpt] = useState(null)
-    //     let testObj = { questionId: q.id, answer: q.options.find(o => o.correct === true), input: "x" };
-    //     testArr.push(testObj)
-    //the above may need to happen in the form component, create this in submitClicked fn
-//testArr length should be equal to i.questions.length when we go to submit the final
 
-   //upon submitting answers, map the testArr, if answer === input, add a point
-   //total points = array length
     function handleClickedQuestion(e, quest) {
         setQ(quest)
     }
@@ -38,14 +32,36 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
         e.preventDefault();
         //delete option by o.id
     }
-    // function handleTestInput(e) {
-    //     e.preventDefault();
-    //     // setIsChecked(e.target.value)
-     
-    // }
+
     function handleSubmitTest(e) {
         e.preventDefault();
-        console.log(testArr)
+        fetch("/userresults", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ userrescue_id: userRescue.id, testArr }),
+
+            // body: JSON.stringify({ userrescue_id: userRescue.id, information_id: i.id, input: testArr.input }),
+        })
+     .then((r) => {
+         if (r.ok) {
+           r.json()
+           .then((u) => {
+             console.log(u)
+           })
+         }
+       });
+
+        //post request to userresults, send testArr
+        //send testArr to back end
+        //on back end, map thru testArr
+        //if answer === input, add a point
+        //return number of points out of total (info.id.questions.length)
+        //if testArr.length !== info_id.questions.length, return error message didnt answer all the qs
+        //userresults belongs to userrescue & information
+        //if userresults.score === userresults.topscore show application 
+        //if 
     }
 
     return (

@@ -1,4 +1,4 @@
-# class Userresult < ApplicationRecord
-#     belongs_to :user, dependent: :destroy
-#     belongs_to :question, dependent: :destroy
-# end
+class Userresult < ApplicationRecord
+    belongs_to :userrescue, dependent: :destroy
+    belongs_to :information, dependent: :destroy
+end
