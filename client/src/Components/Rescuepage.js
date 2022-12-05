@@ -1,5 +1,6 @@
 import React, { useState}  from "react";
 import Infopage from "./Infopage";
+import Allusers from "./Allusers";
 
 function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemoveAdmin, handleAddAdmin }) {
     const [showInfo, setShowInfo] = useState(false)
@@ -8,7 +9,7 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
     const [q, setQ] = useState(null)
     const [rescuePets, setRescuePets] = useState([])
     const [showPets, setShowPets] = useState(false)
-
+    const [showingUsers, setShowingUsers] = useState(false)
     fetch(`/information/${rescue.id}`)
     .then((r) => r.json())
     .then((inform) => {
@@ -55,10 +56,15 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
     });
 
   }
+  function handleShowUsers(e) {
+    e.preventDefault();
+    setShowingUsers(!showingUsers)
+
+  }
 return (
     <div>
     <h3>{rescue.name}</h3> 
-    <div><button onClick={handleShowUserInfo}>Rescue Information</button> <button onClick={handleShowPets}>Pets</button> <button style={{display: userRescue.status === "Admin" ? 'visible' : 'none' }} >Users</button> <button onClick={handleDeleteUserRescue}>Remove</button></div>
+    <div><button onClick={handleShowUserInfo}>Information</button> <button onClick={handleShowPets}>Pets</button> <button style={{display: userRescue.status === "Admin" ? 'visible' : 'none' }} onClick={handleShowUsers}>Users</button> <button onClick={handleDeleteUserRescue}>Remove from my list</button></div>
     {showInfo && info !== null && info !== undefined ? <Infopage q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} user={user} setShowInfo={setShowInfo} info={info} /> : null}
    {showInfo && info === null ? <p>No Info Yet</p> : null}
    {userRescue.status === "Admin" && showInfo ? <button onClick={handleAddInfo}>Add Info</button> : null }
@@ -67,7 +73,9 @@ return (
              </form> : null}
              {showInfo ? <button onClick={handleClose}>Close</button> : null} 
     {rescuePets !== [] && showPets ? rescuePets.map(rP => <p>{rP.name}, {rP.animal}, {rP.age}, {rP.breed}</p> ): null}
+    {showingUsers ? <Allusers rescue={rescue} userRescue={userRescue}/> : null}
     </div>
+    
 )
 }
 export default Rescuepage;
