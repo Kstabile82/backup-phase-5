@@ -8,9 +8,15 @@ class RescuepetsController < ApplicationController
         render json: rescpet, status: :created
     end
     def show
-        rescpets = Rescuepet.where(rescue_id: params[:id].to_i)
+        rescpets = Rescuepet.where(rescue_id: params[:id])
         render json: rescpets
     end
+    def update
+        pet = Rescuepet.find(params[:id])
+        pet.update(rescuepet_params)
+        render json: pet
+    end
+
     def destroy
         rescpet = Rescuepet.find(params[:id])
         rescpet.destroy
@@ -20,6 +26,6 @@ class RescuepetsController < ApplicationController
     private
     
     def rescuepet_params
-        params.permit(:name, :rescue_id, :breed, :animal, :size, :age)
+        params.permit(:name, :rescue_id, :breed, :animal, :age)
     end
 end

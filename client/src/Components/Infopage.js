@@ -24,21 +24,30 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
   }
   function handleEditInfo(e, i) {
     setEditInfo(!editInfo)
+    setInf(i)
   }
-  function handleClickForm(e, i) {
+
+  function handleSubmitForm(e, i) {
   }
   function handleShowQuiz(e, i) {
     setInf(i)
     // setTakeTest(!takeTest)
     setTakeTest(i)
     setTestArr([])
-
   }
   function handleEditQuestions(e, i) {
     setQs(i.questions)
     setShowingQs(!showingQs)
   }
-
+function handleChangeInfo(e) {
+  e.preventDefault();
+  if (e.target.name === "title") {
+    //set title to e.target.value
+  }
+  if (e.target.name === "text") {
+    //set text to e.target.value
+  }
+}
 
   return (
         <div>
@@ -51,7 +60,19 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
              {/* {inf && takeTest ? <Questions answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null} */}
              {/* <br></br>{i && takeTest && i.questions ? <button onClick={handleSub}>Submit "{i.title}"</button> : null } */}
              </div>) } 
-             {editInfo ? <form onClick={(e) => handleClickForm(e, inf)}>Editing form here</form> : null}
+             {editInfo ? <div><form onSubmit={handleSubmitForm}>
+             Title: {inf.title} <input onChange={handleChangeInfo}
+                type="text"
+                name="title"
+                placeholder="Enter New Title"
+                ></input><br></br>
+             Text: {inf.text} <input onChange={handleChangeInfo}
+                type="text"
+                name="text"
+                placeholder="Enter New Text"
+                ></input>
+                     </form> <button>Submit Form</button> 
+                     </div>: null}
              {inf && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={inf.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
              {inf && takeTest ? <Questions answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
 

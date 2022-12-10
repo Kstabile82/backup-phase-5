@@ -51,7 +51,7 @@ function App(){
     .then((r) => r.json())
     .then((currentRescues) => setRescues(currentRescues));
     },[]);
-
+console.log(rescues)
 // function handlePdfChange(e){
 //   e.preventDefault();
 //   let file = e.target.files[0]

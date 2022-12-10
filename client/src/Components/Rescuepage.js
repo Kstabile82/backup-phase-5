@@ -11,6 +11,7 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
     const [rescuePets, setRescuePets] = useState([])
     const [showPets, setShowPets] = useState(false)
     const [showingUsers, setShowingUsers] = useState(false)
+    
     fetch(`/information/${rescue.id}`)
     .then((r) => r.json())
     .then((inform) => {
@@ -49,14 +50,10 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
   }
   function handleShowPets(e) {
     e.preventDefault();
-    fetch(`/rescuepets/${rescue.id}`)
-    .then((r) => r.json())
-    .then((pets) => {
-        setRescuePets(pets)
-        setShowPets(!showPets)
-    });
-
+    setShowPets(!showPets)
+    setRescuePets(rescue.rescuepets)
   }
+
   function handleShowUsers(e) {
     e.preventDefault();
     setShowingUsers(!showingUsers)
