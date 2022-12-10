@@ -19,8 +19,12 @@ class InformationController < ApplicationController
     info = Information.find(params[:id])
     info.destroy
         render json: { message: "Deleted" }
-      end
-
+  end
+  def update
+      info = Information.find(params[:id])
+      info.update(information_params)
+      render json: info
+  end
   private
   def information_params
     params.permit(:title, :text, :rescue_id)

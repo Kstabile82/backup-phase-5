@@ -12,22 +12,23 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
   let infoObj = {}
   const [testArr, setTestArr] = useState([])
   const [answerObj, setAnswerObj] = useState({})
-
+const [newTitle, setNewTitle] = useState(null)
+const [newText, setNewText] = useState(null)
 //for each piece of info, have an array that contains: 
 //obj{
   //question_id: x, correct_answer: x, input_answer: x
 //}
 //obj.questions.map, take question id, for the question, map options & find correct, then include the input with that question id
-  function handleDeleteInfo(e, i) {
-    console.log(i)
-    //delete goes here
+  function handleDeleteInfo(e) {
+    e.preventDefault();
+    fetch(`/information/${inf.id}`, { 
+      method: 'DELETE'
+  })
+  //setInformation here
   }
   function handleEditInfo(e, i) {
     setEditInfo(!editInfo)
     setInf(i)
-  }
-
-  function handleSubmitForm(e, i) {
   }
   function handleShowQuiz(e, i) {
     setInf(i)
@@ -41,13 +42,34 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
   }
 function handleChangeInfo(e) {
   e.preventDefault();
+  setNewTitle(inf.title)
+  setNewText(inf.text)
   if (e.target.name === "title") {
-    //set title to e.target.value
+    setNewTitle(e.target.value)
   }
   if (e.target.name === "text") {
-    //set text to e.target.value
+    setNewText(e.target.value)
   }
 }
+function handleSubmitForm(e) {
+  e.preventDefault();
+  fetch(`/information/${inf.id}`, {
+    method: "PATCH",
+    headers: {
+    "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+    title: newTitle,
+    text: newText
+    }),
+})
+.then((r) => r.json())
+.then((updatedpet) => {
+    console.log(updatedpet)
+//   setUserRescues slice etc
+})
+}
+
 
   return (
         <div>
@@ -70,8 +92,8 @@ function handleChangeInfo(e) {
                 type="text"
                 name="text"
                 placeholder="Enter New Text"
-                ></input>
-                     </form> <button>Submit Form</button> 
+                ></input><br></br><button>Submit Form</button>
+                     </form>  <button onClick={handleDeleteInfo}>Delete Information</button>
                      </div>: null}
              {inf && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={inf.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
              {inf && takeTest ? <Questions answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
