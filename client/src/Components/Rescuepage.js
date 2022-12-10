@@ -1,6 +1,7 @@
 import React, { useState}  from "react";
 import Infopage from "./Infopage";
 import Allusers from "./Allusers";
+import Rescuepets from "./Rescuepets";
 
 function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemoveAdmin, handleAddAdmin }) {
     const [showInfo, setShowInfo] = useState(false)
@@ -71,8 +72,8 @@ return (
              {addInfo ? <form onSubmit={handleSubmitNewInfo}>
               Fields to add info here
              </form> : null}
-             {showInfo ? <button onClick={handleClose}>Close</button> : null} 
-    {rescuePets !== [] && showPets ? rescuePets.map(rP => <p>{rP.name}, {rP.animal}, {rP.age}, {rP.breed}</p> ): null}
+             {showInfo ? <button onClick={handleClose}>Close Info</button> : null} 
+    {rescuePets !== [] && showPets ? <Rescuepets rescue={rescue} userRescue={userRescue} rescuePets={rescuePets} setRescuePets={setRescuePets} showPets={showPets} setShowPets={setShowPets} /> : null}
     {showingUsers ? <Allusers rescue={rescue} userRescue={userRescue}/> : null}
     </div>
     
