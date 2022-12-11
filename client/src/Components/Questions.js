@@ -1,5 +1,7 @@
 import React, { useState } from "react"; 
 import Form from "./Form";
+import EmailForm from "./EmailForm";
+
 
 function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
     const [addQs, setAddQs] = useState(false);
@@ -240,7 +242,8 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
                 <h2>{i.title} Test:</h2>
             <Form answerObj={answerObj} setAnswerObj={setAnswerObj} qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
             <button onClick={handleSubmitTest}>Submit {i.title}</button> </div>
-            : null}          
+            : null}  
+            <EmailForm/>        
     </div>
     )
 }
