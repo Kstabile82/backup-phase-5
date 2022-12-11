@@ -1,4 +1,4 @@
 class QuestionSerializer < ActiveModel::Serializer
   attributes :id, :information_id, :idx, :text, :options
-  has_many :options
+  has_many :options, useSerializer: OptionSerializer
 end

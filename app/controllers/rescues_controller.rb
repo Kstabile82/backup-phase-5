@@ -4,7 +4,8 @@ class RescuesController < ApplicationController
   
 def index
     rescs = Rescue.all
-    render json: rescs, include: [:userrescues]
+    render json: rescs
+    # render json: rescs, include: [:userrescues, :information, include: [:questions, include: [:options]]]
 end
 
 # def nonUserRescues

@@ -4,8 +4,12 @@ import Form from "./Form";
 function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
-    const [inputOpt, setInputOpt] = useState(null)
-
+    const [text, setText] = useState(null)
+    const [correct, setCorrect] = useState(false) 
+    const [showEditQ, setShowEditQ] = useState(false)
+    const [editedQ, setEditedQ] = useState(null)
+    const [newQ, setNewQ] = useState(null)
+    const [newO, setNewO] = useState(null)
     function handleClickedQuestion(e, quest) {
         setQ(quest)
     }
@@ -22,15 +26,50 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
     }
     function handleInputOption(e) {
         e.preventDefault();
-        setInputOpt(e.target.value)
+        if (e.target.name === "text") {
+            setText(e.target.value)
+        }
+        if (e.target.name === "correct") {
+            setCorrect(e.target.value)
+        }
     }
     function handleSubmitOption(e, quest) {
         e.preventDefault();
-        //post inputOpt text & quest.id for question_id
+        fetch("/options", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                text, 
+                correct, 
+                question_id: quest.id
+             }),
+        })
+     .then((r) => {
+         if (r.ok) {
+           r.json()
+           .then((opt) => {
+             console.log(opt)
+            //  setShowingAddForm(!showingAddForm)
+           })
+         }
+       });
     }
     function deleteOption(e, o) {
         e.preventDefault();
-        //delete option by o.id
+        fetch(`/option/${o.id}`, { 
+            method: 'DELETE'
+        })
+        //set options
+    }
+    function handleDeleteQuestion(e, quest) {
+        e.preventDefault();
+        //delete q by quest.id
+        fetch(`/questions/${quest.id}`, { 
+            method: 'DELETE'
+        })
+        //set questions
     }
 
     function handleSubmitTest(e) {
@@ -52,7 +91,6 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
            })
          }
        });
-
         //post request to userresults, send testArr
         //send testArr to back end
         //on back end, map thru testArr
@@ -61,7 +99,94 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
         //if testArr.length !== info_id.questions.length, return error message didnt answer all the qs
         //userresults belongs to userrescue & information
         //if userresults.score === userresults.topscore show application 
-        //if 
+    }
+    function editQuestion(e) {
+        e.preventDefault();
+        setShowEditQ(!showEditQ)
+    }
+    function handleEditQuestionInput(e) {
+        e.preventDefault();
+        setEditedQ(e.target.value)
+    }
+    function submitEditedQ(e, quest) {
+        e.preventDefault();
+        console.log(quest, editedQ)
+        fetch(`/questions/${quest.id}`, {
+            method: "PATCH",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+            text: editedQ
+            }),
+        })
+        .then((r) => r.json())
+        .then((updatedq) => {
+            console.log(updatedq)
+        //   setInf(updatedpet)
+        //   setUserRescues slice etc
+        })
+    }
+    function handleNewQInput(e) {
+        e.preventDefault();
+        if (e.target.name === "question") {
+            setNewQ(e.target.value)
+        }
+        if (e.target.name === "answer") {
+            setNewO(e.target.value)
+        }
+    }
+    function handleSubmitNewQ(e) {
+        e.preventDefault();
+        //post request for q and for o
+       fetch("/questions", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ information_id: i.id, text: newQ }),
+        })
+     .then((r) => {
+         if (r.ok) {
+           r.json()
+           .then((q) => {
+            // fetch("/options", {
+            //     method: "POST", 
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify({ question_id: q.id, text: newQ, correct: true }),
+            //     })
+            //     .then((r) => {
+            //         if (r.ok) {
+            //         r.json()
+            //         .then((o) => {
+            //                 console.log(o)
+            //         })
+            //         }
+            //     })
+                console.log(q)
+                FirstOption(q)
+            });
+           }
+        });
+    }
+    function FirstOption(q) {
+        fetch("/options", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ question_id: q.id, text: newO, correct: true }),
+            })
+            .then((r) => {
+                if (r.ok) {
+                r.json()
+                .then((o) => {
+                        console.log(o)
+                })
+                }
+            })
     }
 
     return (
@@ -69,17 +194,46 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
             {userRescue.status === "Admin" ? <div>
             {qs.map(quest => <div><ul onClick={(e) => handleClickedQuestion(e, quest)}>{quest.text}
             {quest.options ? quest.options.map(o => <div><li>{o.text}</li><button onClick={(e) => deleteOption(e, o)}>-</button></div>) : null}
-            <button onClick={(e) => handleAddOption(e, quest)}>Add Option</button></ul> 
-            {addO ? <form>
+            <button onClick={editQuestion}>Edit Question</button>
+            {showEditQ ? <form onSubmit={(e) => submitEditedQ(e, quest)}>
                 <input 
                 type="text" 
-                id="inputopt" 
+                name="editquestion" 
+                placeholder="New Question Text"
+                onChange={handleEditQuestionInput}></input>  
+                <button>Submit Question Edits</button>
+                </form> : null }
+            <button onClick={(e) => handleDeleteQuestion(e, quest)}>Delete Question</button>
+            <button onClick={(e) => handleAddOption(e, quest)}>Add Option</button></ul> 
+            {addO ? <form onSubmit={(e) => handleSubmitOption(e, quest)}>
+                <input 
+                type="text" 
+                name="text" 
                 placeholder="New Option"
                 onChange={handleInputOption}></input>  
-                <button onClick={(e) => handleSubmitOption(e, quest)}>Submit</button>
+                 <input 
+                type="text" 
+                name="correct" 
+                placeholder="Correct?"
+                onChange={handleInputOption}></input>  
+                <button>Submit</button>
             </form> : null } </div>)} 
             <button onClick={handleAddQuestions}>Add Question</button>
-            {addQs ? <p>Add Question Form here</p>: null}
+            {addQs ? <form onSubmit={handleSubmitNewQ}>
+                <input 
+                type="text" 
+                name="question" 
+                placeholder="New Question"
+                onChange={handleNewQInput}
+                ></input>  
+                 <input 
+                type="text" 
+                name="answer" 
+                placeholder="Correct Answer"
+                onChange={handleNewQInput}
+                ></input>  
+                <button>Submit</button>
+            </form>: null}
             <button onClick={handleQClose}>Close</button>
             </div> : null }
             {userRescue.status !== "Admin" ? <div>

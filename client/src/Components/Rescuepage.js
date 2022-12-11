@@ -5,22 +5,26 @@ import Rescuepets from "./Rescuepets";
 
 function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemoveAdmin, handleAddAdmin }) {
     const [showInfo, setShowInfo] = useState(false)
-    const [info, setInfo] = useState(rescue.information)
+    // const [info, setInfo] = useState(rescue.information)
+    const [info, setInfo] = useState(null)
+
     const [addInfo, setAddInfo] = useState(false)
     const [q, setQ] = useState(null)
     const [rescuePets, setRescuePets] = useState([])
     const [showPets, setShowPets] = useState(false)
     const [showingUsers, setShowingUsers] = useState(false)
-    // fetch(`/information/${rescue.id}`)
-    // .then((r) => r.json())
-    // .then((inform) => {
-    //     if (inform.length > 0){
-    //         setInfo(inform)
-    //     }
-    //     else {
-    //         setInfo(null)
-    //     }
-    // });
+
+    fetch(`/information/${rescue.id}`)
+    .then((r) => r.json())
+    .then((inform) => {
+        if (inform.length > 0){
+            setInfo(inform)
+        }
+        else {
+            setInfo(null)
+        }
+    }, []);
+    
     function handleShowUserInfo(e) {
         e.preventDefault();
         setShowInfo(true)

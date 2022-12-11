@@ -36,8 +36,9 @@ const [newText, setNewText] = useState(null)
     setTakeTest(i)
     setTestArr([])
   }
-  function handleEditQuestions(e, i) {
-    setQs(i.questions)
+  function handleEditQuestions(e) {
+    e.preventDefault();
+    setQs(inf.questions)
     setShowingQs(!showingQs)
   }
 function handleChangeInfo(e) {
@@ -46,6 +47,7 @@ function handleChangeInfo(e) {
   setNewText(inf.text)
   if (e.target.name === "title") {
     setNewTitle(e.target.value)
+    
   }
   if (e.target.name === "text") {
     setNewText(e.target.value)
@@ -65,17 +67,16 @@ function handleSubmitForm(e) {
 })
 .then((r) => r.json())
 .then((updatedpet) => {
-    console.log(updatedpet)
+  setInf(updatedpet)
 //   setUserRescues slice etc
 })
 }
-
 
   return (
         <div>
              {info.map(i => <div key={i.id}><h3>{i.title}</h3>
              {userRescue.status === "Admin" ? <div><button onClick={(e) => handleDeleteInfo(e, i)}>Delete</button> 
-             <button onClick={(e) => handleEditInfo(e, i)}>Edit Information</button><button onClick={(e) => handleEditQuestions(e, i)}>Edit Questions</button> </div> :  
+             <button onClick={(e) => handleEditInfo(e, i)}>Edit Information</button> </div> : 
              <button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button> }
              {/* {editInfo ? <form onClick={(e) => handleClickForm(e, i)}>Editing form here</form> : null}
              {i && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={i.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null} */}
@@ -95,6 +96,7 @@ function handleSubmitForm(e) {
                 ></input><br></br><button>Submit Form</button>
                      </form>  <button onClick={handleDeleteInfo}>Delete Information</button>
                      </div>: null}
+             {inf ? <button onClick={handleEditQuestions}>Edit Questions</button> : null } 
              {inf && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={inf.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
              {inf && takeTest ? <Questions answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
 
