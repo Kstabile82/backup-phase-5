@@ -4,5 +4,4 @@ class User < ApplicationRecord
     validates :name, uniqueness: :true
     has_many :userrescues, dependent: :destroy
     has_many :rescues, through: :userrescues
-    has_many :userresults, dependent: :destroy
 end

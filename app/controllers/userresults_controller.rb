@@ -1,4 +1,7 @@
 class UserresultsController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    before_action :authorize, only: [:delete, :update]
+  
     # def show
     #     ur = Userresult.where(information_id: params[:information_id].to_i && user_id: params[:userrescue][:user_id].to_i)
     #     if ur
@@ -9,7 +12,6 @@ class UserresultsController < ApplicationController
     # end
   
       def create
-        byebug
         arr = params[:testArr]
         score = 0; 
         inp = params[:testArr].map do |t| 

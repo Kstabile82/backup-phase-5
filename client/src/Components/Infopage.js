@@ -1,5 +1,6 @@
 import React, { useState } from "react"; 
 import Questions from "./Questions";
+import EmailForm from "./EmailForm";
 
 function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
    const [qs, setQs] = useState([])
@@ -14,6 +15,8 @@ function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
   const [answerObj, setAnswerObj] = useState({})
 const [newTitle, setNewTitle] = useState(null)
 const [newText, setNewText] = useState(null)
+const [showContactForm, setShowContactForm] = useState(false)
+
 //for each piece of info, have an array that contains: 
 //obj{
   //question_id: x, correct_answer: x, input_answer: x
@@ -71,13 +74,19 @@ function handleSubmitForm(e) {
 //   setUserRescues slice etc
 })
 }
+function handleAlreadyPassed(e, i) {
+  e.preventDefault();
+  setShowContactForm(!showContactForm)
 
+
+}
   return (
         <div>
              {info.map(i => <div key={i.id}><h3>{i.title}</h3>
              {userRescue.status === "Admin" ? <div><button onClick={(e) => handleDeleteInfo(e, i)}>Delete</button> 
              <button onClick={(e) => handleEditInfo(e, i)}>Edit Information</button> </div> : 
-             <button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button> }
+             <div><button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button>
+             <button onClick={(e) => handleAlreadyPassed(e, i)}>You already passed this test, open contact form</button></div> }
              {/* {editInfo ? <form onClick={(e) => handleClickForm(e, i)}>Editing form here</form> : null}
              {i && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={i.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null} */}
              {/* {inf && takeTest ? <Questions answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null} */}
@@ -96,9 +105,10 @@ function handleSubmitForm(e) {
                 ></input><br></br><button>Submit Form</button>
                      </form>  <button onClick={handleDeleteInfo}>Delete Information</button>
                      </div>: null}
-             {inf ? <button onClick={handleEditQuestions}>Edit Questions</button> : null } 
+             {inf && userRescue.status === "Admin" ? <button onClick={handleEditQuestions}>Edit Questions</button> : null } 
              {inf && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={inf.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
-             {inf && takeTest ? <Questions answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
+             {inf && takeTest ? <Questions showContactForm={showContactForm} setShowContactForm={setShowContactForm} answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
+             {showContactForm ? <EmailForm/> : null}       
 
              <br></br>
              <br></br>

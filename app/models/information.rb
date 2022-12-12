@@ -1,4 +1,8 @@
 class Information < ApplicationRecord
+   validates :text, presence: true
+   validates :title, presence: true
+    validates :information_id, presence: true
+    validates :rescue_id, presence: true
     belongs_to :rescue
     has_many :questions
     has_many :userresults

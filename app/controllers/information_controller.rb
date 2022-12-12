@@ -1,4 +1,6 @@
 class InformationController < ApplicationController
+  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+  before_action :authorize, only: [:create, :delete, :update]
 
   def show
     info = []
@@ -11,7 +13,7 @@ class InformationController < ApplicationController
   end
 
   def create
-    info = Information.create(information_params)
+    info = Information.create!(information_params)
     render json: info
   end
 

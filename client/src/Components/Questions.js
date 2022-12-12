@@ -1,9 +1,8 @@
 import React, { useState } from "react"; 
 import Form from "./Form";
-import EmailForm from "./EmailForm";
 
 
-function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
+function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [text, setText] = useState(null)
@@ -12,6 +11,7 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
     const [editedQ, setEditedQ] = useState(null)
     const [newQ, setNewQ] = useState(null)
     const [newO, setNewO] = useState(null)
+    
     function handleClickedQuestion(e, quest) {
         setQ(quest)
     }
@@ -88,8 +88,11 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
      .then((r) => {
          if (r.ok) {
            r.json()
-           .then((u) => {
-             console.log(u)
+           .then((ur) => {
+             console.log(ur)
+             if (ur.score === testArr.length) {
+                setShowContactForm(!showContactForm)
+             }
            })
          }
        });
@@ -243,7 +246,6 @@ function Questions({ answerObj, setAnswerObj, testArr, setTestArr, infoAns, setI
             <Form answerObj={answerObj} setAnswerObj={setAnswerObj} qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
             <button onClick={handleSubmitTest}>Submit {i.title}</button> </div>
             : null}  
-            <EmailForm/>        
     </div>
     )
 }

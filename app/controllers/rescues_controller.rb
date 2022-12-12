@@ -1,4 +1,7 @@
 class RescuesController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    before_action :authorize, only: [:delete, :update]
+  
     # rescue ActiveRecord::RecordInvalid => invalid
 #     render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
   
