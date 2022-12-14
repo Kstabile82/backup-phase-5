@@ -5,14 +5,17 @@ import Rescuepets from "./Rescuepets";
 
 function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemoveAdmin, handleAddAdmin }) {
     const [showInfo, setShowInfo] = useState(false)
-    // const [info, setInfo] = useState(rescue.information)
     const [info, setInfo] = useState(null)
-
     const [addInfo, setAddInfo] = useState(false)
     const [q, setQ] = useState(null)
     const [rescuePets, setRescuePets] = useState([])
     const [showPets, setShowPets] = useState(false)
     const [showingUsers, setShowingUsers] = useState(false)
+    const [showingEditRescueForm, setShowingEditRescueForm] = useState(false)
+    const [newRescueName, setNewRescueName] = useState(null)
+    const [newRescueLocation, setNewRescueLocation] = useState(null)
+    const [newInfoTitle, setNewInfoTitle] = useState(null)
+    const [newInfoText, setNewInfoText] = useState(null)
 
     fetch(`/information/${rescue.id}`)
     .then((r) => r.json())
@@ -38,12 +41,6 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
         e.preventDefault();
         setAddInfo(!addInfo)
       }
-      function handleNewInfoInput(e) {
-        e.preventDefault();
-      }
-      function handleSubmitNewInfo(e) {
-        e.preventDefault();
-      }
 
   function handleClose(e) {
     e.preventDefault();
@@ -59,7 +56,76 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, userRescue, handleRemove
   function handleShowUsers(e) {
     e.preventDefault();
     setShowingUsers(!showingUsers)
-
+  }
+  function handleDeleteRescue(e) {
+    e.preventDefault();
+    fetch(`/rescues/${rescue.id}`, { 
+      method: 'DELETE'
+  })
+  //setInformation here
+  }
+  function editRescueForm(e) {
+    e.preventDefault();
+    setShowingEditRescueForm(!showingEditRescueForm)
+  }
+  function handleChangeRescueInfo(e) {
+    e.preventDefault();
+    if (e.target.name === "name") {
+      setNewRescueName(e.target.value)
+    }
+    else {
+      setNewRescueLocation(e.target.value)
+    }
+  }
+  function submitRescueUpdates(e) {
+    e.preventDefault();
+    fetch(`/rescues/${rescue.id}`, {
+      method: "PATCH", 
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ 
+          name: newRescueName,
+          location: newRescueLocation
+       }),
+  })
+.then((r) => {
+   if (r.ok) {
+     r.json()
+     .then((updatedRescue) => {
+       console.log(updatedRescue)
+       //setstate here
+     })
+   }
+ });   
+  }
+  function handleChangeNewInfo(e) {
+    e.preventDefault();
+    if (e.target.name === "title") {
+      setNewInfoTitle(e.target.value)
+    }
+    else {
+      setNewInfoText(e.target.value)
+    }
+  }
+  function handleSubmitNewInfo(e){
+    e.preventDefault();
+    fetch(`/information`, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ title: newInfoTitle, text: newInfoText }),
+})
+.then((r) => {
+ if (r.ok) {
+   r.json()
+   .then((newInfo) => {
+     console.log(newInfo)
+     //set state
+   })
+ }
+});
   }
 return (
     <div>
@@ -69,11 +135,33 @@ return (
    {showInfo && info === null ? <p>No Info Yet</p> : null}
    {userRescue.status === "Admin" && showInfo ? <button onClick={handleAddInfo}>Add Info</button> : null }
              {addInfo ? <form onSubmit={handleSubmitNewInfo}>
-              Fields to add info here
-             </form> : null}
+             <input onChange={handleChangeNewInfo}
+                type="text"
+                name="title"
+                placeholder="Title"
+                ></input><br></br>
+                  <input onChange={handleChangeNewInfo}
+                type="text"
+                name="text"
+                placeholder="Text"
+                ></input><button>Submit New Information</button></form> : null}
              {showInfo ? <button onClick={handleClose}>Close Info</button> : null} 
     {rescuePets !== [] && showPets ? <Rescuepets rescue={rescue} userRescue={userRescue} rescuePets={rescuePets} setRescuePets={setRescuePets} showPets={showPets} setShowPets={setShowPets} /> : null}
     {showingUsers ? <Allusers rescue={rescue} userRescue={userRescue}/> : null}
+    {userRescue.status === "Admin" ? <div><button onClick={editRescueForm}>Update Rescue</button><button onClick={handleDeleteRescue}>Delete Rescue</button></div> : null}
+    {showingEditRescueForm ? <form onSubmit={submitRescueUpdates}>
+      <input onChange={handleChangeRescueInfo}
+                type="text"
+                name="name"
+                placeholder="Rescue name"
+                ></input><br></br>
+                  <input onChange={handleChangeRescueInfo}
+                type="text"
+                name="location"
+                placeholder="Rescue location"
+                ></input>
+      <button>Submit Rescue Edits</button>
+    </form> : null }
     </div>
     
 )

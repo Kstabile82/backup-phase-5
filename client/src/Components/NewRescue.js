@@ -24,14 +24,6 @@ function NewRescue({ rescues, user, setRescues, userRescues, setUserRescues }) {
             setAdded(false) 
         }
         else {
-        // let findMatch = rescues.find(rescue => rescue.name.toLowerCase() === name.toLowerCase());
-        // if (findMatch === undefined) {
-        //     // postNewRescue(newRescue)
-        //     setAdded("true")
-        // }
-        //  else {
-        //     setAdded("taken");
-        // }
         postNewRescue(newRescue)
         setAdded(true)
     }
@@ -58,21 +50,10 @@ function postNewRescue(newRescue) {
         .then((r) => {
             console.log(r)
             setUserRescues([...userRescues, r]) 
-            
         })
     })
 }
-// function createAdmin(rescue) {
-//     fetch ("/myrescues", {
-//         method: "POST",
-//         headers: {
-//         "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ rescue_id: rescue.id, user_id: user.id, status: "Admin" })
-//         })
-//     .then((r) => r.json())
-//     .then((r) => console.log(r))
-// }
+
     return (
         <div className="add-rescue-form">
              <form onSubmit={handleSubmit}>

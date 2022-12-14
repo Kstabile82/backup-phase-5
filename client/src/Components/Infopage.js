@@ -17,11 +17,6 @@ const [newTitle, setNewTitle] = useState(null)
 const [newText, setNewText] = useState(null)
 const [showContactForm, setShowContactForm] = useState(false)
 
-//for each piece of info, have an array that contains: 
-//obj{
-  //question_id: x, correct_answer: x, input_answer: x
-//}
-//obj.questions.map, take question id, for the question, map options & find correct, then include the input with that question id
   function handleDeleteInfo(e) {
     e.preventDefault();
     fetch(`/information/${inf.id}`, { 
@@ -77,8 +72,6 @@ function handleSubmitForm(e) {
 function handleAlreadyPassed(e, i) {
   e.preventDefault();
   setShowContactForm(!showContactForm)
-
-
 }
   return (
         <div>
@@ -87,10 +80,6 @@ function handleAlreadyPassed(e, i) {
              <button onClick={(e) => handleEditInfo(e, i)}>Edit Information</button> </div> : 
              <div><button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button>
              <button onClick={(e) => handleAlreadyPassed(e, i)}>You already passed this test, open contact form</button></div> }
-             {/* {editInfo ? <form onClick={(e) => handleClickForm(e, i)}>Editing form here</form> : null}
-             {i && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={i.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null} */}
-             {/* {inf && takeTest ? <Questions answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null} */}
-             {/* <br></br>{i && takeTest && i.questions ? <button onClick={handleSub}>Submit "{i.title}"</button> : null } */}
              </div>) } 
              {editInfo ? <div><form onSubmit={handleSubmitForm}>
              Title: {inf.title} <input onChange={handleChangeInfo}

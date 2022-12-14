@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
     #   end
     
       def create
-       q = Question.create(question_params)
+       q = Question.create!(question_params)
         render json: q
       end
 

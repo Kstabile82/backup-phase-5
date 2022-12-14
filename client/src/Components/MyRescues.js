@@ -10,28 +10,7 @@ function MyRescues({ resc, setResc, rescues, userRescue, setUserRescue, onDelete
     }
     setResc(rescues.find(r => r.id === uR.rescue.id))
    }
-//     function handleChangeStatus(e, h) {
-//        e.preventDefault();
-//        setNewStatus(e.target.value)
-//     }
 
-//   function handleSubmitStatus(h, e) {
-//     e.preventDefault();
-//     fetch(`/hikerhikes/${h.id}`, {
-//         method: "PATCH",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ status: newStatus }),
-//     })
-//     .then((r) => r.json())
-//     .then((updatedHikerHike) => {
-//       let del = userHikes.find(uH => uH.id === updatedHikerHike.id)
-//       let idx = userHikes.indexOf(del)
-//       userHikes.splice(idx, 1, updatedHikerHike)
-//       setUserHikes(userHikes)
-//     })   
-//  }
 return (
     <div>
       <p>{user.name}'s Rescues:</p>

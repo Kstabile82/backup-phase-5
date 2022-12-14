@@ -5,9 +5,9 @@ function Welcomepage({ user, handleLogout }) {
       e.preventDefault();
       fetch(`/user/${user.id}`, { method: "DELETE" }).then((r) => {
         console.log(r)
-        // if (r.ok) {
-        //   handleLogout();
-        // }
+        if (r.ok) {
+          handleLogout();
+        }
     })
     }
 return (

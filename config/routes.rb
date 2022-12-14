@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :questions
   resources :userresults
   resources :rescuepets
- resources :options
+  resources :options
   post "/signup", to: "users#create"
   get "/me", to: "users#show"
   post "/login", to: "sessions#create"

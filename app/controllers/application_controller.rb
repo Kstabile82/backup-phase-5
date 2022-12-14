@@ -15,12 +15,6 @@ class ApplicationController < ActionController::API
     # render json: { errors: invalid.record.errors }, status: :not_found
     end
 
-    # def authAdmin
-    #   @current_user = User.find_by(id: session[:user_id])  
-    # status = @current_user.userrescues.find(rescue_id: params[:rescue.id])
-    #   render json: { errors: ["Not authorized"] }, status: :unauthorized unless status === "Admin"
-    # end
-
     def render_unprocessable_entity_response
       render json: { error: "Not found" }, status: :unprocessable_entity
     # render json: { errors: invalid.record.errors }, status: :not_found

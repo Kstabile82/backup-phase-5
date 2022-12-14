@@ -13,7 +13,7 @@ class OptionsController < ApplicationController
       end
     
       def create
-       opt = Option.create(option_params)
+       opt = Option.create!(option_params)
         render json: opt
       end
     

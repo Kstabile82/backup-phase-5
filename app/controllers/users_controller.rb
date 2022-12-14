@@ -18,7 +18,6 @@ class UsersController < ApplicationController
         user = User.find_by(id: session[:user_id])
         if user
             render json: user, status: 200, include: ['userrescues']
-            # render json: user, include: ['rescues']
         else
             render json: { message: "Not logged in" }, status: :unauthorized
         end
@@ -30,7 +29,6 @@ class UsersController < ApplicationController
         if user
             updatedUser = user.update(user_params)
             render json: updatedUser
-            # render json: user
         else
             render json: { message: "Not logged in" }, status: :unauthorized
         end

@@ -1,7 +1,6 @@
 import React, { useState } from "react"; 
 import Form from "./Form";
 
-
 function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
@@ -82,8 +81,6 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ userrescue_id: userRescue.id, testArr }),
-
-            // body: JSON.stringify({ userrescue_id: userRescue.id, information_id: i.id, input: testArr.input }),
         })
      .then((r) => {
          if (r.ok) {
@@ -96,14 +93,6 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
            })
          }
        });
-        //post request to userresults, send testArr
-        //send testArr to back end
-        //on back end, map thru testArr
-        //if answer === input, add a point
-        //return number of points out of total (info.id.questions.length)
-        //if testArr.length !== info_id.questions.length, return error message didnt answer all the qs
-        //userresults belongs to userrescue & information
-        //if userresults.score === userresults.topscore show application 
     }
     function editQuestion(e) {
         e.preventDefault();
@@ -143,7 +132,6 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
     }
     function handleSubmitNewQ(e) {
         e.preventDefault();
-        //post request for q and for o
        fetch("/questions", {
             method: "POST", 
             headers: {
@@ -155,21 +143,7 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
          if (r.ok) {
            r.json()
            .then((q) => {
-            // fetch("/options", {
-            //     method: "POST", 
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify({ question_id: q.id, text: newQ, correct: true }),
-            //     })
-            //     .then((r) => {
-            //         if (r.ok) {
-            //         r.json()
-            //         .then((o) => {
-            //                 console.log(o)
-            //         })
-            //         }
-            //     })
+            //set qs 
                 console.log(q)
                 FirstOption(q)
             });
@@ -189,6 +163,7 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
                 r.json()
                 .then((o) => {
                         console.log(o)
+                        //set os
                 })
                 }
             })
