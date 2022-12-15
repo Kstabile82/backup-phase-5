@@ -1,8 +1,8 @@
 import React, { useState } from "react"; 
 
-function AllRescues({ animalArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
-    let displayedRescueIDs = []
-    let displayedRescues = []
+function AllRescues({ animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
+    // let displayedRescueIDs = []
+    // let displayedRescues = []
     const [animalChoice, setAnimalChoice] = useState(null)
     const [locationChoice, setLocationChoice] = useState(null)
     // const [displayedRescs, setDisplayedRescs] = useState(rescues)
@@ -14,13 +14,19 @@ function AllRescues({ animalArray, displayedRescs, setDisplayedRescs, updateUser
           }
         })
       })
-    if (user && user.userrescues && user.userrescues.length > 0) {
-        user.userrescues.map(ur => {
-        displayedRescueIDs.push(ur.rescue.id)
-        return displayedRescueIDs
+      rescues.map(r => {
+          if (!locationArray.includes(r.location)) {
+            locationArray.push(r.location)
+          }
         })
-    }
-    displayedRescues = rescues.filter(r => !displayedRescueIDs.includes(r.id))
+      
+    // if (user && user.userrescues && user.userrescues.length > 0) {
+    //     user.userrescues.map(ur => {
+    //     displayedRescueIDs.push(ur.rescue.id)
+    //     return displayedRescueIDs
+    //     })
+    // }
+    // displayedRescues = rescues.filter(r => !displayedRescueIDs.includes(r.id))
 
     function handleClick(e, r) {
         e.preventDefault();
@@ -40,12 +46,35 @@ function AllRescues({ animalArray, displayedRescs, setDisplayedRescs, updateUser
         if(e.target.name === "location") {
             setLocationChoice(e.target.value)
         }
-      rescues.filter(dR => dR.rescuepets.filter(rPs => console.log(rPs.animal === animalChoice)))
     }
     function handleSubmitFilter(e){
         e.preventDefault();
-        setDisplayedRescs(displayedRescs.filter(dR => dR.rescuepets.map(rPs => rPs.animal === animalChoice)))
-
+        let animalFilterArr = []
+        let locationFilter = []
+        if (animalChoice === undefined || animalChoice === "All" || animalChoice === null) {
+            animalFilterArr = rescues
+        }
+        else {
+            rescues.map(dR => {
+                dR.rescuepets.filter(rPs => {
+                    if (rPs.animal === animalChoice) {
+                        animalFilterArr.push(dR)
+                    } })
+            })
+            animalFilterArr = [...new Set(animalFilterArr)]
+        }
+        if (locationChoice === undefined || locationChoice === "All" || locationChoice === null) {
+            locationFilter = animalFilterArr
+        }
+        else {
+            animalFilterArr.filter(aF => {
+               if(aF.location === locationChoice) {
+                locationFilter.push(aF)
+               } 
+            })
+            // locationFilter = [...new Set(locationFilter)]
+        }
+        setDisplayedRescs(locationFilter)
     }
     return (
         <div className="container">
@@ -53,19 +82,18 @@ function AllRescues({ animalArray, displayedRescs, setDisplayedRescs, updateUser
             <form onSubmit={handleSubmitFilter}>
                 <select name="location" id="location" onChange={handleFilterChange}>
                 <option key="" value="" hidden>Location</option>
+                {locationArray.map(la => 
+                <option key={la} value={la}>{la}</option>)}
                 <option key="all" value="All" >All</option>
-                <option key="NY" value="NY" >NY</option>
-                <option key="NJ" value="NJ" >NJ</option>
-                <option key="CA" value="CA" >CA</option>
                 </select>
                 <select name="animals" id="animals" onChange={handleFilterChange}>
                 <option key="" value="" hidden>Animals</option>
                 {animalArray.map(aa => 
-                <option key={aa} value={aa}>{aa}</option>
-                )}
+                <option key={aa} value={aa}>{aa}</option>)}
                 <option key="all" value="All">All</option>
                 </select>
                 <b> </b> 
+                <button onClick={handleSubmitFilter}>Submit</button>
              </form> 
             </div>
             {displayedRescs.map(r => <div>

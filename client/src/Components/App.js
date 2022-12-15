@@ -21,6 +21,7 @@ function App(){
   const [displayedRescs, setDisplayedRescs] = useState(rescues)
 
   const animalArray = []; 
+  const locationArray = [];
     useEffect(() => {
     fetch("/me")
     .then((response) => {
@@ -124,7 +125,7 @@ function handleAddAdmin(e, v){
         </Route>  : null} 
         {user && !loggedOut ? 
           <Route exact path="/allrescues">
-         <AllRescues displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} updateUserRescues={updateUserRescues} setResc={setResc} resc={resc} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
+         <AllRescues displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} setResc={setResc} resc={resc} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
          </Route> : null} 
          {user && !loggedOut ? 
           <Route exact path="/newrescue">
