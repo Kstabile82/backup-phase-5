@@ -3,6 +3,7 @@ import Rescuepage from "./Rescuepage";
 import ReactModal from 'react-modal';
 
 function MyRescues({ rescues, setRescues, errors, setErrors, isOpen, setIsOpen, rescue, setRescue, userRescue, setUserRescue, onDeleteUserRescue, user, isAdmin, setIsAdmin }) { 
+
   function handleClick(e, uR) {
     setUserRescue(uR)
     if (uR.status === "Admin"){

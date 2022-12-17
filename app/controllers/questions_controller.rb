@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-  before_action :authorize, only: [:create, :delete, :update]
+  # before_action :authorize, only: [:create, :delete, :update]
+  wrap_parameters format: [] 
 
     def index
         q = []

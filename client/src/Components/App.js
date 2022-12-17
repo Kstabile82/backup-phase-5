@@ -112,7 +112,7 @@ function App(){
        </Route> : null} 
        {user && !loggedOut ? 
        <Route exact path="/myrescues">
-        <MyRescues rescues={rescues} setRescues={setRescues} isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} userRescues={userRescues} setUserRescues={setUserRescues} />
+        <MyRescues rescues={rescues} setRescues={setRescues} isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} setRescue={setRescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} userRescues={userRescues} setUserRescues={setUserRescues} />
         </Route>  : null} 
         {user && !loggedOut ? 
           <Route exact path="/allrescues">

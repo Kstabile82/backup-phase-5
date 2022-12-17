@@ -1,7 +1,8 @@
 import React, { useState } from "react"; 
 import Form from "./Form";
+import Rescuepage from "./Rescuepage";
 
-function Questions({ info, setInfo, showContactForm, setShowContactForm, answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue, setUserRescue }) {
+function Questions({ info, setInfo, showContactForm, setShowContactForm, answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, i, setI, q, setQ, userRescue, setUserRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [text, setText] = useState(null)
@@ -18,7 +19,7 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
         e.preventDefault();
         setAddQs(!addQs)
     }
-    function handleAddOption(e, quest) {
+    function handleAddOption(e) {
         setAddO(!addO)
     }
     function handleQClose(e) {
@@ -51,28 +52,34 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
          if (r.ok) {
            r.json()
            .then((opt) => {
-             console.log(opt)
-            //  setShowingAddForm(!showingAddForm)
-            //setstate for options
+            const inform = {...i}
+            const specQ = inform.questions.find(qu => qu.id === quest.id)
+            specQ.options.push(opt)
+            setI(inform)
            })
          }
        });
     }
     function deleteOption(e, o) {
         e.preventDefault();
-        fetch(`/option/${o.id}`, { 
+        fetch(`/options/${o.id}`, { 
             method: 'DELETE'
         })
-        //set options
+        const inform = {...i}
+        const specQ = inform.questions.find(qu => qu.id === o.question_id)
+        specQ.options.filter(op => op.id !== o.id)
+        setI(inform)
+        //need to do something more here to set it and replace Q with specQ
     }
     function handleDeleteQuestion(e, quest) {
         e.preventDefault();
         fetch(`/questions/${quest.id}`, { 
             method: 'DELETE'
         })
-        //set questions
+        const inform = {...i}
+        inform.questions = inform.questions.filter(infQ => infQ.id !== quest.id)
+        setI(inform)
     }
-
     function handleSubmitTest(e) {
         e.preventDefault();
         fetch("/userresults", {
@@ -88,7 +95,8 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
            .then((ur) => {
              if (ur.score === testArr.length) {
                 setShowContactForm(!showContactForm)
-                //setuser state
+                userRescue.userresults = [...userRescue.userresults, ur]
+                setUserRescue(userRescue)
              }
            })
          }
@@ -115,8 +123,9 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
         })
         .then((r) => r.json())
         .then((updatedq) => {
-            console.log(updatedq)
-        //   setInf(updatedq)
+            let index = i.questions.findIndex((qu) => qu.id === quest.id)
+            i.questions.splice(index,1,updatedq)
+            setI(i)
         })
     }
     function handleNewQInput(e) {
@@ -141,35 +150,33 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
          if (r.ok) {
            r.json()
            .then((q) => {
-            //set rescue.information.questions
-                FirstOption(q)
-            });
-           }
-        });
-    }
-    function FirstOption(q) {
-        fetch("/options", {
-            method: "POST", 
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ question_id: q.id, text: newO, correct: true }),
-            })
-            .then((r) => {
-                if (r.ok) {
-                r.json()
-                .then((o) => {
-                        console.log(o)
-                        //set rescue.information.questions.options
+            fetch("/options", {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ question_id: q.id, text: newO, correct: true }),
                 })
-                }
-            })
+                .then((r) => {
+                    if (r.ok) {
+                    r.json()
+                    .then((o) => {
+                             q.options = [o]
+                    })
+                    }
+                })
+            const inform = {...i}
+            inform.questions = [...i.questions, q]
+            setI(inform)
+            });
+          }
+        });
     }
 
     return (
         <div>
             {userRescue.status === "Admin" ? <div>
-            {qs.map(quest => <div><ul onClick={(e) => handleClickedQuestion(e, quest)}>{quest.text}
+            {i.questions.map(quest => <div><ul onClick={(e) => handleClickedQuestion(e, quest)}>{quest.text}
             {quest.options ? quest.options.map(o => <div><li>{o.text}</li><button onClick={(e) => deleteOption(e, o)}>-</button></div>) : null}
             <button onClick={editQuestion}>Edit Question</button>
             {showEditQ ? <form onSubmit={(e) => submitEditedQ(e, quest)}>
@@ -215,7 +222,7 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
             </div> : null }
             {userRescue.status !== "Admin" ? <div>
                 <h2>{i.title} Test:</h2>
-            <Form answerObj={answerObj} setAnswerObj={setAnswerObj} qs={qs} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
+            <Form answerObj={answerObj} setAnswerObj={setAnswerObj} qs={i.questions} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
             <button onClick={handleSubmitTest}>Submit {i.title}</button> </div>
             : null}  
     </div>

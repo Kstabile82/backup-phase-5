@@ -36,6 +36,7 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, user, rescue, set
     function handleDeleteUserRescue(e) {
         e.preventDefault();
         onDeleteUserRescue(rescue, user)
+        //setmodal if unsuccessful
     }
     function handleAddInfo(e) {
         e.preventDefault();
@@ -131,6 +132,7 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, user, rescue, set
  }
 });
   }
+
 return (
     <div>
     <h3>{rescue.name}</h3> 
@@ -151,7 +153,7 @@ return (
                 ></input><button>Submit New Information</button></form> : null}
              {showInfo ? <button onClick={handleClose}>Close Info</button> : null} 
     {rescuePets !== [] && showPets ? <Rescuepets rescue={rescue} setRescue={setRescue} userRescue={userRescue} rescuePets={rescuePets} setRescuePets={setRescuePets} showPets={showPets} setShowPets={setShowPets} /> : null}
-    {showingUsers ? <Allusers rescue={rescue} userRescue={userRescue} setUserRescue={setUserRescue} /> : null}
+    {showingUsers ? <Allusers rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue} /> : null}
     {userRescue.status === "Admin" ? <div><button onClick={editRescueForm}>Update Rescue</button><button onClick={handleDeleteRescue}>Delete Rescue</button></div> : null}
     {showingEditRescueForm ? <form onSubmit={submitRescueUpdates}>
       <input onChange={handleChangeRescueInfo}

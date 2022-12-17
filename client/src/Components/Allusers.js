@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Allusers({ rescue, userRescue, setUserRescue }) {
+function Allusers({ rescue, setRescue, userRescue, setUserRescue }) {
  const [results, setResults] = useState(null)
 const [showingScores, setShowingScores] = useState(false)
     function handleMakeAdmin(e, uR) {
@@ -14,8 +14,9 @@ const [showingScores, setShowingScores] = useState(false)
         })
         .then((r) => r.json())
         .then((updatedUser) => {
-            console.log(updatedUser)
-            //setstate
+            let index = rescue.userrescues.findIndex((u) => u.id === uR.id)
+            rescue.userrescues.splice(index,1,updatedUser)
+            setRescue(rescue)
         })
     }
     function handleRemoveAdmin(e, uR) {
@@ -29,8 +30,9 @@ const [showingScores, setShowingScores] = useState(false)
         })
         .then((r) => r.json())
         .then((updatedUser) => {
-            console.log(updatedUser)
-            //setstate
+            let index = rescue.userrescues.findIndex((u) => u.id === uR.id)
+            rescue.userrescues.splice(index,1,updatedUser)
+            setRescue(rescue)
         })
     }
     function handleScores(e, uR) {

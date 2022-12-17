@@ -3,7 +3,6 @@ import Questions from "./Questions";
 import EmailForm from "./EmailForm";
 
 function Infopage({ q, setQ, info, setInfo, rescue, user, setRescue, userRescue, setUserRescue }) {
-   const [qs, setQs] = useState([])
    const [editInfo, setEditInfo] = useState(false)
    const [inf, setInf] = useState(null)
   const [showingQs, setShowingQs] = useState(false)
@@ -34,9 +33,11 @@ const [showContactForm, setShowContactForm] = useState(false)
     setTakeTest(i)
     setTestArr([])
   }
-  function handleEditQuestions(e) {
+  function handleEditQuestions(e, i) {
     e.preventDefault();
-    setQs(inf.questions)
+    if (i) {
+      setInf(i)
+    }
     setShowingQs(!showingQs)
   }
 function handleChangeInfo(e) {
@@ -81,11 +82,14 @@ function handleAlreadyPassed(e, i) {
   e.preventDefault();
   setShowContactForm(!showContactForm)
 }
+
   return (
         <div>
              {info.map(i => <div key={i.id}><h3>{i.title}</h3>
              {userRescue.status === "Admin" ? <div><button onClick={(e) => handleDeleteInfo(e, i)}>Delete</button> 
-             <button onClick={(e) => handleEditInfo(e, i)}>Edit Information</button> </div> : 
+             <button onClick={(e) => handleEditInfo(e, i)}>Edit Information</button> 
+             <button onClick={(e) => handleEditQuestions(e, i)}>Edit Questions</button></div>
+              : 
              <div><button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button>
              <button onClick={(e) => handleAlreadyPassed(e, i)}>You already passed this test, open contact form</button></div> }
              </div>) } 
@@ -102,8 +106,8 @@ function handleAlreadyPassed(e, i) {
                 ></input><br></br><button>Submit Form</button>
                      </form>  <button onClick={handleDeleteInfo}>Delete Information</button>
                      </div>: null}
-             {inf && userRescue.status === "Admin" ? <button onClick={handleEditQuestions}>Edit Questions</button> : null } 
-             {inf && showingQs ? <Questions setInfo={setInfo} info={info} setShowingQs={setShowingQs} showingQs={showingQs} qs={inf.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
+             {/* {inf && userRescue.status === "Admin" ? <button onClick={handleEditQuestions}>Edit Questions</button> : null }  */}
+             {inf && showingQs ? <Questions setInfo={setInfo} info={info} setShowingQs={setShowingQs} showingQs={showingQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
              {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
              {showContactForm ? <EmailForm/> : null}       
 
