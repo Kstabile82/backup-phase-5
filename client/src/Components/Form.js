@@ -33,7 +33,6 @@ function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, se
                     type="radio"
                     name={q.text}
                     value={o.text}
-                    // checked={false}
                     onChange={handleTestInput}
                     >
                     </input></label>)}

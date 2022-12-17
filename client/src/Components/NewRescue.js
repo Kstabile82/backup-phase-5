@@ -49,6 +49,7 @@ function postNewRescue(newRescue) {
         .then((r) => r.json())
         .then((r) => {
             setUserRescues([...userRescues, r]) 
+        //set modal 
         })
     })
 }

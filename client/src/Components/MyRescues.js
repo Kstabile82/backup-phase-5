@@ -2,7 +2,7 @@ import React from "react";
 import Rescuepage from "./Rescuepage";
 import ReactModal from 'react-modal';
 
-function MyRescues({ errors, setErrors, isOpen, setIsOpen, rescue, setRescue, rescues, userRescue, setUserRescue, onDeleteUserRescue, user, isAdmin, setIsAdmin }) { 
+function MyRescues({ rescues, setRescues, errors, setErrors, isOpen, setIsOpen, rescue, setRescue, userRescue, setUserRescue, onDeleteUserRescue, user, isAdmin, setIsAdmin }) { 
   function handleClick(e, uR) {
     setUserRescue(uR)
     if (uR.status === "Admin"){
@@ -10,7 +10,6 @@ function MyRescues({ errors, setErrors, isOpen, setIsOpen, rescue, setRescue, re
     }
     setRescue(rescues.find(r => r.id === uR.rescue.id))
    }
-
 return (
     <div>
       <p>{user.name}'s Rescues:</p>
@@ -18,7 +17,7 @@ return (
   </div> )}
       {rescue.name !== undefined ? 
        <div key={rescue.id}>
-      <Rescuepage onDeleteUserRescue={onDeleteUserRescue} isAdmin={isAdmin} user={user} rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue}/> 
+      <Rescuepage rescues={rescues} setRescues={setRescues} onDeleteUserRescue={onDeleteUserRescue} isAdmin={isAdmin} user={user} rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue}/> 
       </div> : null }  
       {errors ? <ReactModal
                     isOpen={isOpen}

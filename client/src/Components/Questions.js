@@ -1,7 +1,7 @@
 import React, { useState } from "react"; 
 import Form from "./Form";
 
-function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue }) {
+function Questions({ info, setInfo, showContactForm, setShowContactForm, answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, qs, setQs, i, setI, q, setQ, userRescue, setUserRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [text, setText] = useState(null)
@@ -53,6 +53,7 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
            .then((opt) => {
              console.log(opt)
             //  setShowingAddForm(!showingAddForm)
+            //setstate for options
            })
          }
        });
@@ -87,6 +88,7 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
            .then((ur) => {
              if (ur.score === testArr.length) {
                 setShowContactForm(!showContactForm)
+                //setuser state
              }
            })
          }
@@ -114,7 +116,7 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
         .then((r) => r.json())
         .then((updatedq) => {
             console.log(updatedq)
-        //   setInf(updatedpet)
+        //   setInf(updatedq)
         })
     }
     function handleNewQInput(e) {

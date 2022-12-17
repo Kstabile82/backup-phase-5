@@ -3,7 +3,7 @@ import Infopage from "./Infopage";
 import Allusers from "./Allusers";
 import Rescuepets from "./Rescuepets";
 
-function Rescuepage({ onDeleteUserRescue, user, rescue, setRescue, userRescue, setUserRescue }) {
+function Rescuepage({ rescues, setRescues, onDeleteUserRescue, user, rescue, setRescue, userRescue, setUserRescue }) {
     const [showInfo, setShowInfo] = useState(false)
     const [info, setInfo] = useState(null)
     const [addInfo, setAddInfo] = useState(false)
@@ -62,9 +62,9 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, setRescue, userRescue, s
     fetch(`/rescues/${rescue.id}`, { 
       method: 'DELETE'
   })
-  //setRescues here
-
+  setRescues(rescues.filter(r => r.id !== rescue.id))
   }
+
   function editRescueForm(e) {
     e.preventDefault();
     setShowingEditRescueForm(!showingEditRescueForm)
@@ -94,8 +94,9 @@ function Rescuepage({ onDeleteUserRescue, user, rescue, setRescue, userRescue, s
    if (r.ok) {
      r.json()
      .then((updatedRescue) => {
-       console.log(updatedRescue)
-       //setstate here
+       let index = rescues.indexOf(rescue)
+       rescues.splice(index,1,updatedRescue)
+       setRescues(rescues)
      })
    }
  });   
@@ -134,7 +135,7 @@ return (
     <div>
     <h3>{rescue.name}</h3> 
     <div><button onClick={handleShowUserInfo}>Information</button> <button onClick={handleShowPets}>Pets</button> <button style={{display: userRescue.status === "Admin" ? 'visible' : 'none' }} onClick={handleShowUsers}>Users</button> <button onClick={handleDeleteUserRescue}>Remove from my list</button></div>
-    {showInfo && info !== null && info !== undefined ? <Infopage setRescue={setRescue} q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} user={user} setShowInfo={setShowInfo} info={info} /> : null}
+    {showInfo && info !== null && info !== undefined ? <Infopage setRescue={setRescue} q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} setUserRescue={setUserRescue} user={user} setShowInfo={setShowInfo} info={info} setInfo={setInfo} /> : null}
    {showInfo && info === null ? <p>No Info Yet</p> : null}
    {userRescue.status === "Admin" && showInfo ? <button onClick={handleAddInfo}>Add Info</button> : null }
              {addInfo ? <form onSubmit={handleSubmitNewInfo}>
@@ -149,7 +150,7 @@ return (
                 placeholder="Text"
                 ></input><button>Submit New Information</button></form> : null}
              {showInfo ? <button onClick={handleClose}>Close Info</button> : null} 
-    {rescuePets !== [] && showPets ? <Rescuepets rescue={rescue} userRescue={userRescue} rescuePets={rescuePets} setRescuePets={setRescuePets} showPets={showPets} setShowPets={setShowPets} /> : null}
+    {rescuePets !== [] && showPets ? <Rescuepets rescue={rescue} setRescue={setRescue} userRescue={userRescue} rescuePets={rescuePets} setRescuePets={setRescuePets} showPets={showPets} setShowPets={setShowPets} /> : null}
     {showingUsers ? <Allusers rescue={rescue} userRescue={userRescue} setUserRescue={setUserRescue} /> : null}
     {userRescue.status === "Admin" ? <div><button onClick={editRescueForm}>Update Rescue</button><button onClick={handleDeleteRescue}>Delete Rescue</button></div> : null}
     {showingEditRescueForm ? <form onSubmit={submitRescueUpdates}>

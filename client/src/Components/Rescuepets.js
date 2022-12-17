@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 
-function Rescuepets({ rescue, userRescue, rescuePets, setRescuePets, showPets, setShowPets }) {
+function Rescuepets({ rescue, setRescue, userRescue, rescuePets, setRescuePets, showPets, setShowPets }) {
     const [showDetails, setShowDetails] = useState(null)
     const [showingAddForm, setShowingAddForm] = useState(false)
     const [showingUpdateForm, setShowingUpdateForm] = useState(false)
@@ -109,8 +109,10 @@ function handleSubmitUpdates(e) {
         }),
     })
     .then((r) => r.json())
-    .then((updatedpet) => {
-    //   setPets slice etc
+    .then((updatedpet) => {        
+        let index = rescue.rescuepets.findIndex((p) => p.id === updatedpet.id)
+        rescuePets.splice(index,1,updatedpet)
+        setRescuePets(rescuePets)
     })
 }
 function handleFilter(e) {

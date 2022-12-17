@@ -4,6 +4,7 @@ import ReactModal from 'react-modal';
 function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
     const [animalChoice, setAnimalChoice] = useState(null)
     const [locationChoice, setLocationChoice] = useState(null)
+    let alreadyAdded = undefined
 
     rescues.map(r => {
         r.rescuepets.map(rP => {
@@ -17,21 +18,16 @@ function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locatio
             locationArray.push(r.location)
           }
         })
-      
-    // if (user && user.userrescues && user.userrescues.length > 0) {
-    //     user.userrescues.map(ur => {
-    //     displayedRescueIDs.push(ur.rescue.id)
-    //     return displayedRescueIDs
-    //     })
-    // }
-    // displayedRescues = rescues.filter(r => !displayedRescueIDs.includes(r.id))
 
     function handleClick(e, r) {
         e.preventDefault();
         setRescue(r)
     }
     function handleSaveToMyRescues(e, r) {
+       alreadyAdded = user.userrescues.find(u => u.rescue.id === r.id) 
+       if (alreadyAdded === undefined || alreadyAdded === null) {
         updateUserRescues(r, e)
+       }
     }
 
     function handleFilterChange(e) {

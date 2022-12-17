@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Questions from "./Questions";
 import EmailForm from "./EmailForm";
 
-function Infopage({ q, setQ, info, rescue, user, setRescue, userRescue }) {
+function Infopage({ q, setQ, info, setInfo, rescue, user, setRescue, userRescue, setUserRescue }) {
    const [qs, setQs] = useState([])
    const [editInfo, setEditInfo] = useState(false)
    const [inf, setInf] = useState(null)
@@ -41,18 +41,22 @@ const [showContactForm, setShowContactForm] = useState(false)
   }
 function handleChangeInfo(e) {
   e.preventDefault();
-  setNewTitle(inf.title)
-  setNewText(inf.text)
   if (e.target.name === "title") {
     setNewTitle(e.target.value)
-    
   }
   if (e.target.name === "text") {
     setNewText(e.target.value)
   }
 }
+
 function handleSubmitForm(e) {
   e.preventDefault();
+  if (newTitle === null) {
+    setNewTitle(inf.title)
+  }
+  if (newText === null) {
+    setNewText(inf.text)
+  }
   fetch(`/information/${inf.id}`, {
     method: "PATCH",
     headers: {
@@ -64,9 +68,13 @@ function handleSubmitForm(e) {
     }),
 })
 .then((r) => r.json())
-.then((updatedpet) => {
-  setInf(updatedpet)
-//   setRescue.info slice etc
+.then((updatedinf) => {
+  setInf(updatedinf)
+  let index = rescue.information.findIndex((i) => i.id === inf.id)
+  const s = {...rescue};
+  s.information = rescue.information.splice(index,1,updatedinf)
+  setRescue(rescue) 
+
 })
 }
 function handleAlreadyPassed(e, i) {
@@ -95,8 +103,8 @@ function handleAlreadyPassed(e, i) {
                      </form>  <button onClick={handleDeleteInfo}>Delete Information</button>
                      </div>: null}
              {inf && userRescue.status === "Admin" ? <button onClick={handleEditQuestions}>Edit Questions</button> : null } 
-             {inf && showingQs ? <Questions setShowingQs={setShowingQs} showingQs={showingQs} qs={inf.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
-             {inf && takeTest ? <Questions showContactForm={showContactForm} setShowContactForm={setShowContactForm} answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
+             {inf && showingQs ? <Questions setInfo={setInfo} info={info} setShowingQs={setShowingQs} showingQs={showingQs} qs={inf.questions} setQs={setQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
+             {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
              {showContactForm ? <EmailForm/> : null}       
 
              <br></br>
