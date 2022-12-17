@@ -66,7 +66,6 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
     }
     function handleDeleteQuestion(e, quest) {
         e.preventDefault();
-        //delete q by quest.id
         fetch(`/questions/${quest.id}`, { 
             method: 'DELETE'
         })
@@ -86,7 +85,6 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
          if (r.ok) {
            r.json()
            .then((ur) => {
-             console.log(ur)
              if (ur.score === testArr.length) {
                 setShowContactForm(!showContactForm)
              }
@@ -104,7 +102,6 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
     }
     function submitEditedQ(e, quest) {
         e.preventDefault();
-        console.log(quest, editedQ)
         fetch(`/questions/${quest.id}`, {
             method: "PATCH",
             headers: {
@@ -118,7 +115,6 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
         .then((updatedq) => {
             console.log(updatedq)
         //   setInf(updatedpet)
-        //   setUserRescues slice etc
         })
     }
     function handleNewQInput(e) {
@@ -143,8 +139,7 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
          if (r.ok) {
            r.json()
            .then((q) => {
-            //set qs 
-                console.log(q)
+            //set rescue.information.questions
                 FirstOption(q)
             });
            }
@@ -163,7 +158,7 @@ function Questions({ showContactForm, setShowContactForm, answerObj, setAnswerOb
                 r.json()
                 .then((o) => {
                         console.log(o)
-                        //set os
+                        //set rescue.information.questions.options
                 })
                 }
             })

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function NewRescue({ rescues, user, setRescues, userRescues, setUserRescues }) { 
+function NewRescue({ isOpen, setIsOpen, errors, setErrors, rescues, user, setRescues, userRescues, setUserRescues }) { 
     const [added, setAdded] = useState(false)
     const [name, setName] = useState("")
     const [location, setLocation] = useState("")
@@ -48,7 +48,6 @@ function postNewRescue(newRescue) {
             })
         .then((r) => r.json())
         .then((r) => {
-            console.log(r)
             setUserRescues([...userRescues, r]) 
         })
     })

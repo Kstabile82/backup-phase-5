@@ -1,6 +1,7 @@
 class InformationController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
   before_action :authorize, only: [:create, :delete, :update]
+  wrap_parameters format: [] 
 
   def show
     info = []
@@ -22,7 +23,7 @@ class InformationController < ApplicationController
     info.destroy
     render json: { message: "Deleted" }
   end
-  
+
   def update
       info = Information.find(params[:id])
       info.update(information_params)

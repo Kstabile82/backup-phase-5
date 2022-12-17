@@ -1,11 +1,9 @@
 import React, { useState } from "react"; 
+import ReactModal from 'react-modal';
 
-function AllRescues({ animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
-    // let displayedRescueIDs = []
-    // let displayedRescues = []
+function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
     const [animalChoice, setAnimalChoice] = useState(null)
     const [locationChoice, setLocationChoice] = useState(null)
-    // const [displayedRescs, setDisplayedRescs] = useState(rescues)
 
     rescues.map(r => {
         r.rescuepets.map(rP => {
@@ -31,8 +29,6 @@ function AllRescues({ animalArray, locationArray, displayedRescs, setDisplayedRe
     function handleClick(e, r) {
         e.preventDefault();
         setRescue(r)
-    //   let num = parseInt(e.target.className);
-    //   setRescue(rescues.find(r => r.id === num))
     }
     function handleSaveToMyRescues(e, r) {
         updateUserRescues(r, e)
@@ -72,12 +68,19 @@ function AllRescues({ animalArray, locationArray, displayedRescs, setDisplayedRe
                 locationFilter.push(aF)
                } 
             })
-            // locationFilter = [...new Set(locationFilter)]
         }
         setDisplayedRescs(locationFilter)
     }
     return (
         <div className="container">
+             {errors ? <ReactModal
+                    isOpen={isOpen}
+                    contentLabel="Error Modal"
+                    ariaHideApp={false}                    
+                    onRequestClose={() => setIsOpen(false)}>
+                 {errors.errors.map(e => <p>{e}</p>)}    
+                 <button onClick={() => setIsOpen(false)}>Close</button>
+                </ReactModal> : null }
            <div className="filter">Filter:
             <form onSubmit={handleSubmitFilter}>
                 <select name="location" id="location" onChange={handleFilterChange}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Allusers({ rescue, userRescue }) {
+function Allusers({ rescue, userRescue, setUserRescue }) {
  const [results, setResults] = useState(null)
 const [showingScores, setShowingScores] = useState(false)
     function handleMakeAdmin(e, uR) {
@@ -51,7 +51,23 @@ const [showingScores, setShowingScores] = useState(false)
     }
     function handleDeleteResults(e, r) {
         e.preventDefault();
-        //delete score by id#
+        fetch(`/deleteresults`, {
+            method: "POST", 
+            headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ id: r.id, userrescue_id: userRescue.id }),
+      })
+      .then((r) => {
+       if (r.ok) {
+         r.json()
+         .then((deleted) => {
+           const res = {...userRescue};
+           res.userresults = userRescue.userresults.filter(u => u.id !== deleted.id)
+           setUserRescue(res)
+         })
+        }
+    })
     }   
 return (
     <div>

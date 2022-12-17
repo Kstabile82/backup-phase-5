@@ -2,35 +2,35 @@ import React, { useState } from "react";
 import Questions from "./Questions";
 import EmailForm from "./EmailForm";
 
-function Infopage({ q, setQ, info, rescue, user, userRescue, setShowInfo }) {
+function Infopage({ q, setQ, info, rescue, user, setRescue, userRescue }) {
    const [qs, setQs] = useState([])
    const [editInfo, setEditInfo] = useState(false)
    const [inf, setInf] = useState(null)
   const [showingQs, setShowingQs] = useState(false)
   const [takeTest, setTakeTest] = useState(null)
   const [infoAns, setInfoAns] = useState([])
-  const [scoreArr, setScoreArr] = useState([])
-  let infoObj = {}
   const [testArr, setTestArr] = useState([])
   const [answerObj, setAnswerObj] = useState({})
 const [newTitle, setNewTitle] = useState(null)
 const [newText, setNewText] = useState(null)
 const [showContactForm, setShowContactForm] = useState(false)
 
-  function handleDeleteInfo(e) {
+  function handleDeleteInfo(e, i) {
     e.preventDefault();
-    fetch(`/information/${inf.id}`, { 
+    fetch(`/information/${i.id}`, { 
       method: 'DELETE'
   })
-  //setInformation here
+  const s = {...rescue};
+        s.information = rescue.information.filter(r => r.id !== i.id)
+        setRescue(s)  
   }
+
   function handleEditInfo(e, i) {
     setEditInfo(!editInfo)
     setInf(i)
   }
   function handleShowQuiz(e, i) {
     setInf(i)
-    // setTakeTest(!takeTest)
     setTakeTest(i)
     setTestArr([])
   }
@@ -66,7 +66,7 @@ function handleSubmitForm(e) {
 .then((r) => r.json())
 .then((updatedpet) => {
   setInf(updatedpet)
-//   setUserRescues slice etc
+//   setRescue.info slice etc
 })
 }
 function handleAlreadyPassed(e, i) {

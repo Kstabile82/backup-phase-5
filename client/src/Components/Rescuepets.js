@@ -85,8 +85,8 @@ function handleSubmitNewPet(e) {
      if (r.ok) {
        r.json()
        .then((pet) => {
-         console.log(pet)
          setShowingAddForm(!showingAddForm)
+         setRescuePets([...rescuePets, pet])
        })
      }
    });
@@ -110,8 +110,7 @@ function handleSubmitUpdates(e) {
     })
     .then((r) => r.json())
     .then((updatedpet) => {
-        console.log(updatedpet)
-    //   setUserRescues slice etc
+    //   setPets slice etc
     })
 }
 function handleFilter(e) {

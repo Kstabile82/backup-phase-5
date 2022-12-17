@@ -1,5 +1,4 @@
 import React, { useState } from "react"; 
-import Questions from "./Questions";
 
 function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, setTestArr }){
 

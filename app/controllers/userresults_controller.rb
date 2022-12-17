@@ -1,16 +1,7 @@
 class UserresultsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-    before_action :authorize, only: [:delete, :update]
-  
-    # def show
-    #     ur = Userresult.where(information_id: params[:information_id].to_i && user_id: params[:userrescue][:user_id].to_i)
-    #     if ur
-    #         render json: ur, status: 200
-    #     else
-    #         render json: { message: "No info" }, status: :unauthorized
-    #     end
-    # end
-  
+    before_action :authorize, only: :create, :delete
+
       def create
         arr = params[:testArr]
         score = 0; 
@@ -30,11 +21,16 @@ class UserresultsController < ApplicationController
         render json: ur
       end
 
-    #   def destroy
-    #         u = Userresult.find_by(information_id: params[:testArr][0][:infoId].to_i && userrescue_id: params[:userrescue_id].to_i)
-    #         u.destroy
-    #         render json: { message: "Deleted" }
-    #   end
+      def destroy
+        uR = Userrescue.find(params[:userrescue_id])
+        if uR.status === "Admin"
+            u = Userresult.find(params[:id])
+            u.destroy
+            render json: { message: "Deleted" }
+        else 
+            render json: { message: `You're not an admin for this rescue. Only admins are authorized to delete results.`}
+      end
+    end
 
     private 
 

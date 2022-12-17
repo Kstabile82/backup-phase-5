@@ -20,7 +20,6 @@ class UserrescuesController < ApplicationController
     end
 
     def destroy
-        byebug
         uR = Userrescue.find(params[:id])
         if uR.status === "Admin"
             resc = Rescue.find(uR.rescue_id)

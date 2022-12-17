@@ -11,16 +11,17 @@ Rails.application.routes.draw do
   #   resources :questions
   # end
   resources :questions
-  resources :userresults
   resources :rescuepets
   resources :options
   post "/signup", to: "users#create"
+  post "/userresults", to: "userresults#create"
   get "/me", to: "users#show"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   post "/newrescue", to: "rescues#create"
   post "/myrescues", to: "userrescues#create"
   post "/allusers", to: "userrescues#showalluserstoadmin"
+  post "/deleteresults", to: "userrescues#destroy"
   
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

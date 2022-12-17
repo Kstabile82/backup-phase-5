@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import ReactModal from 'react-modal';
 
-function SignUp({ handleLogIn }) {
+function SignUp({ errors, setErrors, isOpen, setIsOpen, handleLogIn }) {
 const [userName, setUserName] = useState("")
 const [password, setPassword] = useState("")
 const [confirmPassword, setConfirmPassword] = useState("")
@@ -21,7 +22,10 @@ const [confirmPassword, setConfirmPassword] = useState("")
           if (r.ok) {
             r.json().then((user) => handleLogIn(user));
           } else {
-            r.json().then((err) => console.log(err.errors));
+            r.json().then((err) => {
+              setErrors(err.errors)
+              setIsOpen(true)
+            });
           }
         });
     }
@@ -45,6 +49,14 @@ return (
         onChange={(e) => setConfirmPassword(e.target.value)}></input>   
         <button>Enter</button>
     </form>
+    {errors ? <ReactModal
+                    isOpen={isOpen}
+                    contentLabel="Error Modal"
+                    ariaHideApp={false}                    
+                    onRequestClose={() => setIsOpen(false)}>
+                 {errors.length > 1 ? errors.map(e => <p>{e}</p>) : <p>{errors}</p>}    
+                 <button onClick={() => setIsOpen(false)}>Close</button>
+                </ReactModal> : null }
 </div>
 )
 }

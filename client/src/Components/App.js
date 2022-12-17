@@ -8,6 +8,8 @@ import Welcome from "./Welcome";
 import AllRescues from "./AllRescues";
 import MyRescues from "./MyRescues";
 import NewRescue from "./NewRescue";
+import ReactModal from 'react-modal';
+
 
 function App(){
   const [user, setUser] = useState(null);
@@ -16,9 +18,10 @@ function App(){
   const [userRescues, setUserRescues] = useState([])
   const [userRescue, setUserRescue] = useState({}) 
   const [isAdmin, setIsAdmin] = useState(false)
-  const [resc, setResc] = useState({})
   const [rescue, setRescue] = useState({})
   const [displayedRescs, setDisplayedRescs] = useState(rescues)
+  const [errors, setErrors] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   const animalArray = []; 
   const locationArray = [];
@@ -30,7 +33,6 @@ function App(){
           setLoggedOut(false)
           setUser(u);
           setLoggedOut(false)
-          setUserRescues(u.userrescues)
         })
       }
     })
@@ -47,22 +49,22 @@ function App(){
   function handleLogIn(user) {
     setUser(user);
     setLoggedOut(false)
-    setUserRescues(user.userrescues)
   }
-  
   function onDeleteUserRescue(rescue, user) {
    let id = user.userrescues.find(uR => uR.rescue.id === rescue.id)
-      fetch(`/userrescue/${id.id}`, { 
+      fetch(`/userrescues/${id.id}`, { 
             method: 'DELETE'
         })
-        setUserRescues(userRescues.filter(uRs => uRs.id !== id))  
-      }
-
+     const s = {...user};
+        s.userrescues = user.userrescues.filter(u => u.id !== id.id)
+        setUser(s)   
+     }
   function handleLogout() {
     setUser(null);
     setLoggedOut(true)
     setUserRescues([])
-    setResc({})
+    setRescue({})
+    setIsOpen(true)
   }
   function updateUserRescues(rescue, e) {
     e.preventDefault();
@@ -79,41 +81,30 @@ function App(){
     })
     .then((r) => r.json())
     .then((ur) => {
-      setUserRescues([...userRescues, ur])
+      const s = {...user};
+      s.userrescues = [...user.userrescues, ur]
+      setUser(s)
     })
   }
-  function handleRemoveAdmin(e, v){
-   fetch(`/userrescues/${v.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ status: "Guest" }),
-        })
-        .then((r) => r.json())
-        .then((updatedUR) => console.log(updatedUR))
-}
-function handleAddAdmin(e, v){
-  fetch(`/userrescues/${v.id}`, {
-           method: "PATCH",
-           headers: {
-               "Content-Type": "application/json",
-           },
-           body: JSON.stringify({ status: "Admin" }),
-       })
-       .then((r) => r.json())
-       .then((updatedUR) => console.log(updatedUR))
-}
+
   return (
     <div className="App">
       <h1 className="Hello">Pawsitive Pets</h1>
+      {user ? <ReactModal
+        isOpen={isOpen}
+        contentLabel="Example Modal"
+        ariaHideApp={false}                    
+        onRequestClose={() => setIsOpen(false)}>
+        Welcome, {user.name}!
+        <button onClick={() => setIsOpen(false)}>Close</button>
+      </ReactModal> : null } 
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
     <Switch>
       <Route exact path="/login">
-        <LogIn handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
+        <LogIn isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
       <Route exact path="/signup">
-        <SignUp handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
+        <SignUp isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
       {user && !loggedOut ? 
       <Route exact path="/welcome">
@@ -121,15 +112,15 @@ function handleAddAdmin(e, v){
        </Route> : null} 
        {user && !loggedOut ? 
        <Route exact path="/myrescues">
-        <MyRescues rescues={rescues} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} handleRemoveAdmin={handleRemoveAdmin} handleAddAdmin={handleAddAdmin} setResc={setResc} resc={resc} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} userRescues={userRescues} setUserRescues={setUserRescues} />
+        <MyRescues isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} rescues={rescues} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} userRescues={userRescues} setUserRescues={setUserRescues} />
         </Route>  : null} 
         {user && !loggedOut ? 
           <Route exact path="/allrescues">
-         <AllRescues displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} setResc={setResc} resc={resc} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
+         <AllRescues isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
          </Route> : null} 
          {user && !loggedOut ? 
           <Route exact path="/newrescue">
-          <NewRescue user={user} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
+          <NewRescue isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} user={user} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route> 
        : null} 
     </Switch> 
