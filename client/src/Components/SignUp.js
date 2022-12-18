@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactModal from 'react-modal';
+// import ReactModal from 'react-modal';
 
 function SignUp({ errors, setErrors, isOpen, setIsOpen, handleLogIn }) {
 const [userName, setUserName] = useState("")
@@ -49,14 +49,14 @@ return (
         onChange={(e) => setConfirmPassword(e.target.value)}></input>   
         <button>Enter</button>
     </form>
-    {errors ? <ReactModal
+    {/* {errors ? <ReactModal
                     isOpen={isOpen}
                     contentLabel="Error Modal"
                     ariaHideApp={false}                    
                     onRequestClose={() => setIsOpen(false)}>
                  {errors.length > 1 ? errors.map(e => <p>{e}</p>) : <p>{errors}</p>}    
                  <button onClick={() => setIsOpen(false)}>Close</button>
-                </ReactModal> : null }
+                </ReactModal> : null } */}
 </div>
 )
 }

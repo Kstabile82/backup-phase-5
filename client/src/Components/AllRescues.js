@@ -1,5 +1,5 @@
 import React, { useState } from "react"; 
-import ReactModal from 'react-modal';
+// import ReactModal from 'react-modal';
 
 function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
     const [animalChoice, setAnimalChoice] = useState(null)
@@ -69,14 +69,14 @@ function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locatio
     }
     return (
         <div className="container">
-             {errors ? <ReactModal
+             {/* {errors ? <ReactModal
                     isOpen={isOpen}
                     contentLabel="Error Modal"
                     ariaHideApp={false}                    
                     onRequestClose={() => setIsOpen(false)}>
                  {errors.errors.map(e => <p>{e}</p>)}    
                  <button onClick={() => setIsOpen(false)}>Close</button>
-                </ReactModal> : null }
+                </ReactModal> : null } */}
            <div className="filter">Filter:
             <form onSubmit={handleSubmitFilter}>
                 <select name="location" id="location" onChange={handleFilterChange}>

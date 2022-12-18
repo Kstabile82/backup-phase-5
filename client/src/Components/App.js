@@ -8,7 +8,7 @@ import Welcome from "./Welcome";
 import AllRescues from "./AllRescues";
 import MyRescues from "./MyRescues";
 import NewRescue from "./NewRescue";
-import ReactModal from 'react-modal';
+// import ReactModal from 'react-modal';
 
 
 function App(){
@@ -90,14 +90,14 @@ function App(){
   return (
     <div className="App">
       <h1 className="Hello">Pawsitive Pets</h1>
-      {user ? <ReactModal
+      {/* {user ? <ReactModal
         isOpen={isOpen}
         contentLabel="Example Modal"
         ariaHideApp={false}                    
         onRequestClose={() => setIsOpen(false)}>
         Welcome, {user.name}!
         <button onClick={() => setIsOpen(false)}>Close</button>
-      </ReactModal> : null } 
+      </ReactModal> : null }  */}
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
     <Switch>
       <Route exact path="/login">
