@@ -1,9 +1,11 @@
-import React from "react"; 
+import React, { useContext } from "react"; 
+import UserContext from "./UserContext"
 
-function Welcomepage({ user, handleLogout }) {
+function Welcomepage({ handleLogout }) {
+    const msg = useContext(UserContext);
     function handleDelete(e){
       e.preventDefault();
-      fetch(`/user/${user.id}`, { method: "DELETE" }).then((r) => {
+      fetch(`/user/${msg.id}`, { method: "DELETE" }).then((r) => {
         if (r.ok) {
           handleLogout();
         }
@@ -11,7 +13,7 @@ function Welcomepage({ user, handleLogout }) {
     }
 return (
     <div>
-        Welcome, {user.name}!
+        Welcome, {msg.name}!
         <br></br><br></br>
         <button onClick={handleDelete}>Delete My Account</button>
 

@@ -1,10 +1,12 @@
-import React, { useState } from "react"; 
+import React, { useState, useContext } from "react"; 
 // import ReactModal from 'react-modal';
+import UserContext from "./UserContext"
 
 function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
     const [animalChoice, setAnimalChoice] = useState(null)
     const [locationChoice, setLocationChoice] = useState(null)
     let alreadyAdded = undefined
+    const msg = useContext(UserContext);
 
     rescues.map(r => {
         r.rescuepets.map(rP => {
@@ -24,7 +26,7 @@ function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locatio
         setRescue(r)
     }
     function handleSaveToMyRescues(e, r) {
-       alreadyAdded = user.userrescues.find(u => u.rescue.id === r.id) 
+       alreadyAdded = msg.userrescues.find(u => u.rescue.id === r.id) 
        if (alreadyAdded === undefined || alreadyAdded === null) {
         updateUserRescues(r, e)
        }

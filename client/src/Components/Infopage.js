@@ -1,15 +1,13 @@
 import React, { useState } from "react"; 
 import Questions from "./Questions";
-// import EmailForm from "./EmailForm";
+import EmailForm from "./EmailForm";
 
-function Infopage({ q, setQ, info, setInfo, rescue, user, setRescue, userRescue, setUserRescue }) {
+function Infopage({ q, setQ, info, setInfo, rescue, setRescue, userRescue, setUserRescue }) {
    const [editInfo, setEditInfo] = useState(false)
    const [inf, setInf] = useState(null)
   const [showingQs, setShowingQs] = useState(false)
   const [takeTest, setTakeTest] = useState(null)
-  const [infoAns, setInfoAns] = useState([])
   const [testArr, setTestArr] = useState([])
-  const [answerObj, setAnswerObj] = useState({})
 const [newTitle, setNewTitle] = useState(null)
 const [newText, setNewText] = useState(null)
 const [showContactForm, setShowContactForm] = useState(false)
@@ -106,10 +104,9 @@ function handleAlreadyPassed(e, i) {
                 ></input><br></br><button>Submit Form</button>
                      </form>  <button onClick={handleDeleteInfo}>Delete Information</button>
                      </div>: null}
-             {/* {inf && userRescue.status === "Admin" ? <button onClick={handleEditQuestions}>Edit Questions</button> : null }  */}
              {inf && showingQs ? <Questions setInfo={setInfo} info={info} setShowingQs={setShowingQs} showingQs={showingQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
-             {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
-             {/* {showContactForm ? <EmailForm/> : null}        */}
+             {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} testArr={testArr} setTestArr={setTestArr} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
+             {showContactForm ? <EmailForm/> : null}       
 
              <br></br>
              <br></br>

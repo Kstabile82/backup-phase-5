@@ -1,9 +1,6 @@
 import React, { useState } from "react"; 
 
-function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, setTestArr }){
-//   const[inputQ, setInputQ] = useState(null)
-//   const [inputVal, setInputVal] = useState(null)
-//   const [correctAns, setCorrectAns] = useState(null)
+function Form({ qs, i, testArr, setTestArr }){
     const [obj, setObj] = useState(null)
     
     let obJ = {}
@@ -16,7 +13,6 @@ function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, se
         let correctAns;
         let questionId; 
         let infoId = i.id
-
         e.target.checked = !e.target.checked
         inputQ = e.target.name
         inputVal = e.target.value
@@ -26,7 +22,6 @@ function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, se
     }
     function handleSubmitClicked(e, q) {
         e.preventDefault();
-        console.log(obj)
         let alreadyExists = testArr.find(tA => tA.question_id === obj.question_id)
         if (alreadyExists) {
             let idx = testArr.indexOf(alreadyExists)

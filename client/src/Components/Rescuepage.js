@@ -1,9 +1,11 @@
-import React, { useState}  from "react";
+import React, { useState, useContext }  from "react";
 import Infopage from "./Infopage";
 import Allusers from "./Allusers";
 import Rescuepets from "./Rescuepets";
+import UserContext from "./UserContext"
 
-function Rescuepage({ rescues, setRescues, onDeleteUserRescue, user, rescue, setRescue, userRescue, setUserRescue }) {
+function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue, userRescue, setUserRescue }) {
+    const user = useContext(UserContext);
     const [showInfo, setShowInfo] = useState(false)
     const [info, setInfo] = useState(null)
     const [addInfo, setAddInfo] = useState(false)
@@ -137,7 +139,7 @@ return (
     <div>
     <h3>{rescue.name}</h3> 
     <div><button onClick={handleShowUserInfo}>Information</button> <button onClick={handleShowPets}>Pets</button> <button style={{display: userRescue.status === "Admin" ? 'visible' : 'none' }} onClick={handleShowUsers}>Users</button> <button onClick={handleDeleteUserRescue}>Remove from my list</button></div>
-    {showInfo && info !== null && info !== undefined ? <Infopage setRescue={setRescue} q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} setUserRescue={setUserRescue} user={user} setShowInfo={setShowInfo} info={info} setInfo={setInfo} /> : null}
+    {showInfo && info !== null && info !== undefined ? <Infopage setRescue={setRescue} q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} setUserRescue={setUserRescue} setShowInfo={setShowInfo} info={info} setInfo={setInfo} /> : null}
    {showInfo && info === null ? <p>No Info Yet</p> : null}
    {userRescue.status === "Admin" && showInfo ? <button onClick={handleAddInfo}>Add Info</button> : null }
              {addInfo ? <form onSubmit={handleSubmitNewInfo}>

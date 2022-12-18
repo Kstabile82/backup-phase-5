@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import UserContext from "./UserContext"
 
-function NewRescue({ isOpen, setIsOpen, errors, setErrors, rescues, user, setRescues, userRescues, setUserRescues }) { 
+function NewRescue({ isOpen, setIsOpen, errors, setErrors, rescues, setRescues, userRescues, setUserRescues }) { 
+    const msg = useContext(UserContext);
     const [added, setAdded] = useState(false)
     const [name, setName] = useState("")
     const [location, setLocation] = useState("")
@@ -34,7 +36,7 @@ function postNewRescue(newRescue) {
         headers: {
         "Content-Type": "application/json",
         },
-        body: JSON.stringify(newRescue, user)
+        body: JSON.stringify(newRescue, msg)
         })
     .then((r) => r.json())
     .then(rescue => {
@@ -44,7 +46,7 @@ function postNewRescue(newRescue) {
             headers: {
             "Content-Type": "application/json",
             },
-            body: JSON.stringify({ rescue_id: rescue.id, user_id: user.id, status: "Admin" })
+            body: JSON.stringify({ rescue_id: rescue.id, user_id: msg.id, status: "Admin" })
             })
         .then((r) => r.json())
         .then((r) => {

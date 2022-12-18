@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Form from "./Form";
 import Rescuepage from "./Rescuepage";
 
-function Questions({ info, setInfo, showContactForm, setShowContactForm, answerObj, setAnswerObj, testArr, setTestArr, infoAns, setInfoAns, takeTest, setTakeTest, setShowingQs, showingQs, i, setI, q, setQ, userRescue, setUserRescue }) {
+function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, setShowingQs, showingQs, i, setI, q, setQ, userRescue, setUserRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [text, setText] = useState(null)
@@ -255,7 +255,7 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
             </div> : null }
             {userRescue.status !== "Admin" ? <div>
                 <h2>{i.title} Test:</h2>
-            <Form answerObj={answerObj} setAnswerObj={setAnswerObj} qs={i.questions} i={i} infoAns={infoAns} setInfoAns={setInfoAns} testArr={testArr} setTestArr={setTestArr}/> 
+            <Form qs={i.questions} i={i} testArr={testArr} setTestArr={setTestArr}/> 
             <button onClick={handleSubmitTest}>Submit {i.title}</button> </div>
             : null}  
     </div>
