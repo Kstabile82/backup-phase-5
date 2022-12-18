@@ -82,12 +82,22 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
     }
     function handleSubmitTest(e) {
         e.preventDefault();
+        let corr = 0
+        i.questions.map(qu => {
+            qu.options.map(qo => {
+                if(qo.correct){
+                    corr++
+                }
+            })
+            })
+            // let correctlyAnswered = testArr.filter(t => t.correct_answer === t.input)
+            // console.log(correctlyAnswered.length === corr)
         fetch("/userresults", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ userrescue_id: userRescue.id, testArr }),
+            body: JSON.stringify({ userrescue_id: userRescue.id, testArr, corr }),
         })
      .then((r) => {
          if (r.ok) {

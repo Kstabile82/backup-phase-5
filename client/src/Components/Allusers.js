@@ -64,9 +64,9 @@ const [showingScores, setShowingScores] = useState(false)
        if (r.ok) {
          r.json()
          .then((deleted) => {
-           const res = {...userRescue};
-           res.userresults = userRescue.userresults.filter(u => u.id !== deleted.id)
-           setUserRescue(res)
+           const res = {...rescue};
+           res.userresults = rescue.userresults.filter(u => u.id !== deleted.id)
+           setRescue(res)
          })
         }
     })
