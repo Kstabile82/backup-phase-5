@@ -3,6 +3,7 @@ import UserContext from "./UserContext"
 
 function Welcomepage({ handleLogout }) {
     const msg = useContext(UserContext);
+    
     function handleDelete(e){
       e.preventDefault();
       fetch(`/user/${msg.id}`, { method: "DELETE" }).then((r) => {

@@ -256,7 +256,7 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
             {userRescue.status !== "Admin" ? <div>
                 <h2>{i.title} Test:</h2>
             <Form qs={i.questions} i={i} testArr={testArr} setTestArr={setTestArr}/> 
-            <button onClick={handleSubmitTest}>Submit {i.title}</button> </div>
+            <button onClick={handleSubmitTest}>Submit {i.title} Test</button> </div>
             : null}  
     </div>
     )

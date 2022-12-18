@@ -84,6 +84,7 @@ function App(){
       const s = {...user};
       s.userrescues = [...user.userrescues, ur]
       setUser(s)
+      
     })
   }
   return (

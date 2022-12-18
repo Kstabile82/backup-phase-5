@@ -13,7 +13,7 @@ const msg = useContext(UserContext);
     setRescue(rescues.find(r => r.id === uR.rescue.id))
    }
 return (
-    <div>{msg.name}
+    <div>
       <p>{msg.name}'s Rescues:</p>
       {msg.userrescues.map(uR => <div key={uR.id} onClick={(e) => handleClick(e, uR)}>{uR.rescue.name} • Status: {uR.status}
   </div> )}

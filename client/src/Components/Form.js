@@ -37,6 +37,7 @@ function Form({ qs, i, testArr, setTestArr }){
         <div>
             {qs.map(q => 
                 <div><form onSubmit={(e) => handleSubmitClicked(e, q)}>{q.text}
+                <br></br>
                 {q.options.map(o => 
                     <label>{o.text}
                     <input
@@ -47,9 +48,11 @@ function Form({ qs, i, testArr, setTestArr }){
                     onChange={(e) => handleTestInput(e, q)}
                     >
                     </input></label>)}
-                    <button>Enter</button>
+                    <button>Enter</button><br></br>
+                   
 
                 </form> 
+                <br></br>
                  </div>
             )}
    </div>

@@ -124,9 +124,10 @@ function handleFilter(e) {
         setRescuePets(rescuePets.filter(r => r.animal === e.target.value))
     }
 }
+//remove duplicates from pet array, make so nothing happens on click
 return (
     <div>
-        <form onChange={handleFilter}>Filter
+        <form onChange={handleFilter}>Filter    
         <select name="animal" id="animal">
                 <option key="" value="" hidden>Animal</option>
                 {rescuePets.map(rPs => 
