@@ -1,6 +1,6 @@
 import React, { useState } from "react"; 
 import Questions from "./Questions";
-import EmailForm from "./EmailForm";
+// import EmailForm from "./EmailForm";
 
 function Infopage({ q, setQ, info, setInfo, rescue, user, setRescue, userRescue, setUserRescue }) {
    const [editInfo, setEditInfo] = useState(false)
@@ -109,7 +109,7 @@ function handleAlreadyPassed(e, i) {
              {/* {inf && userRescue.status === "Admin" ? <button onClick={handleEditQuestions}>Edit Questions</button> : null }  */}
              {inf && showingQs ? <Questions setInfo={setInfo} info={info} setShowingQs={setShowingQs} showingQs={showingQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
              {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} answerObj={answerObj} setAnswerObj={setAnswerObj} testArr={testArr} setTestArr={setTestArr} infoAns={infoAns} setInfoAns={setInfoAns} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
-             {showContactForm ? <EmailForm/> : null}       
+             {/* {showContactForm ? <EmailForm/> : null}        */}
 
              <br></br>
              <br></br>
