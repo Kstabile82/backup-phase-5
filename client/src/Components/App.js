@@ -8,8 +8,8 @@ import Welcome from "./Welcome";
 import AllRescues from "./AllRescues";
 import MyRescues from "./MyRescues";
 import NewRescue from "./NewRescue";
-// import ReactModal from 'react-modal';
-
+import UserContext from "./UserContext"
+// import ReactModal from 'react-modal'; 
 
 function App(){
   const [user, setUser] = useState(null);
@@ -111,9 +111,11 @@ function App(){
        <Welcome user={user} handleLogout={handleLogout} />
        </Route> : null} 
        {user && !loggedOut ? 
-       <Route exact path="/myrescues">
-        <MyRescues rescues={rescues} setRescues={setRescues} isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} setRescue={setRescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} userRescues={userRescues} setUserRescues={setUserRescues} />
-        </Route>  : null} 
+       <UserContext.Provider value={user}>
+        <Route exact path="/myrescues">
+        <MyRescues rescues={rescues} setRescues={setRescues} isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
+        </Route>  
+        </UserContext.Provider>: null} 
         {user && !loggedOut ? 
           <Route exact path="/allrescues">
          <AllRescues isOpen={isOpen} setIsOpen={setIsOpen} errors={errors} setErrors={setErrors} displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} user={user} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />

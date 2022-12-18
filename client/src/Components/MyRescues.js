@@ -1,9 +1,10 @@
-import React from "react"; 
+import React, { useContext } from "react"; 
 import Rescuepage from "./Rescuepage";
+import UserContext from "./UserContext"
 // import ReactModal from 'react-modal';
 
 function MyRescues({ rescues, setRescues, errors, setErrors, isOpen, setIsOpen, rescue, setRescue, userRescue, setUserRescue, onDeleteUserRescue, user, isAdmin, setIsAdmin }) { 
-
+const msg = useContext(UserContext);
   function handleClick(e, uR) {
     setUserRescue(uR)
     if (uR.status === "Admin"){
@@ -12,13 +13,13 @@ function MyRescues({ rescues, setRescues, errors, setErrors, isOpen, setIsOpen, 
     setRescue(rescues.find(r => r.id === uR.rescue.id))
    }
 return (
-    <div>
-      <p>{user.name}'s Rescues:</p>
-      {user.userrescues.map(uR => <div key={uR.id} onClick={(e) => handleClick(e, uR)}>{uR.rescue.name} • Status: {uR.status}
+    <div>{msg.name}
+      <p>{msg.name}'s Rescues:</p>
+      {msg.userrescues.map(uR => <div key={uR.id} onClick={(e) => handleClick(e, uR)}>{uR.rescue.name} • Status: {uR.status}
   </div> )}
       {rescue.name !== undefined ? 
        <div key={rescue.id}>
-      <Rescuepage rescues={rescues} setRescues={setRescues} onDeleteUserRescue={onDeleteUserRescue} isAdmin={isAdmin} user={user} rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue}/> 
+      <Rescuepage rescues={rescues} setRescues={setRescues} onDeleteUserRescue={onDeleteUserRescue} isAdmin={isAdmin} user={msg} rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue}/> 
       </div> : null }  
       {/* {errors ? <ReactModal
                     isOpen={isOpen}
