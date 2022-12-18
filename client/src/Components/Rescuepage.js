@@ -18,6 +18,7 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue
     const [newRescueLocation, setNewRescueLocation] = useState(null)
     const [newInfoTitle, setNewInfoTitle] = useState(null)
     const [newInfoText, setNewInfoText] = useState(null)
+    // const [showingDeleteQ, setShowingDeleteQ] = useState(false)
 
     fetch(`/information/${rescue.id}`)
     .then((r) => r.json())
@@ -38,7 +39,6 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue
     function handleDeleteUserRescue(e) {
         e.preventDefault();
         onDeleteUserRescue(rescue, user)
-        //setmodal if unsuccessful
     }
     function handleAddInfo(e) {
         e.preventDefault();
@@ -156,7 +156,11 @@ return (
              {showInfo ? <button onClick={handleClose}>Close Information</button> : null} 
     {rescuePets !== [] && showPets ? <Rescuepets rescue={rescue} setRescue={setRescue} userRescue={userRescue} rescuePets={rescuePets} setRescuePets={setRescuePets} showPets={showPets} setShowPets={setShowPets} /> : null}
     {showingUsers ? <Allusers rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue} /> : null}
-    {userRescue.status === "Admin" ? <div><button onClick={editRescueForm}>Update Rescue</button><button onClick={handleDeleteRescue}>Delete Rescue</button></div> : null}
+    {userRescue.status === "Admin" ? <div>
+      <button onClick={editRescueForm}>Update Rescue</button>
+      <button onClick={handleDeleteRescue}>Delete Rescue</button>
+      </div> : null}
+    {/* {showingDeleteQ ? <form>Are you sure you want to delete {rescue.name}? </form> : null } */}
     {showingEditRescueForm ? <form onSubmit={submitRescueUpdates}>
       <input onChange={handleChangeRescueInfo}
                 type="text"

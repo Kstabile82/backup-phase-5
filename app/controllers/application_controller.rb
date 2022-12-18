@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
-    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-    rescue_from ActiveRecord::RecordNotFound, with: :render_unprocessable_entity_response
+    # rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    # rescue_from ActiveRecord::RecordNotFound, with: :render_unprocessable_entity_response
 
     private
 
@@ -11,12 +11,12 @@ class ApplicationController < ActionController::API
     end
 
     def render_not_found_response
+      # render json: { error: "Not found" }, status: :not_found
       render json: { error: "Not found" }, status: :not_found
-    # render json: { errors: invalid.record.errors }, status: :not_found
     end
 
-    def render_unprocessable_entity_response
-      render json: { error: "Not found" }, status: :unprocessable_entity
-    # render json: { errors: invalid.record.errors }, status: :not_found
+    def render_unprocessable_entity_response(invalid)
+      # render json: { error: "Not found" }, status: :unprocessable_entity
+      render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
     end
 end

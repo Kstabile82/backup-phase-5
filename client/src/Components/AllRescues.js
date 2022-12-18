@@ -1,8 +1,7 @@
 import React, { useState, useContext } from "react"; 
-// import ReactModal from 'react-modal';
 import UserContext from "./UserContext"
 
-function AllRescues({ errors, setErrors, isOpen, setIsOpen, animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
+function AllRescues({ animalArray, locationArray, displayedRescs, setDisplayedRescs, updateUserRescues, user, rescues, setRescue, rescue, isAdmin, setIsAdmin }) {
     const [animalChoice, setAnimalChoice] = useState(null)
     const [locationChoice, setLocationChoice] = useState(null)
     let alreadyAdded = undefined

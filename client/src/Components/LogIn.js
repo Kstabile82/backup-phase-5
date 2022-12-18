@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-// import ReactModal from 'react-modal';
 
-function LogIn({ errors, setErrors, isOpen, setIsOpen, handleLogIn, loggedOut }) {
+function LogIn({ handleCloseErrors, errors, setErrors, isOpen, setIsOpen, handleLogIn, loggedOut }) {
 const [name, setName] = useState("")
 const [password, setPassword] = useState("")
 
@@ -44,14 +43,9 @@ const [password, setPassword] = useState("")
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}></input>  
                 <button>Enter</button>
-                {/* {errors ? <ReactModal
-                    isOpen={isOpen}
-                    contentLabel="Error Modal"
-                    ariaHideApp={false}                    
-                    onRequestClose={() => setIsOpen(false)}>
-                 {errors.map(e => <p>{e}</p>)}    
-                 <button onClick={() => setIsOpen(false)}>Close</button>
-                </ReactModal> : null } */}
+                {errors ? <div> {errors.map(e => <div><p>{e}</p></div>) }
+                <button onClick={handleCloseErrors}>Close error messages</button>  </div>  : null }
+         
             </form> : null }
         </div>
     )

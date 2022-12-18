@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import UserContext from "./UserContext"
 
-function NewRescue({ isOpen, setIsOpen, errors, setErrors, rescues, setRescues, userRescues, setUserRescues }) { 
+function NewRescue({ handleCloseErrors, errors, setErrors, rescues, setRescues, userRescues, setUserRescues }) { 
     const msg = useContext(UserContext);
     const [added, setAdded] = useState(false)
     const [name, setName] = useState("")
@@ -22,13 +22,7 @@ function NewRescue({ isOpen, setIsOpen, errors, setErrors, rescues, setRescues, 
     }
     function handleSubmit(e) {
         e.preventDefault();
-        if (location === "" || name === "") {
-            setAdded(false) 
-        }
-        else {
         postNewRescue(newRescue)
-        setAdded(true)
-    }
 }
 function postNewRescue(newRescue) {
     fetch ("/newrescue", {
@@ -38,7 +32,9 @@ function postNewRescue(newRescue) {
         },
         body: JSON.stringify(newRescue, msg)
         })
-    .then((r) => r.json())
+    .then((r) => { 
+        if (r.ok) { 
+            r.json()
     .then(rescue => {
         setRescues([...rescues, rescue])
         fetch ("/myrescues", {
@@ -51,9 +47,16 @@ function postNewRescue(newRescue) {
         .then((r) => r.json())
         .then((r) => {
             setUserRescues([...userRescues, r]) 
-        //set modal 
+            setAdded(true)
         })
     })
+}
+else {
+    r.json().then((errorInfo) => {
+      setErrors(errorInfo.errors)
+       })
+}   
+})
 }
 
     return (
@@ -71,7 +74,9 @@ function postNewRescue(newRescue) {
                 ></input>
                 <button className="formbutton">Submit</button>
             </form> 
-            {added ? <p>Thanks, your rescue was added!</p> : null}
+                {errors ? <div> {errors.map(e => <div><p>{e}</p></div>) }
+                <button onClick={handleCloseErrors}>Close error messages</button>  </div>  : null }
+         
         </div>
     );
 }

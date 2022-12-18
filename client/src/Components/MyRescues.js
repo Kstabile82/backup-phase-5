@@ -1,7 +1,7 @@
 import React, { useContext } from "react"; 
 import Rescuepage from "./Rescuepage";
 import UserContext from "./UserContext"
-// import ReactModal from 'react-modal';
+import ReactModal from 'react-modal';
 
 function MyRescues({ rescues, setRescues, errors, setErrors, isOpen, setIsOpen, rescue, setRescue, userRescue, setUserRescue, onDeleteUserRescue, isAdmin, setIsAdmin }) { 
 const msg = useContext(UserContext);
@@ -21,14 +21,14 @@ return (
        <div key={rescue.id}>
       <Rescuepage rescues={rescues} setRescues={setRescues} onDeleteUserRescue={onDeleteUserRescue} isAdmin={isAdmin} rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue}/> 
       </div> : null }  
-      {/* {errors ? <ReactModal
+      {errors ? <ReactModal
                     isOpen={isOpen}
                     contentLabel="Error Modal"
                     ariaHideApp={false}                    
                     onRequestClose={() => setIsOpen(false)}>
                  {errors.map(e => <p>{e}</p>)}    
                  <button onClick={() => setIsOpen(false)}>Close</button>
-                </ReactModal> : null } */}
+                </ReactModal> : null }
     </div>
 )
 }

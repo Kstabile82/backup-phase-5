@@ -1,7 +1,8 @@
 class RescuesController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-    before_action :authorize, only: [:delete, :update]
-  
+    before_action :authorize, only: [:create, :delete, :update]
+    wrap_parameters format: []
+    
 def index
     rescs = Rescue.all
     render json: rescs
@@ -9,7 +10,7 @@ end
 
 def create    
     resc = Rescue.create!(rescue_params)
-    render json: resc, status: :created
+    render json: resc, status: 200
 end
 
 def update
