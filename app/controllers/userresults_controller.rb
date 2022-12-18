@@ -12,13 +12,30 @@ class UserresultsController < ApplicationController
                 score = score
             end
         end
-        alreadyexists = Userresult.find_by(information_id: params[:testArr][0][:info_id])
-        if alreadyexists
-            ur = alreadyexists.update!(userrescue_id: params[:userrescue_id], information_id: params[:testArr][0][:info_id], score: score)
+        ur = Userresult.create!(userrescue_id: params[:userrescue_id], information_id: params[:testArr][0][:info_id], score: score, maxscore: params[:corr])
+        if ur
+            render json: ur
         else 
-        ur = Userresult.create!(userrescue_id: params[:userrescue_id], information_id: params[:testArr][0][:info_id], score: score)
+            render json: { message: `We couldn't save your results.` }
         end
-        render json: ur
+      end
+
+      def update
+        arr = params[:testArr]
+        score = 0; 
+        inp = params[:testArr].map do |t| 
+            if t[:input] == t[:correct_answer] 
+                score = score + 1
+            else 
+                score = score
+            end
+        end
+        ur = Userresult.update!(userrescue_id: params[:userrescue_id], information_id: params[:testArr][0][:info_id], score: score, maxscore: params[:corr])
+        if ur
+            render json: ur
+        else 
+            render json: { message: `We couldn't update your results.` }
+        end
       end
 
       def destroy
@@ -35,7 +52,7 @@ class UserresultsController < ApplicationController
     private 
 
     def userresults_params
-        params.permit(:userrescue_id, :information_id, :score)
+        params.permit(:userrescue_id, :information_id, :score, :maxscore)
     end
 
 end

@@ -36,17 +36,6 @@ function Form({ answerObj, setAnswerObj, qs, i, infoAns, setInfoAns, testArr, se
         else {
             setTestArr([...testArr, obj])
         }
-        //testArr.find obj w/ question, if exists, splice to swap out with new obj
-        //if dont find above, spread operator to add obj to TestArr
-
-        // let alreadyexists = infoAns.find(iA => iA.question === answerObj.question)
-        //if alreadyexists, splice the infoAns array and replace iA w/ answerObj
-        //else setInfoAns([...infoAns, answerObj])
-       //ans is the correct option 
-        // setInfoAns([...infoAns.filter(iA => iA.question !== answerObj.question), answerObj])
-        //array of Q&A, filters so the new Q isnt included, then adds the new Q&A
-            // let testObj = { infoId: i.id, questionId: q.id, answer: ans.text, inputName: inputVal };
-            // setTestArr([...testArr.filter(tA => tA.questionId !== testObj.questionId), testObj])
     }
 
     return (

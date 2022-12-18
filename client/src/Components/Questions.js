@@ -90,8 +90,30 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
                 }
             })
             })
-            // let correctlyAnswered = testArr.filter(t => t.correct_answer === t.input)
-            // console.log(correctlyAnswered.length === corr)
+    let exists = userRescue.userresults.find(urs => urs.information_id === testArr.information_id)
+    if (exists) {
+        fetch(`/userresults/${exists.id}`, {
+            method: "PATCH", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ userrescue_id: userRescue.id, testArr, corr }),
+        })
+     .then((r) => {
+         if (r.ok) {
+           r.json()
+           .then((ur) => {
+             if (ur.score === testArr.length) {
+                setShowContactForm(!showContactForm)
+                let index = userRescue.userresults.findIndex(exists)
+                userRescue.userresults.splice(index,1,ur)
+                setUserRescue(userRescue)
+             }
+           })
+         }
+       });
+    }
+    else {
         fetch("/userresults", {
             method: "POST", 
             headers: {
@@ -111,6 +133,7 @@ function Questions({ info, setInfo, showContactForm, setShowContactForm, answerO
            })
          }
        });
+    }
     }
     function editQuestion(e) {
         e.preventDefault();
