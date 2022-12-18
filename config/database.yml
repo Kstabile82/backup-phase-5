@@ -85,3 +85,5 @@ production:
   database: backup_phase_5_production
   username: backup_phase_5
   password: <%= ENV["BACKUP_PHASE_5_DATABASE_PASSWORD"] %>
+    url: <%= ENV['DATABASE_URL'] %>
+
