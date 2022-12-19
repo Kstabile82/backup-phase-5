@@ -7,7 +7,7 @@ function EmailForm() {
   const sendEmail = (e) => {
     e.preventDefault();
  
-        emailjs.sendForm('service_au46z5s', 'template_ehnw6dw', form.current, 'M8KFb0Ew-2p9FTfkj')
+        emailjs.sendForm('service_au46z5s', 'template_ehnw6dw', form.current, process.env.REACT_APP_API_KEY)
           .then((result) => {
               console.log(result.text);
           }, (error) => {
