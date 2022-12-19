@@ -11,7 +11,7 @@ import NewRescue from "./NewRescue";
 import UserContext from "./UserContext"
 
 function App(){
-  console.log(process.env.REACT_APP_API_KEY)
+  console.log(process.env.RAILS_APP_API_KEY)
 
   const [user, setUser] = useState(null);
   const [loggedOut, setLoggedOut] = useState(true);
