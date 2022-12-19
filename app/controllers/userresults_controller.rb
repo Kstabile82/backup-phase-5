@@ -39,14 +39,9 @@ class UserresultsController < ApplicationController
       end
 
       def destroy
-        uR = Userrescue.find(params[:userrescue_id])
-        if uR.status === "Admin"
-            u = Userresult.find(params[:id])
-            u.destroy
-            render json: { message: "Deleted" }
-        else 
-            render json: { message: `You're not an admin for this rescue. Only admins are authorized to delete results.`}
-      end
+        uR = Userresult.find(params[:id])
+        uR.destroy
+        render json: { message: "Deleted" }
     end
 
     private 

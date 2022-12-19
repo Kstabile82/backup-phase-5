@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   post "/newrescue", to: "rescues#create"
   post "/myrescues", to: "userrescues#create"
   post "/allusers", to: "userrescues#showalluserstoadmin"
-  post "/deleteresults", to: "userresults#destroy"
   
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

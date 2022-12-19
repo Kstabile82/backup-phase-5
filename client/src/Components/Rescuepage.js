@@ -156,7 +156,7 @@ return (
                 ></input><button>Submit New Information</button></form> : null}
              {showInfo ? <button onClick={handleClose}>Close Information</button> : null} 
     {rescuePets !== [] && showPets ? <Rescuepets rescue={rescue} setRescue={setRescue} userRescue={userRescue} rescuePets={rescuePets} setRescuePets={setRescuePets} showPets={showPets} setShowPets={setShowPets} /> : null}
-    {showingUsers ? <Allusers rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue} /> : null}
+    {showingUsers ? <Allusers rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue} /> : null}
     {userRescue.status === "Admin" ? <div>
       <button onClick={editRescueForm}>Update Rescue</button>
       <button onClick={handleDeleteRescue}>Delete Rescue</button>

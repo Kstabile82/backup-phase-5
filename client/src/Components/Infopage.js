@@ -89,7 +89,9 @@ function handleAlreadyPassed(e, i) {
              <button onClick={(e) => handleEditQuestions(e, i)}>Edit Questions</button></div>
               : 
              <div><button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button>
-             <button onClick={(e) => handleAlreadyPassed(e, i)}>You already passed this test, open contact form</button></div> }
+             {/* <button onClick={(e) => handleAlreadyPassed(e, i)}>You already passed this test, open contact form</button> */}
+             </div> 
+             }
              </div>) } 
              {editInfo ? <div><p className="line"></p><h3>Editor</h3><form onSubmit={handleSubmitForm}>
              Previous title: {inf.title} <input onChange={handleChangeInfo}
