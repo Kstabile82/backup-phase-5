@@ -12,6 +12,8 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/env
+/.env
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
@@ -27,3 +29,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore env files.
+.env
+/env
+
