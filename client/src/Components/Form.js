@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 function Form({ qs, i, testArr, setTestArr }){
     const [obj, setObj] = useState(null)
-    
+    const [selected, setSelected] = useState(null)
+
     let obJ = {}
     let thisValue;
 
@@ -13,7 +14,7 @@ function Form({ qs, i, testArr, setTestArr }){
         let correctAns;
         let questionId; 
         let infoId = i.id
-        e.target.checked = !e.target.checked
+        setSelected(e.target.value)
         inputQ = e.target.name
         inputVal = e.target.value
         correctAns = q.options.find(o => o.correct)  
@@ -32,7 +33,6 @@ function Form({ qs, i, testArr, setTestArr }){
             setTestArr([...testArr, obj])
         }
     }
-
     return (
         <div>
             {qs.map(q => 
@@ -44,7 +44,7 @@ function Form({ qs, i, testArr, setTestArr }){
                     type="radio"
                     name={q.text}
                     value={o.text}
-                    checked="false"
+                    checked={selected === o.text}
                     onChange={(e) => handleTestInput(e, q)}
                     >
                     </input></label>)}

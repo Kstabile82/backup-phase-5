@@ -18,7 +18,7 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue
     const [newRescueLocation, setNewRescueLocation] = useState(null)
     const [newInfoTitle, setNewInfoTitle] = useState(null)
     const [newInfoText, setNewInfoText] = useState(null)
-    // const [showingDeleteQ, setShowingDeleteQ] = useState(false)
+    const [showingDeleteQ, setShowingDeleteQ] = useState(false)
 
     fetch(`/information/${rescue.id}`)
     .then((r) => r.json())
@@ -141,7 +141,8 @@ return (
     <div><button onClick={handleShowUserInfo}>Information</button> <button onClick={handleShowPets}>Pets</button> <button style={{display: userRescue.status === "Admin" ? 'visible' : 'none' }} onClick={handleShowUsers}>Users</button> <button onClick={handleDeleteUserRescue}>Remove from my list</button></div>
     {showInfo && info !== null && info !== undefined ? <Infopage setRescue={setRescue} q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} setUserRescue={setUserRescue} setShowInfo={setShowInfo} info={info} setInfo={setInfo} /> : null}
    {showInfo && info === null ? <p>No Info Yet</p> : null}
-   {userRescue.status === "Admin" && showInfo ? <button onClick={handleAddInfo}>Add Info</button> : null }
+   <p className="infomenu">{userRescue.status === "Admin" && showInfo ? <div>   
+<button onClick={handleAddInfo}>Add Information</button> </div> : null }
              {addInfo ? <form onSubmit={handleSubmitNewInfo}>
              <input onChange={handleChangeNewInfo}
                 type="text"
@@ -173,7 +174,7 @@ return (
                 placeholder="Rescue location"
                 ></input>
       <button>Submit Rescue Edits</button>
-    </form> : null }
+    </form> : null } </p>
     </div>
     
 )

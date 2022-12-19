@@ -5,13 +5,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .image {
   text-align: center;
 }
 
 .Hello {
   font-family: Marker felt; 
-  color:  rgb(71, 9, 94);
+  color: rgb(71, 9, 94);
   background-color: rgb(242, 242, 247);
   text-align: left;
   font-size: 30px;
@@ -112,6 +113,11 @@ form {
   padding: 0;
 }
 
+.line {
+  color:rgb(71, 9, 94);
+  border: solid;
+
+}
 .Home {
   float: left;
   color: #f2f2f2;
@@ -128,6 +134,9 @@ form {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+}
+.infomenu {
+  background-color:rgb(71, 9, 94)
 }
 .Signup {
   float: left;

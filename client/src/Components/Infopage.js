@@ -91,13 +91,13 @@ function handleAlreadyPassed(e, i) {
              <div><button onClick={(e) => handleShowQuiz(e, i)}>Test Your Knowledge</button>
              <button onClick={(e) => handleAlreadyPassed(e, i)}>You already passed this test, open contact form</button></div> }
              </div>) } 
-             {editInfo ? <div><form onSubmit={handleSubmitForm}>
-             Title: {inf.title} <input onChange={handleChangeInfo}
+             {editInfo ? <div><p className="line"></p><h3>Editor</h3><form onSubmit={handleSubmitForm}>
+             Previous title: {inf.title} <input onChange={handleChangeInfo}
                 type="text"
                 name="title"
                 placeholder="Enter New Title"
                 ></input><br></br>
-             Text: {inf.text} <input onChange={handleChangeInfo}
+             Previous text: {inf.text} <input onChange={handleChangeInfo}
                 type="text"
                 name="text"
                 placeholder="Enter New Text"
@@ -108,8 +108,7 @@ function handleAlreadyPassed(e, i) {
              {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} testArr={testArr} setTestArr={setTestArr} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
              {showContactForm ? <EmailForm/> : null}       
 
-             <br></br>
-             <br></br>
+          
         </div>
     )
 }

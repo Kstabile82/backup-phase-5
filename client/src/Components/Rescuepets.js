@@ -1,14 +1,14 @@
 import React, { useState} from "react";
 
 function Rescuepets({ rescue, setRescue, userRescue, rescuePets, setRescuePets, showPets, setShowPets }) {
-    const [showDetails, setShowDetails] = useState(null)
+    const [pet, setPet] = useState(null)
     const [showingAddForm, setShowingAddForm] = useState(false)
     const [showingUpdateForm, setShowingUpdateForm] = useState(false)
     const [name, setName] = useState(null)
     const [breed, setBreed] = useState(null)
     const [animal, setAnimal] = useState(null)
     const [age, setAge] = useState(null)
-    let updatedPet = showDetails
+    let updatedPet = pet
 
     let animalArr = []; 
     rescuePets.map(rP => {
@@ -16,6 +16,10 @@ function Rescuepets({ rescue, setRescue, userRescue, rescuePets, setRescuePets, 
             animalArr.push(rP.animal)
         }
     })
+
+    function handleSetPet(e, rP) {
+        setPet(rP)
+    }
     function handleClosePets(e) {
         e.preventDefault(); 
         setShowPets(!showPets)
@@ -28,10 +32,10 @@ function Rescuepets({ rescue, setRescue, userRescue, rescuePets, setRescuePets, 
 
 function handleDeletePet(e) {
     e.preventDefault();
-    fetch(`/rescuepets/${showDetails.id}`, { 
+    fetch(`/rescuepets/${pet.id}`, { 
         method: 'DELETE'
     })
-    setRescuePets(rescuePets.filter(rP => rP.id !== showDetails.id))
+    setRescuePets(rescuePets.filter(rP => rP.id !== pet.id))
 }
 function onAddPetClick(e){
     e.preventDefault();
@@ -137,29 +141,30 @@ return (
                 <option key="all" value="All" >All</option>
                 </select>
         </form>
-    {rescuePets.map(rP => <p>{rP.name}, {rP.animal}, {rP.age}, {rP.breed}</p> ) }
-    {showDetails ? <div><p>{showDetails.name}</p>
-    {userRescue.status === "Admin" ? <div><button onClick={handleDeletePet}>Delete</button><button onClick={handleUpdatePet}>Update</button></div> : null} </div> : null }
+    {rescuePets.map(rP => <p onClick={(e) => handleSetPet(e, rP)}>{rP.name}, {rP.animal}, {rP.age}, {rP.breed}</p> ) }
+    {pet ? <div><p>{pet.name}</p>
+    {userRescue.status === "Admin" ? <div><button onClick={handleDeletePet}>Delete</button><button onClick={handleUpdatePet}>Update</button></div> : null} </div> 
+    : null }
     {showingUpdateForm ? <div><form className="Update Form" onSubmit={handleSubmitUpdates}>
     <input onChange={handleChange}
                 type="text"
                 name="name"
-                placeholder={showDetails.name}
+                placeholder={pet.name}
                 ></input>
                 <input onChange={handleChange}
                 type="text"
                 name="animal"
-                placeholder={showDetails.animal}
+                placeholder={pet.animal}
                 ></input>
                   <input onChange={handleChange}
                 type="text"
                 name="breed"
-                placeholder={showDetails.breed}
+                placeholder={pet.breed}
                 ></input>
                   <input onChange={handleChange}
                 type="text"
                 name="age"
-                placeholder={showDetails.age}
+                placeholder={pet.age}
                 ></input><button className="formbutton">Submit Updates</button>
     </form> 
 </div> : null }

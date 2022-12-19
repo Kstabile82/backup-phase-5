@@ -207,7 +207,8 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
     }
 
     return (
-        <div>
+        <div><p className="line"></p><h3>Editing {i.title} Questions:</h3>
+           
             {userRescue.status === "Admin" ? <div>
             {i.questions.map(quest => <div><ul onClick={(e) => handleClickedQuestion(e, quest)}>{quest.text}
             {quest.options ? quest.options.map(o => <div><li>{o.text}</li><button onClick={(e) => deleteOption(e, o)}>-</button></div>) : null}
@@ -221,7 +222,7 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
                 <button>Submit Question Edits</button>
                 </form> : null }
             <button onClick={(e) => handleDeleteQuestion(e, quest)}>Delete Question</button>
-            <button onClick={(e) => handleAddOption(e, quest)}>Add Option</button></ul> 
+            <button onClick={(e) => handleAddOption(e, quest)}>Add Option</button></ul><br></br>
             {addO ? <form onSubmit={(e) => handleSubmitOption(e, quest)}>
                 <input 
                 type="text" 
@@ -235,6 +236,7 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
                 onChange={handleInputOption}></input>  
                 <button>Submit</button>
             </form> : null } </div>)} 
+            <p className="line"></p>
             <button onClick={handleAddQuestions}>Add Question</button>
             {addQs ? <form onSubmit={handleSubmitNewQ}>
                 <input 
@@ -251,7 +253,7 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
                 ></input>  
                 <button>Submit</button>
             </form>: null}
-            <button onClick={handleQClose}>Close</button>
+            <button onClick={handleQClose}>Close {i.title}</button>
             </div> : null }
             {userRescue.status !== "Admin" ? <div>
                 <h2>{i.title} Test:</h2>
