@@ -11,6 +11,7 @@ import NewRescue from "./NewRescue";
 import UserContext from "./UserContext"
 
 function App(){
+  
   const [user, setUser] = useState(null);
   const [loggedOut, setLoggedOut] = useState(true);
   const [rescues, setRescues] = useState([])
