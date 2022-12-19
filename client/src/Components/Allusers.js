@@ -48,8 +48,8 @@ const [showingScores, setShowingScores] = useState(false)
         r.score = res.score
         r.id = res.id
         r.maxscore = res.maxscore
-        rArray.push(r)
       }))
+      rArray.push(r)
       setResults(rArray)
     }
     function handleDeleteResults(e, r) {
@@ -73,7 +73,6 @@ const [showingScores, setShowingScores] = useState(false)
         }
     })
     }   
-   
 return (
     <div>
         {rescue.userrescues.map(uR => <div><p>{uR.user.name}, {uR.status}</p>

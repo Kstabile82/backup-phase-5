@@ -10,6 +10,12 @@ function Rescuepets({ rescue, setRescue, userRescue, rescuePets, setRescuePets, 
     const [age, setAge] = useState(null)
     let updatedPet = showDetails
 
+    let animalArr = []; 
+    rescuePets.map(rP => {
+        if(!animalArr.includes(rP.animal)) {
+            animalArr.push(rP.animal)
+        }
+    })
     function handleClosePets(e) {
         e.preventDefault(); 
         setShowPets(!showPets)
@@ -19,10 +25,7 @@ function Rescuepets({ rescue, setRescue, userRescue, rescuePets, setRescuePets, 
     e.preventDefault();
     setShowingUpdateForm(!showingUpdateForm)
   }
-  function handleShowDetails(e, rP) {
-    e.preventDefault();
-    setShowDetails(rP)
-  }
+
 function handleDeletePet(e) {
     e.preventDefault();
     fetch(`/rescuepets/${showDetails.id}`, { 
@@ -52,8 +55,7 @@ function handleChange(e) {
     }
     if(e.target.parentElement.className === "Add Form"){
         if (e.target.name === "name") {
-            setName(e.target.value)
-            
+            setName(e.target.value) 
         }
         if (e.target.name === "age") {
             setAge(e.target.value)
@@ -124,19 +126,18 @@ function handleFilter(e) {
         setRescuePets(rescuePets.filter(r => r.animal === e.target.value))
     }
 }
-//remove duplicates from pet array, make so nothing happens on click
 return (
     <div>
         <form onChange={handleFilter}>Filter    
         <select name="animal" id="animal">
                 <option key="" value="" hidden>Animal</option>
-                {rescuePets.map(rPs => 
-                                <option key={rPs.name} value={rPs.animal}>{rPs.animal}</option>
+                {animalArr.map(a => 
+                                <option key={a} value={a}>{a}</option>
                     )}
                 <option key="all" value="All" >All</option>
                 </select>
         </form>
-    {rescuePets.map(rP => <p onClick={(e) => handleShowDetails(e, rP)}>{rP.name}, {rP.animal}, {rP.age}, {rP.breed}</p> ) }
+    {rescuePets.map(rP => <p>{rP.name}, {rP.animal}, {rP.age}, {rP.breed}</p> ) }
     {showDetails ? <div><p>{showDetails.name}</p>
     {userRescue.status === "Admin" ? <div><button onClick={handleDeletePet}>Delete</button><button onClick={handleUpdatePet}>Update</button></div> : null} </div> : null }
     {showingUpdateForm ? <div><form className="Update Form" onSubmit={handleSubmitUpdates}>
