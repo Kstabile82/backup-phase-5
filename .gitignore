@@ -31,5 +31,5 @@
 # Ignore env files.
 .env
 /env
-*.env
+/env/*
 
