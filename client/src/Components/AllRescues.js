@@ -70,14 +70,7 @@ function AllRescues({ animalArray, locationArray, displayedRescs, setDisplayedRe
     }
     return (
         <div className="container">
-             {/* {errors ? <ReactModal
-                    isOpen={isOpen}
-                    contentLabel="Error Modal"
-                    ariaHideApp={false}                    
-                    onRequestClose={() => setIsOpen(false)}>
-                 {errors.errors.map(e => <p>{e}</p>)}    
-                 <button onClick={() => setIsOpen(false)}>Close</button>
-                </ReactModal> : null } */}
+            
            <div className="filter">Filter:
             <form onSubmit={handleSubmitFilter}>
                 <select name="location" id="location" onChange={handleFilterChange}>

@@ -100,6 +100,7 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue
        let index = rescues.indexOf(rescue)
        rescues.splice(index,1,updatedRescue)
        setRescues(rescues)
+       setRescue(updatedRescue)
      })
    }
  });   
@@ -130,6 +131,7 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue
      const r = {...rescue};
      r.information = [...rescue.information, newInfo]
      setRescue(r)
+     
    })
  }
 });
