@@ -8,6 +8,11 @@ def index
     render json: rescs
 end
 
+def api
+    str = Rails.application.credentials[:email_api].to_json
+    render json: str
+end
+
 def create    
     resc = Rescue.create!(rescue_params)
     render json: resc, status: 200

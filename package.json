@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/Kstabile82/backup-phase-5#readme",
   "dependencies": {
-    "@emailjs/browser": "3.10.0"
+    "@emailjs/browser": "3.10.0",
+    "dotenv": "16.0.3",
+    "node-polyfill-webpack-plugin": "2.0.1",
+    "path-browserify": "1.0.1"
   }
 }

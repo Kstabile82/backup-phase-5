@@ -11,7 +11,9 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
     const [editedQ, setEditedQ] = useState(null)
     const [newQ, setNewQ] = useState(null)
     const [newO, setNewO] = useState(null)
-    
+    const [showScore, setShowScore] = useState(false)
+    const [score, setScore] = useState(null)
+
     function handleClickedQuestion(e, quest) {
         setQ(quest)
     }
@@ -108,6 +110,8 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
                 let index = userRescue.userresults.findIndex(exists)
                 userRescue.userresults.splice(index,1,ur)
                 setUserRescue(userRescue)
+                setShowScore(!showScore)
+                setScore(ur.score + "out of" + "corr")
              }
            })
          }
@@ -129,6 +133,8 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
                 setShowContactForm(!showContactForm)
                 userRescue.userresults = [...userRescue.userresults, ur]
                 setUserRescue(userRescue)
+                setScore(ur.score + " out of " + corr)
+                setShowScore(!showScore)
              }
            })
          }
@@ -205,11 +211,10 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
           }
         });
     }
-
     return (
-        <div><p className="line"></p><h3>Editing {i.title} Questions:</h3>
+        <div> <p className="line"></p>
            
-            {userRescue.status === "Admin" ? <div>
+            {userRescue.status === "Admin" ? <div><h3>Editing {i.title} Questions:</h3>
             {i.questions.map(quest => <div><ul onClick={(e) => handleClickedQuestion(e, quest)}>{quest.text}
             {quest.options ? quest.options.map(o => <div><li>{o.text}</li><button onClick={(e) => deleteOption(e, o)}>-</button></div>) : null}
             <button onClick={editQuestion}>Edit Question</button>
@@ -258,7 +263,10 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
             {userRescue.status !== "Admin" ? <div>
                 <h2>{i.title} Test:</h2>
             <Form qs={i.questions} i={i} testArr={testArr} setTestArr={setTestArr}/> 
-            <button onClick={handleSubmitTest}>Submit {i.title} Test</button> </div>
+         <button onClick={handleSubmitTest}>Submit {i.title} Test</button> 
+         { score && showScore ? <p onClick={(e) => setShowScore(!showScore)}>You scored {score}</p> : null}
+            
+            </div>
             : null}  
     </div>
     )

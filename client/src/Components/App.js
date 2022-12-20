@@ -9,8 +9,10 @@ import AllRescues from "./AllRescues";
 import MyRescues from "./MyRescues";
 import NewRescue from "./NewRescue";
 import UserContext from "./UserContext"
-function App(){
+// require('dotenv').config()
 
+function App(){
+  
   const [user, setUser] = useState(null);
   const [loggedOut, setLoggedOut] = useState(true);
   const [rescues, setRescues] = useState([])
@@ -44,10 +46,13 @@ function App(){
       
     });
     },[]);
+  
+  
   function handleLogIn(user) {
     setUser(user);
     setLoggedOut(false)
   }
+
   function onDeleteUserRescue(rescue, user) {
    let id = user.userrescues.find(uR => uR.rescue.id === rescue.id)
       fetch(`/userrescues/${id.id}`, { 
