@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SignUp({ errors, setErrors, handleCloseErrors, handleLogIn }) {
+function SignUp({ showingErrors, setShowingErrors, errors, setErrors, handleCloseErrors, handleLogIn }) {
 const [userName, setUserName] = useState("")
 const [password, setPassword] = useState("")
 const [confirmPassword, setConfirmPassword] = useState("")
@@ -23,6 +23,7 @@ const [confirmPassword, setConfirmPassword] = useState("")
           } else {
             r.json().then((err) => {
               setErrors(err.errors)
+              setShowingErrors(!showingErrors)
             });
           }
         });

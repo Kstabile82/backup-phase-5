@@ -22,6 +22,7 @@ function App(){
   const [rescue, setRescue] = useState({})
   const [displayedRescs, setDisplayedRescs] = useState(rescues)
   const [errors, setErrors] = useState(null)
+const [showingErrors, setShowingErrors] = useState(false)
 
   const animalArray = []; 
   const locationArray = [];
@@ -91,6 +92,8 @@ function App(){
   function handleCloseErrors(e) {
     e.preventDefault();
     setErrors(null)
+    setShowingErrors(!showingErrors)
+    console.log("clicked")
 }
 
   return (
@@ -99,10 +102,10 @@ function App(){
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
     <Switch>
       <Route exact path="/login">
-        <LogIn handleCloseErrors={handleCloseErrors} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
+        <LogIn showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
       <Route exact path="/signup">
-        <SignUp handleCloseErrors={handleCloseErrors}  errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
+        <SignUp showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors}  errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
        {user && !loggedOut ? 
        <UserContext.Provider value={user}>
@@ -116,7 +119,7 @@ function App(){
           <MyRescues rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route>  
           <Route exact path="/newrescue">
-          <NewRescue errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
+          <NewRescue handleCloseErrors={handleCloseErrors} showingErrors={showingErrors} setShowingErrors={setShowingErrors} errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route> 
         </UserContext.Provider> : null} 
         

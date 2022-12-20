@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function LogIn({ handleCloseErrors, errors, setErrors, isOpen, setIsOpen, handleLogIn, loggedOut }) {
+function LogIn({ showingErrors, setShowingErrors, handleCloseErrors, errors, setErrors, isOpen, setIsOpen, handleLogIn, loggedOut }) {
 const [name, setName] = useState("")
 const [password, setPassword] = useState("")
 
@@ -23,6 +23,7 @@ const [password, setPassword] = useState("")
         else {
           r.json().then((err) => {
             setErrors(err.errors) 
+            setShowingErrors(!showingErrors)
            setIsOpen(true)
           })
         }

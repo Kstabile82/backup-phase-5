@@ -265,7 +265,6 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
             <Form qs={i.questions} i={i} testArr={testArr} setTestArr={setTestArr}/> 
          <button onClick={handleSubmitTest}>Submit {i.title} Test</button> 
          { score && showScore ? <p onClick={(e) => setShowScore(!showScore)}>You scored {score}</p> : null}
-            
             </div>
             : null}  
     </div>

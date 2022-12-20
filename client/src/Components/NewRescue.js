@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import UserContext from "./UserContext"
 
-function NewRescue({ handleCloseErrors, errors, setErrors, rescues, setRescues, userRescues, setUserRescues }) { 
+function NewRescue({ handleCloseErrors, showingErrors, setShowingErrors, errors, setErrors, rescues, setRescues, userRescues, setUserRescues }) { 
     const msg = useContext(UserContext);
     const [added, setAdded] = useState(false)
     const [name, setName] = useState("")
@@ -54,6 +54,8 @@ function postNewRescue(newRescue) {
 else {
     r.json().then((errorInfo) => {
       setErrors(errorInfo.errors)
+      setShowingErrors(!showingErrors)
+
        })
 }   
 })
@@ -74,8 +76,8 @@ else {
                 ></input>
                 <button className="formbutton">Submit</button>
             </form> 
-                {errors ? <div> {errors.map(e => <div><p>{e}</p></div>) }
-                <button onClick={handleCloseErrors}>Close error messages</button>  </div>  : null }
+                {errors && showingErrors ? <div> {errors.map(e => <div><p>{e}</p></div>) }
+                <button onClick={handleCloseErrors}>Close error messages</button> </div>  : null }
          
         </div>
     );
