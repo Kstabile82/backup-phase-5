@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import emailjs from 'emailjs-com';
+import emailjs from 'emailjs';
 
 function EmailForm() {
   const form = useRef();
