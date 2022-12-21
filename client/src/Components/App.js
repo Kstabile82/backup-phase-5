@@ -146,9 +146,9 @@ const [showingErrors, setShowingErrors] = useState(false)
       <h1 className="Hello">Pawsitive Pets</h1>
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
     <Switch>
-      <Route exact="/">
+      {/* <Route exact="/">
         <App></App>
-      </Route>
+      </Route> */}
       <Route exact="/login">
         <LogIn setUserRescues={setUserRescues} showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
