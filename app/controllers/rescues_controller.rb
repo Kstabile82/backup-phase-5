@@ -1,6 +1,6 @@
 class RescuesController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-    before_action :authorize, only: [:create, :delete, :update]
+    before_action :authorize, only: [:create, :update]
     wrap_parameters format: []
     
 def index
@@ -32,12 +32,13 @@ def update
 end
 
 def destroy
-    byebug
    @current_user = User.find_by(id: session[:user_id])
    r = Rescue.find(params[:id]) 
    admins = Userrescue.where(status: "Admin") 
-   admins = admins.where(rescue_id: r.id).map { |ur| ur.user }
-   admins.include?@current_user 
+   admins = admins.where(rescue_id: params[:id]).map { |ur| ur.user }
+   if admins.include?@current_user 
+    r.destroy
+   end
 end
 
 private

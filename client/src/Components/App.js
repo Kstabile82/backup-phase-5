@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect, useHistory } from "react";
+import { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import LogIn from "./LogIn";
@@ -34,7 +34,7 @@ const [showingErrors, setShowingErrors] = useState(false)
           setLoggedOut(false)
           setUser(u);
           setLoggedOut(false)
-          setUserRescues(user.userrescues)
+          setUserRescues(u.userrescues)
         })
       }
     })
@@ -98,7 +98,8 @@ const [showingErrors, setShowingErrors] = useState(false)
         })
      const s = {...user};
         s.userrescues = user.userrescues.filter(u => u.id !== id.id)
-        setUser(s)   
+        setUser(s)  
+        setUserRescues(s.userrescues) 
      }
   function handleLogout() {
     setUser(null);
@@ -132,14 +133,22 @@ const [showingErrors, setShowingErrors] = useState(false)
     setShowingErrors(!showingErrors)
     console.log("clicked")
 }
-
+// function handleDelResc(resc) {
+//   fetch(`/rescues/${resc.id}`, { 
+//     method: 'DELETE'
+// })
+// setRescues(rescues.filter(r => r.id !== resc.id))
+// setUserRescues(userRescues.filter(uR => uR.rescue_id !== resc.id))
+// console.log(resc)
+// }
   return (
+  
     <div className="App">
       <h1 className="Hello">Pawsitive Pets</h1>
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
     <Switch>
       <Route exact path="/login">
-        <LogIn showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
+        <LogIn setUserRescues={setUserRescues} showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
       <Route exact path="/signup">
         <SignUp showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors}  errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
@@ -153,7 +162,7 @@ const [showingErrors, setShowingErrors] = useState(false)
          <AllRescues errors={errors} setErrors={setErrors} displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} isAdmin={isAdmin} setIsAdmin={setIsAdmin} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
          </Route> 
           <Route exact path="/myrescues">
-          <MyRescues userRescues={userRescues} rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
+          <MyRescues displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} setUserRescues={setUserRescues} userRescues={userRescues} rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route>  
           <Route exact path="/newrescue">
           <NewRescue postNewRescue={postNewRescue} handleCloseErrors={handleCloseErrors} showingErrors={showingErrors} setShowingErrors={setShowingErrors} errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />

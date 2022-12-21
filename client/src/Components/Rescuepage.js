@@ -4,7 +4,7 @@ import Allusers from "./Allusers";
 import Rescuepets from "./Rescuepets";
 import UserContext from "./UserContext"
 
-function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue, userRescue, setUserRescue }) {
+function Rescuepage({ handleDelResc, userRescues, setUserRescues, rescues, setRescues, onDeleteUserRescue, rescue, setRescue, userRescue, setUserRescue }) {
     const user = useContext(UserContext);
     const [showInfo, setShowInfo] = useState(false)
     const [info, setInfo] = useState(null)
@@ -62,10 +62,7 @@ function Rescuepage({ rescues, setRescues, onDeleteUserRescue, rescue, setRescue
   }
   function handleDeleteRescue(e) {
     e.preventDefault();
-    fetch(`/rescues/${rescue.id}`, { 
-      method: 'DELETE'
-  })
-  setRescues(rescues.filter(r => r.id !== rescue.id))
+   handleDelResc(rescue)
   }
 
   function editRescueForm(e) {
