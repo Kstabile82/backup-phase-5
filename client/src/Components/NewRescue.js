@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import UserContext from "./UserContext"
 
-function NewRescue({ handleCloseErrors, showingErrors, setShowingErrors, errors, setErrors, rescues, setRescues, userRescues, setUserRescues }) { 
+function NewRescue({ postNewRescue, handleCloseErrors, showingErrors, setShowingErrors, errors, setErrors, rescues, setRescues, userRescues, setUserRescues }) { 
     const msg = useContext(UserContext);
     const [added, setAdded] = useState(false)
     const [name, setName] = useState("")
@@ -24,41 +24,41 @@ function NewRescue({ handleCloseErrors, showingErrors, setShowingErrors, errors,
         e.preventDefault();
         postNewRescue(newRescue)
 }
-function postNewRescue(newRescue) {
-    fetch ("/newrescue", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newRescue, msg)
-        })
-    .then((r) => { 
-        if (r.ok) { 
-            r.json()
-    .then(rescue => {
-        setRescues([...rescues, rescue])
-        fetch ("/myrescues", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ rescue_id: rescue.id, user_id: msg.id, status: "Admin" })
-            })
-        .then((r) => r.json())
-        .then((r) => {
-            setUserRescues([...userRescues, r]) 
-            setAdded(true)
-        })
-    })
-}
-else {
-    r.json().then((errorInfo) => {
-      setErrors(errorInfo.errors)
-      setShowingErrors(!showingErrors)
-       })
-}   
-})
-}
+// function postNewRescue(newRescue) {
+//     fetch ("/newrescue", {
+//         method: "POST",
+//         headers: {
+//         "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(newRescue, msg)
+//         })
+//     .then((r) => { 
+//         if (r.ok) { 
+//             r.json()
+//     .then(rescue => {
+//         setRescues([...rescues, rescue])
+//         fetch ("/myrescues", {
+//             method: "POST",
+//             headers: {
+//             "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({ rescue_id: rescue.id, user_id: msg.id, status: "Admin" })
+//             })
+//         .then((r) => r.json())
+//         .then((r) => {
+//             setUserRescues([...userRescues, r]) 
+//             setAdded(true)
+//         })
+//     })
+// }
+// else {
+//     r.json().then((errorInfo) => {
+//       setErrors(errorInfo.errors)
+//       setShowingErrors(!showingErrors)
+//        })
+// }   
+// })
+// }
     return (
         <div className="add-rescue-form">
              <form onSubmit={handleSubmit}>

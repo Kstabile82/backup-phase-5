@@ -32,6 +32,7 @@ def update
 end
 
 def destroy
+    byebug
    @current_user = User.find_by(id: session[:user_id])
    r = Rescue.find(params[:id]) 
    admins = Userrescue.where(status: "Admin") 

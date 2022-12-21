@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import Rescuepage from "./Rescuepage";
 import UserContext from "./UserContext"
 
-function MyRescues({ rescues, setRescues, errors, setErrors, rescue, setRescue, userRescue, setUserRescue, onDeleteUserRescue, isAdmin, setIsAdmin }) { 
+function MyRescues({ rescues, setRescues, userRescues, errors, setErrors, rescue, setRescue, userRescue, setUserRescue, onDeleteUserRescue, isAdmin, setIsAdmin }) { 
 const msg = useContext(UserContext);
+console.log(userRescues)
   function handleClick(e, uR) {
     setUserRescue(uR)
     if (uR.status === "Admin"){
@@ -14,7 +15,7 @@ const msg = useContext(UserContext);
 return (
     <div>
       <p>{msg.name}'s Rescues:</p>
-      {msg.userrescues.map(uR => <div key={uR.id} onClick={(e) => handleClick(e, uR)}>{uR.rescue.name} • Status: {uR.status}
+      {userRescues.map(uR => <div key={uR.id} onClick={(e) => handleClick(e, uR)}>{uR.rescue.name} • Status: {uR.status}
   </div> )}
       {rescue.name !== undefined ? 
        <div key={rescue.id}>

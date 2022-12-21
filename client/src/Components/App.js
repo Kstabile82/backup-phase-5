@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useHistory } from "react";
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import LogIn from "./LogIn";
@@ -34,6 +34,7 @@ const [showingErrors, setShowingErrors] = useState(false)
           setLoggedOut(false)
           setUser(u);
           setLoggedOut(false)
+          setUserRescues(user.userrescues)
         })
       }
     })
@@ -48,7 +49,43 @@ const [showingErrors, setShowingErrors] = useState(false)
     });
     },[]);
   
-  
+    function postNewRescue(newRescue) {
+      fetch ("/newrescue", {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newRescue, user)
+          })
+      .then((r) => { 
+          if (r.ok) { 
+              r.json()
+      .then(rescue => {
+          setRescues([...rescues, rescue])
+          setDisplayedRescs([...displayedRescs, rescue])
+
+          fetch ("/myrescues", {
+              method: "POST",
+              headers: {
+              "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ rescue_id: rescue.id, user_id: user.id, status: "Admin" })
+              })
+          .then((r) => r.json())
+          .then((r) => {
+              setUserRescues([...userRescues, r]) 
+              // setAdded(true)
+          })
+      })
+  }
+  else {
+      r.json().then((errorInfo) => {
+        setErrors(errorInfo.errors)
+        setShowingErrors(!showingErrors)
+         })
+  }   
+  })
+  }
   function handleLogIn(user) {
     setUser(user);
     setLoggedOut(false)
@@ -116,10 +153,10 @@ const [showingErrors, setShowingErrors] = useState(false)
          <AllRescues errors={errors} setErrors={setErrors} displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} isAdmin={isAdmin} setIsAdmin={setIsAdmin} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
          </Route> 
           <Route exact path="/myrescues">
-          <MyRescues rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
+          <MyRescues userRescues={userRescues} rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route>  
           <Route exact path="/newrescue">
-          <NewRescue handleCloseErrors={handleCloseErrors} showingErrors={showingErrors} setShowingErrors={setShowingErrors} errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
+          <NewRescue postNewRescue={postNewRescue} handleCloseErrors={handleCloseErrors} showingErrors={showingErrors} setShowingErrors={setShowingErrors} errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route> 
         </UserContext.Provider> : null} 
         
