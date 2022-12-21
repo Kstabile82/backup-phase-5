@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import emailjs from 'emailjs-com';
+// import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser'
 
 function EmailForm() {
   const form = useRef();
@@ -7,10 +8,10 @@ function EmailForm() {
   fetch(`/api`)
   .then((r) => r.json())
   .then((r) => setAPI(r))
-
+console.log("hello")
   const sendEmail = (e) => {
     e.preventDefault();
- 
+
         emailjs.sendForm('service_au46z5s', 'template_ehnw6dw', form.current, api)
           .then((result) => {
               console.log(result.text);

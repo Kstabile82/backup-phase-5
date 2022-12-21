@@ -109,6 +109,7 @@ function handleAlreadyPassed(e, i) {
              {inf && showingQs ? <Questions setInfo={setInfo} info={info} setShowingQs={setShowingQs} showingQs={showingQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
              {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} testArr={testArr} setTestArr={setTestArr} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
              {showContactForm ? <EmailForm/> : null}       
+             <EmailForm/>
 
           
         </div>
