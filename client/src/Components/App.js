@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from "react";
-import { Route, Switch, HashRouter } from 'react-router-dom'
-// import { BrowserRouter as Routes, Switch, Route } from "react-router-dom";
+// import { Route, Switch, HashRouter } from 'react-router-dom'
+import { BrowserRouter as Routes, Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
@@ -141,36 +141,39 @@ const [showingErrors, setShowingErrors] = useState(false)
 // console.log(resc)
 // }
   return (
-  <HashRouter>
+  <Routes>
     <div className="App">
       <h1 className="Hello">Pawsitive Pets</h1>
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
     <Switch>
-      <Route exact path="/login">
+      <Route exact="/">
+        <App></App>
+      </Route>
+      <Route exact="/login">
         <LogIn setUserRescues={setUserRescues} showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
-      <Route exact path="/signup">
+      <Route exact="/signup">
         <SignUp showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors}  errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
        {user && !loggedOut ? 
        <UserContext.Provider value={user}>
-         <Route exact path="/welcome">
+         <Route path="/welcome">
          <Welcome handleLogout={handleLogout} />
          </Route> 
-          <Route exact path="/allrescues">
+          <Route path="/allrescues">
          <AllRescues errors={errors} setErrors={setErrors} displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} isAdmin={isAdmin} setIsAdmin={setIsAdmin} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
          </Route> 
-          <Route exact path="/myrescues">
+          <Route path="/myrescues">
           <MyRescues displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} setUserRescues={setUserRescues} userRescues={userRescues} rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route>  
-          <Route exact path="/newrescue">
+          <Route path="/newrescue">
           <NewRescue postNewRescue={postNewRescue} handleCloseErrors={handleCloseErrors} showingErrors={showingErrors} setShowingErrors={setShowingErrors} errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route> 
         </UserContext.Provider> : null} 
         
     </Switch> 
   </div>
-  </HashRouter>
+  </Routes>
   );
 }
 
