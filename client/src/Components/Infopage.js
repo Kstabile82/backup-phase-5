@@ -11,7 +11,6 @@ function Infopage({ q, setQ, info, setInfo, rescue, setRescue, userRescue, setUs
 const [newTitle, setNewTitle] = useState(null)
 const [newText, setNewText] = useState(null)
 const [showContactForm, setShowContactForm] = useState(false)
-
   function handleDeleteInfo(e, i) {
     e.preventDefault();
     fetch(`/information/${i.id}`, { 
@@ -107,8 +106,8 @@ function handleAlreadyPassed(e, i) {
                      </form>  <button onClick={handleDeleteInfo}>Delete Information</button>
                      </div>: null}
              {inf && showingQs ? <Questions setInfo={setInfo} info={info} setShowingQs={setShowingQs} showingQs={showingQs} i={inf} setI={setInf} q={q} setQ={setQ} userRescue={userRescue} /> : null}
-             {inf && takeTest ? <Questions setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} testArr={testArr} setTestArr={setTestArr} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
-             {showContactForm ? <EmailForm/> : null}       
+             {inf && takeTest ? <Questions rescue={rescue} setUserRescue={setUserRescue} showContactForm={showContactForm} setShowContactForm={setShowContactForm} testArr={testArr} setTestArr={setTestArr} setTakeTest={setTakeTest} takeTest={takeTest} qs={inf.questions} q={q} setQ={setQ} i={takeTest} setI={setInf} userRescue={userRescue}/> : null}
+             {showContactForm ? <EmailForm rescue={rescue.name} info={info} /> : null}       
              <EmailForm/>
 
           

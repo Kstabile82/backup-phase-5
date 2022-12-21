@@ -3,7 +3,7 @@ import AllRescues from "./AllRescues";
 import Form from "./Form";
 import Rescuepage from "./Rescuepage";
 
-function Questions({ showContactForm, setShowContactForm, setShowingQs, showingQs, i, setI, q, setQ, userRescue, setUserRescue }) {
+function Questions({ showContactForm, rescue, setShowContactForm, setShowingQs, showingQs, i, setI, q, setQ, userRescue, setUserRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [text, setText] = useState(null)
@@ -15,7 +15,6 @@ function Questions({ showContactForm, setShowContactForm, setShowingQs, showingQ
     const [showScore, setShowScore] = useState(false)
     const [score, setScore] = useState(null)
 const [arr, setArr] = useState(null)
-
 
     function handleClickedQuestion(e, quest) {
         setQ(quest)
