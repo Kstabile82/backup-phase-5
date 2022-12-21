@@ -24,7 +24,7 @@ return (
       <p>{msg.name}'s Rescues:</p>
       {userRescues.map(uR => <div key={uR.id} onClick={(e) => handleClick(e, uR)}>{uR.rescue.name} • Status: {uR.status}
   </div> )}
-      {rescue.name !== undefined ? 
+      {rescue !== undefined ? 
        <div key={rescue.id}>
       <Rescuepage handleDelResc={handleDelResc} setUserRescues={setUserRescues} userRescues={userRescues} rescues={rescues} setRescues={setRescues} onDeleteUserRescue={onDeleteUserRescue} isAdmin={isAdmin} rescue={rescue} setRescue={setRescue} userRescue={userRescue} setUserRescue={setUserRescue}/> 
       </div> : null }  

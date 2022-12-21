@@ -131,7 +131,6 @@ const [showingErrors, setShowingErrors] = useState(false)
     e.preventDefault();
     setErrors(null)
     setShowingErrors(!showingErrors)
-    console.log("clicked")
 }
 // function handleDelResc(resc) {
 //   fetch(`/rescues/${resc.id}`, { 
