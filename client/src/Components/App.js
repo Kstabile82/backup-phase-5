@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
@@ -141,7 +141,7 @@ const [showingErrors, setShowingErrors] = useState(false)
 // console.log(resc)
 // }
   return (
-  
+  <BrowserRouter>
     <div className="App">
       <h1 className="Hello">Pawsitive Pets</h1>
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
@@ -170,6 +170,7 @@ const [showingErrors, setShowingErrors] = useState(false)
         
     </Switch> 
   </div>
+  </BrowserRouter>
   );
 }
 
