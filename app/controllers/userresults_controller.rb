@@ -3,16 +3,16 @@ class UserresultsController < ApplicationController
     before_action :authorize, only: :delete
 
       def create
-        arr = params[:testArr]
+        arr = params[:arr]
         score = 0; 
-        inp = params[:testArr].map do |t| 
+        inp = params[:arr].map do |t| 
             if t[:input] == t[:correct_answer] 
                 score = score + 1
             else 
                 score = score
             end
         end
-        ur = Userresult.create!(userrescue_id: params[:userrescue_id], information_id: params[:testArr][0][:info_id], score: score, maxscore: params[:corr])
+        ur = Userresult.create!(userrescue_id: params[:userrescue_id], information_id: params[:arr][0][:info_id], score: score, maxscore: params[:corr])
         if ur
             render json: ur
         else 
@@ -21,16 +21,16 @@ class UserresultsController < ApplicationController
       end
 
       def update
-        arr = params[:testArr]
+        arr = params[:arr]
         score = 0; 
-        inp = params[:testArr].map do |t| 
+        inp = params[:arr].map do |t| 
             if t[:input] == t[:correct_answer] 
                 score = score + 1
             else 
                 score = score
             end
         end
-        ur = Userresult.update!(userrescue_id: params[:userrescue_id], information_id: params[:testArr][0][:info_id], score: score, maxscore: params[:corr])
+        ur = Userresult.update!(userrescue_id: params[:userrescue_id], information_id: params[:arr][0][:info_id], score: score, maxscore: params[:corr])
         if ur
             render json: ur
         else 

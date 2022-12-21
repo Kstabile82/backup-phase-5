@@ -55,12 +55,10 @@ else {
     r.json().then((errorInfo) => {
       setErrors(errorInfo.errors)
       setShowingErrors(!showingErrors)
-
        })
 }   
 })
 }
-
     return (
         <div className="add-rescue-form">
              <form onSubmit={handleSubmit}>

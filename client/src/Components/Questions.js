@@ -1,8 +1,9 @@
 import React, { useState } from "react"; 
+import AllRescues from "./AllRescues";
 import Form from "./Form";
 import Rescuepage from "./Rescuepage";
 
-function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, setShowingQs, showingQs, i, setI, q, setQ, userRescue, setUserRescue }) {
+function Questions({ showContactForm, setShowContactForm, setShowingQs, showingQs, i, setI, q, setQ, userRescue, setUserRescue }) {
     const [addQs, setAddQs] = useState(false);
     const [addO, setAddO] = useState(false)
     const [text, setText] = useState(null)
@@ -13,6 +14,8 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
     const [newO, setNewO] = useState(null)
     const [showScore, setShowScore] = useState(false)
     const [score, setScore] = useState(null)
+const [arr, setArr] = useState(null)
+
 
     function handleClickedQuestion(e, quest) {
         setQ(quest)
@@ -71,7 +74,6 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
         const specQ = inform.questions.find(qu => qu.id === o.question_id)
         specQ.options.filter(op => op.id !== o.id)
         setI(inform)
-        //need to do something more here to set it and replace Q with specQ
     }
     function handleDeleteQuestion(e, quest) {
         e.preventDefault();
@@ -82,7 +84,7 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
         inform.questions = inform.questions.filter(infQ => infQ.id !== quest.id)
         setI(inform)
     }
-    function handleSubmitTest(e) {
+    function handleSubmitTest(e, i) {
         e.preventDefault();
         let corr = 0
         i.questions.map(qu => {
@@ -92,20 +94,20 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
                 }
             })
             })
-    let exists = userRescue.userresults.find(urs => urs.information_id === testArr.information_id)
+    let exists = userRescue.userresults.find(urs => urs.information_id === i.id)
     if (exists) {
         fetch(`/userresults/${exists.id}`, {
             method: "PATCH", 
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ userrescue_id: userRescue.id, testArr, corr }),
+            body: JSON.stringify({ userrescue_id: userRescue.id, arr, corr }),
         })
      .then((r) => {
          if (r.ok) {
            r.json()
            .then((ur) => {
-             if (ur.score === testArr.length) {
+             if (ur.score === arr.length) {
                 setShowContactForm(!showContactForm)
                 let index = userRescue.userresults.findIndex(exists)
                 userRescue.userresults.splice(index,1,ur)
@@ -123,13 +125,13 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ userrescue_id: userRescue.id, testArr, corr }),
+            body: JSON.stringify({ userrescue_id: userRescue.id, arr, corr }),
         })
      .then((r) => {
          if (r.ok) {
            r.json()
            .then((ur) => {
-             if (ur.score === testArr.length) {
+             if (ur.score === arr.length) {
                 setShowContactForm(!showContactForm)
                 userRescue.userresults = [...userRescue.userresults, ur]
                 setUserRescue(userRescue)
@@ -211,6 +213,34 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
           }
         });
     }
+    function handleTestInput(e, q) {
+        e.preventDefault();
+        let inputQ; 
+        let inputVal;
+        let correctAns;
+        let questionId; 
+        let infoId = i.id
+        inputQ = e.target.name
+        inputVal = e.target.value
+        correctAns = q.options.find(o => o.correct)  
+        questionId = q.id 
+        let ob = {"question_id": questionId, "info_id": infoId, "question": inputQ, "input": inputVal, "correct_answer": correctAns.text}
+        if (arr !== null) {
+            let foundit = arr.find(a => a.question_id === ob.question_id)
+            if (foundit) {
+                let idx = arr.indexOf(foundit)
+                arr.splice(idx,1,ob)
+            setArr(arr)           
+            }
+            else {
+                setArr([...arr, ob])
+            }
+        }
+        else {
+            setArr([ob])
+        }      
+    }
+
     return (
         <div> <p className="line"></p>
            
@@ -262,9 +292,31 @@ function Questions({ showContactForm, setShowContactForm, testArr, setTestArr, s
             </div> : null }
             {userRescue.status !== "Admin" ? <div>
                 <h2>{i.title} Test:</h2>
-            <Form qs={i.questions} i={i} testArr={testArr} setTestArr={setTestArr}/> 
-         <button onClick={handleSubmitTest}>Submit {i.title} Test</button> 
+                {i.questions.map(q => 
+                <div><form>{q.text}
+                <br></br>
+                {q.options.map(o => 
+                    <label>{o.text}
+                    <input
+                    type="radio"
+                    name={q.text}
+                    value={o.text}
+                    // checked={selected === o.text}
+                    onChange={(e) => handleTestInput(e, q)}
+                    >
+                    </input></label>)}
+                    {/* <button>Enter</button><br></br> */}
+
+
+                </form> 
+                
+                <br></br>
+                 </div>
+            )}
+            {/* <Form qs={i.questions} i={i} testArr={testArr} setTestArr={setTestArr}/>  */}
          { score && showScore ? <p onClick={(e) => setShowScore(!showScore)}>You scored {score}</p> : null}
+         <button onClick={(e) => handleSubmitTest(e, i)}>Submit {i.title} Test</button> 
+
             </div>
             : null}  
     </div>
