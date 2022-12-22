@@ -2,24 +2,28 @@ Pawsitive Pets
 React front end and Ruby back end app for animal rescues and users. Rescues can register and log their pets and information, and create a quiz for users to test their readiness for pet adoption. Users can view and filter rescues by animal types and locations. 
 
 How to use:
+
 ```
 bundle install 
-
 ```
 
 ```
 npm install --prefix client
-
 ```
 ```
-
 rails db:migrate
-
 ```
-
 ```
 db:seed
+```
+To run:
 
+Backend: http://localhost:3000
+```rails s
+```
+Frontend: http://localhost:400
+In a separate terminal tab, run:
+```npm start --prefix client
 ```
 
 Usage
@@ -34,6 +38,10 @@ Ruby 2.7.4
 Rails 7.0.4
 NodeJS (v16), and npm
 Postgresql
+React-router-dom 5.3.4
+React 18.2.0
+
+
 
 You can use the following commands to run the application:
 rails s: run the backend on http://localhost:3000

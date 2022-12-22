@@ -142,17 +142,15 @@ const [showingErrors, setShowingErrors] = useState(false)
 // }
   return (
   <HashRouter>
-    <div className="App">
-      <h1 className="Hello">Pawsitive Pets</h1>
+    <div className="App">         <h1 className="Hello">Pawsitive Pets</h1>
+
+      {/* <h1 className="Hello">Pawsitive Pets</h1> */}
     <NavBar user={user} onLogout={handleLogout} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
     <Switch>
-      {/* <Route exact="/">
-        <App></App>
-      </Route> */}
-      <Route exact="/login">
+      <Route path="/login">
         <LogIn setUserRescues={setUserRescues} showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors} errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
-      <Route exact="/signup">
+      <Route path="/signup">
         <SignUp showingErrors={showingErrors} setShowingErrors={setShowingErrors} handleCloseErrors={handleCloseErrors}  errors={errors} setErrors={setErrors} handleLogIn={handleLogIn} handleLogout={handleLogout} onLogout={handleLogout} user={user} setUser={setUser} loggedOut={loggedOut} setLoggedOut={setLoggedOut} />
       </Route>
        {user && !loggedOut ? 
@@ -169,8 +167,9 @@ const [showingErrors, setShowingErrors] = useState(false)
           <Route path="/newrescue">
           <NewRescue postNewRescue={postNewRescue} handleCloseErrors={handleCloseErrors} showingErrors={showingErrors} setShowingErrors={setShowingErrors} errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />
           </Route> 
+          <Route path="/">
+      </Route>
         </UserContext.Provider> : null} 
-        
     </Switch> 
   </div>
   </HashRouter>
