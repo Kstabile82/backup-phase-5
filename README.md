@@ -14,7 +14,7 @@ npm install --prefix client
 rails db:migrate
 ```
 ```
-db:seed
+rails db:seed
 ```
 To run:
 
