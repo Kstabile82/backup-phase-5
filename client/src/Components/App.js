@@ -138,7 +138,7 @@ const [showingErrors, setShowingErrors] = useState(false)
 // })
 // setRescues(rescues.filter(r => r.id !== resc.id))
 // setUserRescues(userRescues.filter(uR => uR.rescue_id !== resc.id))
-// console.log(resc)
+// setRescue(null)
 // }
   return (
   <HashRouter>
@@ -162,7 +162,7 @@ const [showingErrors, setShowingErrors] = useState(false)
          <AllRescues errors={errors} setErrors={setErrors} displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} animalArray={animalArray} locationArray={locationArray} updateUserRescues={updateUserRescues} isAdmin={isAdmin} setIsAdmin={setIsAdmin} handleLogout={handleLogout} rescues={rescues} setRescues={setRescues} rescue={rescue} setRescue={setRescue} />
          </Route> 
           <Route path="/myrescues">
-          <MyRescues displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} setUserRescues={setUserRescues} userRescues={userRescues} rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} userRescues={userRescues} setUserRescues={setUserRescues} />
+          <MyRescues displayedRescs={displayedRescs} setDisplayedRescs={setDisplayedRescs} setUserRescues={setUserRescues} userRescues={userRescues} rescues={rescues} setRescues={setRescues} errors={errors} setErrors={setErrors} userRescue={userRescue} setUserRescue={setUserRescue} onDeleteUserRescue={onDeleteUserRescue} setRescue={setRescue} rescue={rescue} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
           </Route>  
           <Route path="/newrescue">
           <NewRescue postNewRescue={postNewRescue} handleCloseErrors={handleCloseErrors} showingErrors={showingErrors} setShowingErrors={setShowingErrors} errors={errors} setErrors={setErrors} setRescues={setRescues} rescues={rescues} userRescues={userRescues} setUserRescues={setUserRescues} />

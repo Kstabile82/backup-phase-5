@@ -11,6 +11,7 @@ function handleDelResc(resc) {
 setRescues(rescues.filter(r => r.id !== resc.id))
 setUserRescues(userRescues.filter(uR => uR.rescue.id !== resc.id))
 setDisplayedRescs(displayedRescs.filter(dr => dr.id !== resc.id))
+setRescue({})
 }
   function handleClick(e, uR) {
     setUserRescue(uR)

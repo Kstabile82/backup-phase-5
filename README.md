@@ -19,11 +19,14 @@ db:seed
 To run:
 
 Backend: http://localhost:3000
-```rails s
 ```
+rails s
+```
+
 Frontend: http://localhost:400
 In a separate terminal tab, run:
-```npm start --prefix client
+```
+npm start --prefix client
 ```
 
 Usage
