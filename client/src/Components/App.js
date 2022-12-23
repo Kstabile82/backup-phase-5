@@ -99,7 +99,7 @@ const [showingErrors, setShowingErrors] = useState(false)
      const s = {...user};
         s.userrescues = user.userrescues.filter(u => u.id !== id.id)
         setUser(s)  
-        setUserRescues(s.userrescues) 
+        setUserRescues(userRescues.filter(uR => uR.id !== id.id)) 
         setRescue({})
      }
   function handleLogout() {
