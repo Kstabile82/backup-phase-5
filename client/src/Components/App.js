@@ -126,6 +126,7 @@ const [showingErrors, setShowingErrors] = useState(false)
       const s = {...user};
       s.userrescues = [...user.userrescues, ur]
       setUser(s)
+      setUserRescues([...userRescues, ur])
     })
   }
   function handleCloseErrors(e) {
