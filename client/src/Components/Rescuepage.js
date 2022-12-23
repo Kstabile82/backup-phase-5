@@ -135,7 +135,7 @@ function Rescuepage({ handleDelResc, userRescues, setUserRescues, rescues, setRe
   }
 
 return (
-    <div>
+    <div> 
     <h3>{rescue.name}</h3> 
     <div><button onClick={handleShowUserInfo}>Information</button> <button onClick={handleShowPets}>Pets</button> <button style={{display: userRescue.status === "Admin" ? 'visible' : 'none' }} onClick={handleShowUsers}>Users</button> <button onClick={handleDeleteUserRescue}>Remove from my list</button></div>
     {showInfo && info !== null && info !== undefined ? <Infopage setRescue={setRescue} q={q} setQ={setQ} rescue={rescue} userRescue={userRescue} setUserRescue={setUserRescue} setShowInfo={setShowInfo} info={info} setInfo={setInfo} /> : null}
